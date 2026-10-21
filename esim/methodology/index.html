@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology — How the eSIM Price Audit Works</title>
+  <meta name="description" content="Exactly how the eSIM arbitrage audit is produced: the catalogue snapshot, FX normalisation, inversion detection, iOS visibility diff and competitor benchmarks.">
+  <link rel="canonical" href="https://youssef-benatti.me/esim-arbitrage-calculator/methodology/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Youssef Benatti">
+  <meta name="theme-color" content="#0F2942">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="eSIM Arbitrage &amp; Break-Even Engine">
+  <meta property="og:title" content="Methodology — How the eSIM Price Audit Works">
+  <meta property="og:description" content="Exactly how the eSIM arbitrage audit is produced: the catalogue snapshot, FX normalisation, inversion detection, iOS visibility diff and competitor benchmarks.">
+  <meta property="og:url" content="https://youssef-benatti.me/esim-arbitrage-calculator/methodology/">
+  <meta property="og:image" content="https://youssef-benatti.me/esim-arbitrage-calculator/assets/og-default.svg">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Methodology — How the eSIM Price Audit Works">
+  <meta name="twitter:description" content="Exactly how the eSIM arbitrage audit is produced: the catalogue snapshot, FX normalisation, inversion detection, iOS visibility diff and competitor benchmarks.">
+  <meta name="twitter:image" content="https://youssef-benatti.me/esim-arbitrage-calculator/assets/og-default.svg">
+  
+
+  <link rel="icon" href="https://youssef-benatti.me/esim-arbitrage-calculator/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.tailwindcss.com/3.4.17">
+  <link rel="stylesheet" href="https://youssef-benatti.me/esim-arbitrage-calculator/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="bg-[#0F2942] text-white border-b border-slate-800 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <a href="https://youssef-benatti.me/esim-arbitrage-calculator/" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-300 font-extrabold text-lg">eS</span>
+        <span>
+          <span class="font-bold text-base sm:text-lg tracking-tight text-white">eSIM Arbitrage &amp; Break-Even Engine</span>
+          <span class="block text-xs text-slate-300 hidden sm:block">Live FX Checkout Optimizer &amp; Duration Inversion Finder</span>
+        </span>
+      </a>
+      <nav aria-label="Main" class="flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-700/70 overflow-x-auto max-w-full text-xs sm:text-sm font-semibold">
+        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/" class="px-3 py-1.5 rounded-lg transition whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">Calculator</a>
+        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/" class="px-3 py-1.5 rounded-lg transition whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">Destinations</a>
+        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/guides/" class="px-3 py-1.5 rounded-lg transition whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">Guides</a>
+        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/fx-audit/" class="px-3 py-1.5 rounded-lg transition whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">FX Audit</a>
+      </nav>
+    </div>
+  </header>
+  <div class="affiliate-disclosure no-print" role="note">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2">
+      <strong>Affiliate disclosure:</strong> this page contains affiliate links. If you buy an eSIM through them we may earn a commission at no extra cost to you. Prices shown are audited from the vendor catalogue on 2026-10-15 and change often &mdash; always confirm the final price at checkout.
+    </div>
+  </div>
+<main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex-1 w-full">
+
+  <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-7 mb-6">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Methodology</h1>
+    <p class="text-sm text-slate-600 mt-2 max-w-3xl">Everything on this site comes from one static catalogue snapshot, cross-checked against public reference rates. No estimates, no scraped competitor pages, no models.</p>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">1. The catalogue snapshot</h2>
+      <p class="text-xs text-slate-600">The vendor publishes a per-plan price table for every destination, in 20 currencies, across every duration they sell. We captured the full table on 2026-10-15: <strong>94</strong> destinations, <strong>6,802</strong> plan variants, <strong>136,040</strong> individual price points.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">2. FX normalisation</h2>
+      <p class="text-xs text-slate-600">Every price is converted to USD using the 2026-10-15 ECB euro reference rate and IBAN rates. The rate table is published in full on the <a href="https://youssef-benatti.me/esim-arbitrage-calculator/fx-audit/" class="text-teal-600 underline">FX audit page</a>, so every conversion on this site can be re-checked by hand.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">3. Inversion detection</h2>
+      <p class="text-xs text-slate-600">For every destination and currency we sort the durations ascending and flag any adjacent pair where the longer plan's total price is lower than the shorter one's. We found <strong>224</strong> such pairs plus <strong>80</strong> duplicate rows where the same currency key carries two conflicting prices.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">4. iOS visibility</h2>
+      <p class="text-xs text-slate-600">The vendor's iOS app does not list every duration the web checkout sells. We diff the two catalogues: <strong>4,509</strong> of 6,802 plan variants (66.3%) are web-only. Those durations are often where the inversions hide.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">5. Competitor benchmarks</h2>
+      <p class="text-xs text-slate-600">For 7 destinations we recorded the published list price of competing eSIM products (Nomad, Saily, Airalo, Yesim, Jetpac) so the calculator can show a genuine break-even rather than a brand ranking. Benchmarks are 2026-10 list prices and move often.</p>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+      <h2 class="text-base font-bold text-slate-900 mb-3">6. How this site earns money</h2>
+      <p class="text-xs text-slate-600">Through affiliate links. We earn a commission when you buy through them, at no extra cost to you. <strong>Ranking is never paid for.</strong> The "cheapest provider" card is sorted by price, and a paid placement would have to be labelled as such. Full details on the <a href="https://youssef-benatti.me/esim-arbitrage-calculator/disclosure/" class="text-teal-600 underline">disclosure page</a>.</p>
+    </section>
+  </div>
+
+  <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 mt-6">
+    <h2 class="text-base font-bold text-slate-900 mb-3">The raw data</h2>
+    <p class="text-xs text-slate-600 mb-3">The entire dataset is published as JSON so anyone can verify it, and the build scripts that produced this site are on <a href="https://github.com/Jojoussef/esim-arbitrage-calculator" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">GitHub</a>.</p>
+    <div class="flex flex-wrap gap-2">
+      <a href="https://youssef-benatti.me/esim-arbitrage-calculator/data/catalog.json" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200">catalog.json</a>
+      <a href="https://youssef-benatti.me/esim-arbitrage-calculator/data/fx.json" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200">fx.json</a>
+      <a href="https://youssef-benatti.me/esim-arbitrage-calculator/data/competitors.json" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200">competitors.json</a>
+      <a href="https://youssef-benatti.me/esim-arbitrage-calculator/data/stats.json" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200">stats.json</a>
+    </div>
+  </section>
+</main>
+  <footer class="bg-white border-t border-slate-200 mt-10 py-8 px-4 sm:px-6 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div>
+        <div class="font-bold text-slate-800 text-sm mb-2">eSIM Arbitrage &amp; Break-Even Engine</div>
+        <p>94 destinations &middot; 20 currencies &middot; 6,802 plan variants &middot; 136,040 audited prices.</p>
+        <p class="mt-2">Data grounded in the Oct 2026 vendor catalogue, cross-checked against <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">ECB Reference Rates</a> and <a href="https://www.iban.com/exchange-rates" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">IBAN FX</a>.</p>
+      </div>
+      <div>
+        <div class="font-bold text-slate-800 text-sm mb-2">Explore</div>
+        <ul class="space-y-1">
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/" class="hover:text-teal-700">Interactive calculator</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/" class="hover:text-teal-700">All 94 destinations</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/inversions/" class="hover:text-teal-700">224 duration inversions</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/fx-audit/" class="hover:text-teal-700">20-currency FX audit</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/guides/" class="hover:text-teal-700">Traveler guides</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-bold text-slate-800 text-sm mb-2">Methodology &amp; legal</div>
+        <ul class="space-y-1">
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/methodology/" class="hover:text-teal-700">How the audit works</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/privacy/" class="hover:text-teal-700">Privacy</a></li>
+          <li><a href="https://youssef-benatti.me/esim-arbitrage-calculator/disclosure/" class="hover:text-teal-700">Affiliate disclosure</a></li>
+          <li><a href="https://github.com/Jojoussef/esim-arbitrage-calculator" target="_blank" rel="noopener noreferrer" class="hover:text-teal-700">Source on GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
+      &copy; 2026 Youssef Benatti. Prices and availability are the vendor's and can change without notice. This tool is independent and is not affiliated with or endorsed by Holafly, Nomad, Saily, Airalo, Yesim, Jetpac or Cellesim.
+    </div>
+  </footer>
+
+
+</body>
+</html>
