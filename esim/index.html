@@ -3,24 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>eSIM Arbitrage, FX Optimizer &amp; Competitor Break-Even Calculator (2026)</title>
-  <meta name="description" content="Compare eSIM prices across 20 currencies, find duration price inversions where buying more days costs less, and break-even against Holafly, Nomad, Saily, Airalo, Yesim and Jetpac. Built from 136,040 audited prices across 94 destinations.">
+  <title>Cheapest eSIM Prices in 20 Currencies — eSIM Price Truth (2026)</title>
+  <meta name="description" content="Compare eSIM prices across 20 currencies and 94 destinations, find the plan that really costs least, and see which checkout currency saves you money. 136,040 prices checked.">
   <link rel="canonical" href="https://youssef-benatti.me/esim-arbitrage-calculator/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Youssef Benatti">
   <meta name="theme-color" content="#0F2942">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="eSIM Arbitrage &amp; Break-Even Engine">
-  <meta property="og:title" content="eSIM Arbitrage, FX Optimizer &amp; Competitor Break-Even Calculator (2026)">
-  <meta property="og:description" content="Compare eSIM prices across 20 currencies, find duration price inversions where buying more days costs less, and break-even against Holafly, Nomad, Saily, Airalo, Yesim and Jetpac. Built from 136,040 audited prices across 94 destinations.">
+  <meta property="og:site_name" content="eSIM Price Truth">
+  <meta property="og:title" content="Cheapest eSIM Prices in 20 Currencies — eSIM Price Truth (2026)">
+  <meta property="og:description" content="Compare eSIM prices across 20 currencies and 94 destinations, find the plan that really costs least, and see which checkout currency saves you money. 136,040 prices checked.">
   <meta property="og:url" content="https://youssef-benatti.me/esim-arbitrage-calculator/">
   <meta property="og:image" content="https://youssef-benatti.me/esim-arbitrage-calculator/assets/og-default.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="eSIM Arbitrage, FX Optimizer &amp; Competitor Break-Even Calculator (2026)">
-  <meta name="twitter:description" content="Compare eSIM prices across 20 currencies, find duration price inversions where buying more days costs less, and break-even against Holafly, Nomad, Saily, Airalo, Yesim and Jetpac. Built from 136,040 audited prices across 94 destinations.">
+  <meta name="twitter:title" content="Cheapest eSIM Prices in 20 Currencies — eSIM Price Truth (2026)">
+  <meta name="twitter:description" content="Compare eSIM prices across 20 currencies and 94 destinations, find the plan that really costs least, and see which checkout currency saves you money. 136,040 prices checked.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
+  <script>(function(){
+  try {
+    var stored = localStorage.getItem("esim_theme");
+    var mode = stored || "auto";
+    var dark = mode === "dark" || (mode === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    document.documentElement.style.colorScheme = dark ? "dark" : "light";
+  } catch (e) {}
+})();</script>
   <link rel="stylesheet" href="styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"eSIM Arbitrage & Break-Even Engine","description":"Compare eSIM prices across 20 currencies, find duration price inversions where buying more days costs less, and break-even against Holafly, Nomad, Saily, Airalo, Yesim and Jetpac. Built from 136,040 audited prices across 94 destinations.","url":"https://youssef-benatti.me/esim-arbitrage-calculator/","applicationCategory":"TravelApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Checkout currency arbitrage across 20 currencies","Duration price inversion detection","Competitor break-even analysis","iOS app visibility check"],"author":{"@type":"Person","name":"Youssef Benatti"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"eSIM Price Truth","description":"Compare eSIM prices across 20 currencies and 94 destinations, find the plan that really costs least, and see which checkout currency saves you money. 136,040 prices checked.","url":"https://youssef-benatti.me/esim-arbitrage-calculator/","applicationCategory":"TravelApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Compare eSIM prices across 20 currencies","Find the cheapest checkout currency","Spot plans priced cheaper for longer","Compare eSIM providers on price"],"author":{"@type":"Person","name":"Youssef Benatti"}}</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -47,36 +57,34 @@
   </div>
 
   <!-- Top Navigation Header -->
-  <header class="bg-[#0F2942] text-white border-b border-slate-800 sticky top-0 z-30">
+  <header class="app-header sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-300 font-extrabold text-lg">
+        <div class="brand-mark w-9 h-9 rounded-lg border flex items-center justify-center font-extrabold text-lg">
           eS
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-bold text-base sm:text-lg tracking-tight text-white">eSIM Arbitrage &amp; Break-Even Engine</h1>
-            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30">94 Dests · 136,040 Prices</span>
+            <div class="font-bold text-base sm:text-lg tracking-tight text-white">eSIM Price Truth</div>
+            <span class="brand-badge text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border">94 destinations · 136,040 prices</span>
           </div>
-          <p class="text-xs text-slate-300 hidden sm:block">Live FX Checkout Optimizer, 235 Duration Inversion Finder &amp; 2026 Competitor Benchmark</p>
+          <p class="text-xs text-slate-300 hidden sm:block">Find the cheapest eSIM for your trip.</p>
         </div>
       </div>
 
       <!-- Navigation Tabs -->
-      <nav class="flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-700/70 overflow-x-auto max-w-full">
+      <nav class="nav-shell flex items-center gap-1 p-1 rounded-xl border overflow-x-auto max-w-full">
+        <button id="themeToggle" type="button" class="theme-toggle mr-1" title="Theme" aria-label="Change theme">&#9681;</button>
         <button id="tabBtnCalc" type="button" class="tab-active text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg transition whitespace-nowrap">
-          1. Smart Calculator
+          1. Trip Calculator
         </button>
         <button id="tabBtnInversions" type="button" class="tab-inactive text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg transition whitespace-nowrap">
-          2. 235 Inversions &amp; Bugs
+          2. Where Prices Look Wrong
         </button>
         <button id="tabBtnFx" type="button" class="tab-inactive text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg transition whitespace-nowrap">
-          3. 28-Currency FX Audit
+          3. Which Currency to Pay In
         </button>
-        <button id="tabBtnDeploy" type="button" class="tab-inactive text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg transition whitespace-nowrap flex items-center gap-1.5">
-          <span>4. Affiliate &amp; Export Studio</span>
-          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-        </button>
+
         <a href="destinations/" class="text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg transition whitespace-nowrap text-slate-300 hover:bg-slate-800 hover:text-white">
           Destinations
         </a>
@@ -89,6 +97,36 @@
 
   <!-- Main Workspace Container -->
   <main id="main" class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 space-y-6">
+
+  <section class="hero rounded-2xl p-6 sm:p-8 mb-6">
+    <div class="max-w-3xl">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+        Find the cheapest eSIM for your trip — in 20 currencies
+      </h1>
+      <p class="text-sm sm:text-base text-slate-200 mt-3 max-w-2xl">
+        Pick your destination and trip length. We check every price, show the currency that costs you least, and flag the plans that are priced backwards.
+      </p>
+      <div class="hero-rule h-1 w-24 rounded-full mt-5"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+        <div class="hero-stat px-4 py-3">
+          <div class="text-xl font-extrabold text-white">up to 79%</div>
+          <div class="text-[11px] text-slate-300 mt-0.5 leading-snug">saved by changing checkout currency</div>
+        </div><div class="hero-stat px-4 py-3">
+          <div class="text-xl font-extrabold text-white">224</div>
+          <div class="text-[11px] text-slate-300 mt-0.5 leading-snug">plans priced cheaper for longer</div>
+        </div><div class="hero-stat px-4 py-3">
+          <div class="text-xl font-extrabold text-white">66.3%</div>
+          <div class="text-[11px] text-slate-300 mt-0.5 leading-snug">of plans missing from the iOS app</div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Popular destinations</div>
+        <div class="flex flex-wrap gap-2"><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/united-states/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">United States</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/japan/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Japan</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/thailand/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Thailand</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/fiji/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Fiji</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/spain/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Spain</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/portugal/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Portugal</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/mexico/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Mexico</a><a href="https://youssef-benatti.me/esim-arbitrage-calculator/destinations/brazil/" class="btn-outline-light text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">Brazil</a></div>
+      </div>
+    </div>
+  </section>
 
     <!-- ==================== VIEW 1: SMART CALCULATOR ==================== -->
     <section id="viewCalc" class="space-y-6">
@@ -180,8 +218,8 @@
               </span>
               <span id="badgeIosStatus" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">iOS Visible</span>
             </div>
-            <h2 id="card1Title" class="text-base font-bold text-slate-900 mb-1">Switch Storefront Currency to Save</h2>
-            <p id="card1Subtitle" class="text-xs text-slate-500 mb-4">Comparing your selected checkout currency against all 28 localized price tables for this exact SKU.</p>
+            <h2 id="card1Title" class="text-base font-bold text-slate-900 mb-1">Pay in COP and save</h2>
+            <p id="card1Subtitle" class="text-xs text-slate-500 mb-4">The same plan, priced in 20 currencies. We show what each one really costs in dollars so you can pick the cheapest at checkout.</p>
 
             <div class="space-y-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 mb-4">
               <div class="flex items-center justify-between text-xs">
@@ -209,7 +247,7 @@
               <span id="metaTether">Hotspot: 1024 MB/d</span>
             </div>
             <a id="btnHolaflyAffiliate" href="https://esim.holafly.com/" target="_blank" rel="sponsored noopener noreferrer" class="block w-full text-center bg-[#0F2942] hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition">
-              Open Holafly &amp; Checkout in Optimal Currency &rarr;
+              Get this plan &rarr;
             </a>
           </div>
         </div>
@@ -223,7 +261,7 @@
               </span>
               <span id="badgeDailyRate" class="text-xs font-bold text-slate-700">$3.90 / day</span>
             </div>
-            <h2 class="text-base font-bold text-slate-900 mb-1">Duration Pricing &amp; Inversion Scan</h2>
+            <h2 class="text-base font-bold text-slate-900 mb-1">What each trip length costs</h2>
             <p class="text-xs text-slate-500 mb-4">Scans adjacent day lengths across your chosen currency and all 28 currencies to catch pricing inversions.</p>
 
             <div id="inversionAlertBox" class="rounded-xl p-3.5 border mb-4 text-xs">
@@ -254,8 +292,8 @@
               </span>
               <span id="badgeBreakEvenGb" class="text-xs font-bold text-indigo-800">Break-Even: 20 GB</span>
             </div>
-            <h2 id="card3Title" class="text-base font-bold text-slate-900 mb-1">Rival Unlimited &amp; Fixed-GB Matchup</h2>
-            <p id="card3Subtitle" class="text-xs text-slate-500 mb-3">Verified October 2026 pricing from Nomad, Saily, Airalo, Yesim &amp; Jetpac.</p>
+            <h2 id="card3Title" class="text-base font-bold text-slate-900 mb-1">How this compares to other eSIMs</h2>
+            <p id="card3Subtitle" class="text-xs text-slate-500 mb-3">The same trip, priced by Nomad, Saily, Airalo, Yesim and Jetpac &mdash; so you can see if you are about to overpay.</p>
 
             <div id="compCardsContainer" class="space-y-2.5 mb-3">
               <!-- Populated dynamically -->
@@ -312,7 +350,7 @@
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
           <div>
-            <h2 class="text-lg font-bold text-slate-900">224+ Duration Price Inversions &amp; 1,001 Duplicate Currency Conflicts</h2>
+            <h2 class="text-lg font-bold text-slate-900">Plans that are cheaper for longer</h2>
             <p class="text-xs text-slate-500">Every instance in <code>catalogue_all.jsonl</code> where buying <em>more</em> days is cheaper than buying fewer days, or where duplicate currency keys conflict. Click <strong>"Copy Post Snippet"</strong> to grab ready-to-post Reddit/social proof.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
@@ -339,7 +377,7 @@
     <section id="viewFx" class="hidden space-y-6">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
         <div class="mb-4">
-          <h2 class="text-lg font-bold text-slate-900">28-Currency Systematic Spread vs. ECB / Market Spot Rates (Oct 2026)</h2>
+          <h2 class="text-lg font-bold text-slate-900">What each currency really costs</h2>
           <p class="text-xs text-slate-500">Holafly prices its global catalog off a Euro base (<code>1 EUR = 1.0839 USD</code> median vs. <code>1.1208 USD</code> ECB spot). Currencies with negative spreads save buyers money; positive spreads penalize local buyers.</p>
         </div>
         <div class="relative h-80 w-full mb-6">
@@ -367,94 +405,7 @@
     </section>
 
     <!-- ==================== VIEW 4: AFFILIATE & EXPORT STUDIO ==================== -->
-    <section id="viewDeploy" class="hidden space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Left: Affiliate Links Configurator -->
-        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">
-              Sprint 2.3 Ready · Zero-Code Affiliate Wiring
-            </span>
-          </div>
-          <h2 class="text-lg font-bold text-slate-900 mb-1">Paste Your Affiliate Tracking URLs</h2>
-          <p class="text-xs text-slate-500 mb-5">Enter your referral links from Phase 1 below. Clicking <strong>"Save &amp; Wire Buttons"</strong> updates every CTA button in this calculator immediately—and lets you export a standalone <code>index.html</code> file with your links permanently baked in.</p>
-
-          <div class="space-y-3.5">
-            <div>
-              <label for="affSaily" class="block text-xs font-bold text-slate-700 mb-1">Saily Affiliate URL (15% Commission · 30d Cookie)</label>
-              <input id="affSaily" type="url" value="https://saily.com/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affAiralo" class="block text-xs font-bold text-slate-700 mb-1">Airalo Affiliate URL (10%–12% Commission)</label>
-              <input id="affAiralo" type="url" value="https://www.airalo.com/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affNomad" class="block text-xs font-bold text-slate-700 mb-1">Nomad eSIM Partner URL (10% Commission)</label>
-              <input id="affNomad" type="url" value="https://www.nomadesim.com/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affYesim" class="block text-xs font-bold text-slate-700 mb-1">Yesim Affiliate URL (10%+ Commission)</label>
-              <input id="affYesim" type="url" value="https://yesim.app/regions/europe-esim/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affJetpac" class="block text-xs font-bold text-slate-700 mb-1">Jetpac Affiliate URL (10%–15% Commission)</label>
-              <input id="affJetpac" type="url" value="https://www.jetpacglobal.com/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affHolafly" class="block text-xs font-bold text-slate-700 mb-1">Holafly Affiliate URL (10%–20% Commission)</label>
-              <input id="affHolafly" type="url" value="https://esim.holafly.com/" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-mono">
-            </div>
-            <div>
-              <label for="affPromoCode" class="block text-xs font-bold text-slate-700 mb-1">Optional Reader Coupon Code Banner (e.g. SAVE5 or NOMAD15)</label>
-              <input id="affPromoCode" type="text" placeholder="e.g. ESIMHACK10 for 10% off" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs">
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-3 mt-5 pt-4 border-t border-slate-100">
-            <button id="btnSaveAffiliates" type="button" class="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition">
-              Save &amp; Wire All Calculator Buttons
-            </button>
-            <button id="btnResetAffiliates" type="button" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition">
-              Reset to Default URLs
-            </button>
-          </div>
-        </div>
-
-        <!-- Right: 1-Click Export & Deployment Checklist -->
-        <div class="lg:col-span-5 space-y-5">
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-1">1-Click Export Bundle (Sprint 2.1 &amp; 2.2 Done)</h3>
-            <p class="text-xs text-slate-500 mb-4">Download your production-ready files to drag-and-drop directly onto Cloudflare Pages, Vercel, or GitHub Pages.</p>
-
-            <div class="space-y-3">
-              <button id="btnDownloadHtml" type="button" class="w-full bg-[#0F2942] hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition flex items-center justify-between">
-                <span>Download Standalone <code>index.html</code> (With Your Links)</span>
-                <span class="text-teal-300">&darr; HTML</span>
-              </button>
-              <button id="btnDownloadJson" type="button" class="w-full bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-200 font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition flex items-center justify-between">
-                <span>Download Cleaned <code>holafly_clean.json</code> (94 Dests)</span>
-                <span class="text-teal-700">&darr; JSON</span>
-              </button>
-              <button id="btnDownloadCsv" type="button" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-semibold text-xs sm:text-sm py-3 px-4 rounded-xl transition flex items-center justify-between">
-                <span>Download All 224 Inversions &amp; Glitches (<code>.csv</code>)</span>
-                <span class="text-slate-600">&darr; CSV</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Interactive Sprint Checklist -->
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-1">Interactive Micro-Sprint Tracker</h3>
-            <p class="text-xs text-slate-500 mb-3">Sprint 2.1 and Sprint 2.2 are already checked off for you!</p>
-            <div id="sprintChecklistContainer" class="space-y-2 text-xs">
-              <!-- Populated dynamically -->
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
+    
 
   </main>
 
@@ -462,7 +413,7 @@
   <footer class="bg-white border-t border-slate-200 mt-10 py-4 px-4 sm:px-6 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div>
-        <strong>Data Grounding:</strong> 94 products, 6,802 variants &amp; 136,040 localized prices audited against Oct 2026 <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">ECB Reference Rates</a> &amp; <a href="https://www.iban.com/exchange-rates" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">IBAN FX Rates</a>.
+        <strong>Prices checked:</strong> 136,040 prices across 94 destinations, compared against the Oct 2026 <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer" class="text-teal-600 underline">ECB reference rates</a>.
       </div>
       <div id="footerPromoDisplay" class="font-semibold text-teal-700">
         Disclosure: Comparison links may earn an affiliate commission at no extra cost to travelers.
@@ -655,13 +606,11 @@
         calc: document.getElementById("viewCalc"),
         inversions: document.getElementById("viewInversions"),
         fx: document.getElementById("viewFx"),
-        deploy: document.getElementById("viewDeploy")
       };
       const btns = {
         calc: document.getElementById("tabBtnCalc"),
         inversions: document.getElementById("tabBtnInversions"),
         fx: document.getElementById("tabBtnFx"),
-        deploy: document.getElementById("tabBtnDeploy")
       };
       Object.keys(views).forEach(k => {
         if (k === tab) {
@@ -1036,27 +985,6 @@
         }
       });
     }
-
-    // Render Sprint Checklist in Tab 4
-    function renderSprintChecklist() {
-      const container = document.getElementById("sprintChecklistContainer");
-      if (!container) return;
-      container.innerHTML = SPRINT_ITEMS.map((item, idx) => {
-        return "<label class='flex items-center gap-2.5 p-2 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer'>" +
-          "<input type='checkbox' data-sprintidx='" + idx + "' " + (item.done ? "checked" : "") + " class='rounded text-teal-600 focus:ring-teal-500 w-4 h-4'>" +
-          "<span class='" + (item.done ? "line-through text-slate-400" : "font-medium text-slate-800") + "'>" + item.label + "</span>" +
-        "</label>";
-      }).join("");
-
-      container.querySelectorAll("input[type='checkbox']").forEach(cb => {
-        cb.addEventListener("change", (e) => {
-          const i = Number(e.target.getAttribute("data-sprintidx"));
-          SPRINT_ITEMS[i].done = e.target.checked;
-          renderSprintChecklist();
-        });
-      });
-    }
-
     function triggerDownload(filename, content, mimeType) {
       const blob = new Blob([content], { type: mimeType });
       const url = URL.createObjectURL(blob);
@@ -1072,20 +1000,10 @@
 
     // Initialize Application
     window.addEventListener("DOMContentLoaded", () => {
-      // NOTE: affiliate URLs are baked in at build time so every visitor is
-      // attributed. We deliberately do NOT restore a localStorage override
-      // here - a stale browser value would strip referral attribution.
-      // The inputs below are still populated so the operator can see and
-      // copy the exact tracking URLs that are live on this deployment.
-      try {
-        document.getElementById("affSaily").value = affiliateConfig.saily;
-        document.getElementById("affAiralo").value = affiliateConfig.airalo;
-        document.getElementById("affNomad").value = affiliateConfig.nomad;
-        document.getElementById("affYesim").value = affiliateConfig.yesim;
-        document.getElementById("affJetpac").value = affiliateConfig.jetpac;
-        document.getElementById("affHolafly").value = affiliateConfig.holafly;
-        document.getElementById("affPromoCode").value = affiliateConfig.promo || "";
-      } catch (e) {}
+      // Affiliate URLs are baked in at build time so every visitor is
+      // attributed. There is deliberately no localStorage override here -
+      // a stale browser value would strip referral attribution.
+      // The owner-facing studio is not part of the public build.
 
       // Populate Destination Dropdown
       const selDest = document.getElementById("selectDest");
@@ -1105,7 +1023,6 @@
       document.getElementById("tabBtnCalc").addEventListener("click", () => switchTab("calc"));
       document.getElementById("tabBtnInversions").addEventListener("click", () => switchTab("inversions"));
       document.getElementById("tabBtnFx").addEventListener("click", () => switchTab("fx"));
-      document.getElementById("tabBtnDeploy").addEventListener("click", () => switchTab("deploy"));
 
       // Wire Calculator Controls
       selDest.addEventListener("change", (e) => {
@@ -1159,70 +1076,10 @@
       document.getElementById("inputSearchInv").addEventListener("input", renderAnomaliesTable);
       document.getElementById("selectInvType").addEventListener("change", renderAnomaliesTable);
 
-      // Wire Tab 4 Affiliate Studio
-      document.getElementById("btnSaveAffiliates").addEventListener("click", () => {
-        affiliateConfig.saily = document.getElementById("affSaily").value.trim() || "https://saily.com/";
-        affiliateConfig.airalo = document.getElementById("affAiralo").value.trim() || "https://www.airalo.com/";
-        affiliateConfig.nomad = document.getElementById("affNomad").value.trim() || "https://www.nomadesim.com/";
-        affiliateConfig.yesim = document.getElementById("affYesim").value.trim() || "https://yesim.app/";
-        affiliateConfig.jetpac = document.getElementById("affJetpac").value.trim() || "https://www.jetpacglobal.com/";
-        affiliateConfig.holafly = document.getElementById("affHolafly").value.trim() || "https://esim.holafly.com/";
-        affiliateConfig.promo = document.getElementById("affPromoCode").value.trim();
-        try {
-          localStorage.setItem("esim_aff_config_v1", JSON.stringify(affiliateConfig));
-        } catch (e) {}
-        if (affiliateConfig.promo) {
-          document.getElementById("footerPromoDisplay").textContent = "Reader Promo Code Active: " + affiliateConfig.promo + " · Affiliate links wired.";
-        }
-        renderCalculator();
-        showToast("Affiliate links saved & wired to all calculator buttons!");
-      });
-
-      document.getElementById("btnResetAffiliates").addEventListener("click", () => {
-        affiliateConfig = {
-          saily: "https://saily.com/",
-          airalo: "https://www.airalo.com/",
-          nomad: "https://www.nomadesim.com/",
-          yesim: "https://yesim.app/regions/europe-esim/",
-          jetpac: "https://www.jetpacglobal.com/",
-          holafly: "https://esim.holafly.com/",
-          promo: ""
-        };
-        document.getElementById("affSaily").value = affiliateConfig.saily;
-        document.getElementById("affAiralo").value = affiliateConfig.airalo;
-        document.getElementById("affNomad").value = affiliateConfig.nomad;
-        document.getElementById("affYesim").value = affiliateConfig.yesim;
-        document.getElementById("affJetpac").value = affiliateConfig.jetpac;
-        document.getElementById("affHolafly").value = affiliateConfig.holafly;
-        document.getElementById("affPromoCode").value = "";
-        try { localStorage.removeItem("esim_aff_config_v1"); } catch (e) {}
-        renderCalculator();
-        showToast("Reset affiliate URLs to defaults");
-      });
-
-      // Wire Export Buttons
-      document.getElementById("btnDownloadJson").addEventListener("click", () => {
-        triggerDownload("holafly_clean.json", JSON.stringify(APP_DATA, null, 2), "application/json");
-      });
-
-      document.getElementById("btnDownloadCsv").addEventListener("click", () => {
-        const header = "Destination,ISO,Currency,Shorter_Days,Shorter_Price,Longer_Days,Longer_Price,Savings,Discount_Pct\\n";
-        const rows = APP_DATA.inversions.map(i =>
-          '"' + i.name + '",' + i.iso + ',' + i.ccy + ',' + i.d1 + ',' + i.p1 + ',' + i.d2 + ',' + i.p2 + ',' + i.save + ',' + i.pct
-        ).join("\\n");
-        triggerDownload("holafly_duration_inversions.csv", header + rows, "text/csv");
-      });
-
-      document.getElementById("btnDownloadHtml").addEventListener("click", () => {
-        const docHtml = "<!DOCTYPE html>\\n" + document.documentElement.outerHTML;
-        triggerDownload("index.html", docHtml, "text/html");
-      });
-
       // Initial Render
       renderCalculator();
       renderAnomaliesTable();
       renderFxScorecard();
-      renderSprintChecklist();
     });
   </script>
 </body>
