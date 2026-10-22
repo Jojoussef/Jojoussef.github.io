@@ -278,6 +278,102 @@ class EtherealSoundEngine {
     osc.start();
     osc.stop(this.ctx.currentTime + 0.4);
   }
+
+  // Spacetime Deconstruction: Granular microtonal phase dispersion
+  playDeconstruct() {
+    if (!this.enabled || !this.ctx) return;
+    const freqs = [432, 417, 396, 312, 216, 108];
+    freqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = idx % 2 === 0 ? 'sine' : 'sawtooth';
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.45, this.ctx.currentTime + 1.8);
+
+      gain.gain.setValueAtTime(0.08 / (idx + 1), this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.8);
+
+      if (this.ctx.createStereoPanner) {
+        const panner = this.ctx.createStereoPanner();
+        panner.pan.setValueAtTime((idx / (freqs.length - 1)) * 1.8 - 0.9, this.ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(panner);
+        panner.connect(this.sfxGain);
+      } else {
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+      }
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 1.85);
+    });
+  }
+
+  // Spacetime Reconstruction: Gravitational collapse & ascending Pythagorean quintet
+  playReconstruct() {
+    if (!this.enabled || !this.ctx) return;
+    // Sub-bass collapse
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(45, this.ctx.currentTime);
+    subOsc.frequency.exponentialRampToValueAtTime(144, this.ctx.currentTime + 0.6);
+    subGain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+    subGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.7);
+    subOsc.connect(subGain);
+    subGain.connect(this.sfxGain);
+    subOsc.start();
+    subOsc.stop(this.ctx.currentTime + 0.75);
+
+    // Ascending radiant chime
+    const chord = [432, 540, 648, 864, 1080];
+    chord.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const startTime = this.ctx.currentTime + 0.15 + idx * 0.08;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(0.08, startTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.4);
+
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      osc.start(startTime);
+      osc.stop(startTime + 1.45);
+    });
+  }
+
+  // Physical Ontological Regime Audio Signatures (1 to 9)
+  playRegime(regimeIndex = 1) {
+    if (!this.enabled || !this.ctx) return;
+    const baseFreqs = {
+      1: [216, 432, 648],         // Noether Symmetry
+      2: [324, 486, 729],         // Gauge Light
+      3: [108, 162, 243],         // Vacuum Zero-Point
+      4: [288, 432, 576, 864],    // Feynman Action
+      5: [270, 360, 540],         // Critical Tc
+      6: [384, 576, 768],         // Soliton Winding
+      7: [192, 288, 384, 576],    // Poincaré Disk
+      8: [240, 360, 480, 720],    // Ryu-Takayanagi
+      9: [432, 648, 864, 1296]    // Amplituhedron Jewel
+    };
+    const freqs = baseFreqs[regimeIndex] || [432, 648];
+    freqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const st = this.ctx.currentTime + idx * 0.05;
+      osc.type = regimeIndex === 3 ? 'sine' : (regimeIndex === 9 ? 'triangle' : 'sine');
+      osc.frequency.setValueAtTime(freq, st);
+      gain.gain.setValueAtTime(0.06 / (idx + 1), st);
+      gain.gain.exponentialRampToValueAtTime(0.0001, st + 1.2);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      osc.start(st);
+      osc.stop(st + 1.25);
+    });
+  }
 }
 
 window.soundEngine = new EtherealSoundEngine();

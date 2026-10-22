@@ -59,6 +59,13 @@ class EtherealWorkspace {
 
     // Wire ManimGX Geometry Studio
     this.initManimLab();
+
+    // Wire Expanded Mathematical Physics Simulation Laboratories
+    this.initFeynmanLab();
+    this.initIsingLab();
+    this.initSolitonLab();
+    this.initPoincareLab();
+    this.initAmplituhedronLab();
   }
 
   updateClock() {
@@ -326,6 +333,382 @@ class EtherealWorkspace {
     };
 
     renderLoop();
+  }
+
+  // 1. Interactive Feynman Path Integral Lab
+  initFeynmanLab() {
+    const canvas = document.getElementById('feynman-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const hbarSlider = document.getElementById('feynman-hbar');
+    const hbarVal = document.getElementById('feynman-hbar-val');
+    const readout = document.getElementById('feynman-readout');
+
+    let hbar = parseFloat(hbarSlider ? hbarSlider.value : 0.25);
+    let t = 0;
+
+    if (hbarSlider) {
+      hbarSlider.addEventListener('input', (e) => {
+        hbar = parseFloat(e.target.value);
+        if (hbarVal) hbarVal.textContent = hbar.toFixed(3);
+        if (readout) {
+          const coherence = (1 / (1 + hbar * 4)).toFixed(3);
+          readout.innerHTML = `ħ = ${hbar.toFixed(3)} · Classical Path Coherence: <span style="color:${hbar < 0.15 ? '#10b981' : '#38bdf8'}">${(coherence * 100).toFixed(1)}%</span>`;
+        }
+      });
+    }
+
+    const renderFeynman = () => {
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      t += 0.03;
+
+      const startX = 40, startY = canvas.height / 2;
+      const endX = canvas.width - 40, endY = canvas.height / 2;
+      const numPaths = 32;
+
+      for (let i = 0; i < numPaths; i++) {
+        const offset = (i - numPaths / 2) * 5.5;
+        const phase = (offset * offset * 0.45) / hbar + t;
+        const isClassical = Math.abs(offset) < 3.0;
+
+        let opacity = isClassical ? 0.95 : Math.max(0.04, (0.45 / (1 + (offset * offset * 0.2) / hbar)));
+        let color = isClassical ? '#38bdf8' : `hsl(${(phase * 60) % 360}, 85%, 65%)`;
+
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        const steps = 18;
+        for (let s = 1; s <= steps; s++) {
+          const ratio = s / steps;
+          const px = startX + (endX - startX) * ratio;
+          const envelope = Math.sin(ratio * Math.PI);
+          const py = startY + offset * envelope + Math.sin(ratio * Math.PI * 3 + phase) * (hbar * 12 * envelope);
+          ctx.lineTo(px, py);
+        }
+
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = opacity;
+        ctx.lineWidth = isClassical ? 2.5 : 1.0;
+        ctx.stroke();
+        ctx.globalAlpha = 1.0;
+      }
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(startX, startY, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#a855f7';
+      ctx.beginPath(); ctx.arc(endX, endY, 5, 0, Math.PI * 2); ctx.fill();
+
+      requestAnimationFrame(renderFeynman);
+    };
+    renderFeynman();
+  }
+
+  // 2. Interactive 2D Ising Conformal Criticality Lab
+  initIsingLab() {
+    const canvas = document.getElementById('ising-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const tempSlider = document.getElementById('ising-temp');
+    const tempVal = document.getElementById('ising-temp-val');
+    const stateReadout = document.getElementById('ising-state-readout');
+
+    const L = 48;
+    const spins = new Int8Array(L * L);
+    for (let i = 0; i < L * L; i++) spins[i] = Math.random() < 0.5 ? 1 : -1;
+
+    let T = 2.269;
+    const Tc = 2.269;
+
+    const updateReadout = () => {
+      if (tempVal) tempVal.textContent = T.toFixed(3);
+      if (stateReadout) {
+        if (Math.abs(T - Tc) < 0.12) {
+          stateReadout.innerHTML = `STATE: <span style="color:#2dd4bf;">CRITICAL KNIFE-EDGE (T ≈ Tc)</span> · Correlation r^(-1/4) Power-Law Active`;
+        } else if (T < Tc) {
+          stateReadout.innerHTML = `STATE: <span style="color:#38bdf8;">FERROMAGNETIC ORDERED</span> · Domain Coagulation`;
+        } else {
+          stateReadout.innerHTML = `STATE: <span style="color:#f43f5e;">DISORDERED HIGH-ENTROPY</span> · Thermal Fluctuations Dominant`;
+        }
+      }
+    };
+
+    if (tempSlider) {
+      tempSlider.addEventListener('input', (e) => {
+        T = parseFloat(e.target.value);
+        updateReadout();
+      });
+    }
+
+    const coldBtn = document.getElementById('btn-ising-cold');
+    if (coldBtn) coldBtn.addEventListener('click', () => { T = 1.0; if (tempSlider) tempSlider.value = 1.0; updateReadout(); });
+    const critBtn = document.getElementById('btn-ising-crit');
+    if (critBtn) critBtn.addEventListener('click', () => { T = Tc; if (tempSlider) tempSlider.value = Tc; updateReadout(); });
+    const hotBtn = document.getElementById('btn-ising-hot');
+    if (hotBtn) hotBtn.addEventListener('click', () => { T = 4.2; if (tempSlider) tempSlider.value = 4.2; updateReadout(); });
+
+    updateReadout();
+
+    const scaleX = canvas.width / L;
+    const scaleY = canvas.height / L;
+
+    const mcLoop = () => {
+      for (let step = 0; step < 1600; step++) {
+        const x = Math.floor(Math.random() * L);
+        const y = Math.floor(Math.random() * L);
+        const idx = y * L + x;
+        const s = spins[idx];
+
+        const left = spins[y * L + ((x - 1 + L) % L)];
+        const right = spins[y * L + ((x + 1) % L)];
+        const up = spins[((y - 1 + L) % L) * L + x];
+        const down = spins[((y + 1) % L) * L + x];
+
+        const dE = 2 * s * (left + right + up + down);
+        if (dE <= 0 || Math.random() < Math.exp(-dE / T)) {
+          spins[idx] = -s;
+        }
+      }
+
+      ctx.fillStyle = '#030712';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let y = 0; y < L; y++) {
+        for (let x = 0; x < L; x++) {
+          const s = spins[y * L + x];
+          ctx.fillStyle = s === 1 ? '#38bdf8' : '#0f172a';
+          ctx.fillRect(x * scaleX, y * scaleY, scaleX - 0.5, scaleY - 0.5);
+        }
+      }
+
+      requestAnimationFrame(mcLoop);
+    };
+    mcLoop();
+  }
+
+  // 3. Interactive Sine-Gordon Topological Soliton Collider
+  initSolitonLab() {
+    const canvas = document.getElementById('soliton-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const readout = document.getElementById('soliton-charge-readout');
+
+    const N = 160;
+    let phi = new Float32Array(N);
+    let phiPrev = new Float32Array(N);
+    const dt = 0.08;
+
+    const injectKink = (x0 = 35, v = 0.6) => {
+      const gamma = 1 / Math.sqrt(1 - v * v);
+      for (let i = 0; i < N; i++) {
+        const x = (i - x0) * 0.35;
+        phi[i] += 4 * Math.atan(Math.exp(gamma * x));
+        phiPrev[i] = phi[i] - dt * (-v * gamma * (2 / Math.cosh(gamma * x)));
+      }
+      if (window.soundEngine) window.soundEngine.playChime(3);
+    };
+
+    const injectAntiKink = (x0 = 125, v = -0.6) => {
+      const gamma = 1 / Math.sqrt(1 - v * v);
+      for (let i = 0; i < N; i++) {
+        const x = (i - x0) * 0.35;
+        phi[i] -= 4 * Math.atan(Math.exp(gamma * x));
+        phiPrev[i] = phi[i] - dt * (v * gamma * (2 / Math.cosh(gamma * x)));
+      }
+      if (window.soundEngine) window.soundEngine.playChime(1);
+    };
+
+    const clearField = () => {
+      phi.fill(0);
+      phiPrev.fill(0);
+      if (window.soundEngine) window.soundEngine.playClick();
+    };
+
+    const kinkBtn = document.getElementById('btn-inject-kink');
+    if (kinkBtn) kinkBtn.addEventListener('click', () => injectKink(35, 0.65));
+    const antikinkBtn = document.getElementById('btn-inject-antikink');
+    if (antikinkBtn) antikinkBtn.addEventListener('click', () => injectAntiKink(125, -0.65));
+    const clearBtn = document.getElementById('btn-clear-solitons');
+    if (clearBtn) clearBtn.addEventListener('click', () => clearField());
+
+    injectKink(40, 0.55);
+    injectAntiKink(120, -0.55);
+
+    const solitonLoop = () => {
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.35)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const phiNext = new Float32Array(N);
+      for (let i = 1; i < N - 1; i++) {
+        const lap = phi[i + 1] - 2 * phi[i] + phi[i - 1];
+        const force = lap - Math.sin(phi[i]);
+        phiNext[i] = 2 * phi[i] - phiPrev[i] + (dt * dt) * force;
+      }
+      phiNext[0] = phiNext[1];
+      phiNext[N - 1] = phiNext[N - 2];
+
+      phiPrev.set(phi);
+      phi.set(phiNext);
+
+      const Q = (phi[N - 1] - phi[0]) / (2 * Math.PI);
+      if (readout) {
+        readout.innerHTML = `TOPOLOGICAL CHARGE: <span style="color:var(--aurora-cyan); font-weight:700;">Q = ${Q.toFixed(2)}</span> · j^μ Conserved`;
+      }
+
+      ctx.beginPath();
+      const cy = canvas.height / 2;
+      for (let i = 0; i < N; i++) {
+        const px = (i / (N - 1)) * canvas.width;
+        const py = cy - (phi[i] / (2 * Math.PI)) * 55;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = '#2dd4bf';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      for (let i = 0; i < N; i += 6) {
+        const px = (i / (N - 1)) * canvas.width;
+        const angle = phi[i];
+        const len = 24;
+        const endPx = px + Math.sin(angle) * len;
+        const endPy = cy + Math.cos(angle) * len;
+        ctx.beginPath();
+        ctx.moveTo(px, cy);
+        ctx.lineTo(endPx, endPy);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(endPx, endPy, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#a855f7';
+        ctx.fill();
+      }
+
+      requestAnimationFrame(solitonLoop);
+    };
+    solitonLoop();
+  }
+
+  // 4. Interactive Poincaré Hyperbolic Bulk & Ryu-Takayanagi Lab
+  initPoincareLab() {
+    const canvas = document.getElementById('poincare-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const slider = document.getElementById('poincare-subregion');
+    const readout = document.getElementById('poincare-entropy-readout');
+
+    let subregionAngle = parseFloat(slider ? slider.value : 1.8);
+
+    if (slider) {
+      slider.addEventListener('input', (e) => {
+        subregionAngle = parseFloat(e.target.value);
+        if (readout) {
+          const area = (2 * Math.log(2 * Math.sin(subregionAngle / 2) / 0.1)).toFixed(2);
+          readout.innerHTML = `SUBREGION Δθ: <strong>${(subregionAngle * 180 / Math.PI).toFixed(1)}°</strong> · ENTROPY: <strong style="color:var(--aurora-violet);">S_A = ${area} / 4G</strong> (ER=EPR)`;
+        }
+      });
+    }
+
+    const renderPoincare = () => {
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const R = 105;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      const halfA = subregionAngle / 2;
+      const theta1 = -halfA;
+      const theta2 = halfA;
+
+      const d = R / Math.cos(halfA);
+      const rArc = R * Math.tan(halfA);
+
+      ctx.beginPath();
+      ctx.arc(cx + d, cy, rArc, Math.PI - halfA, Math.PI + halfA, false);
+      ctx.strokeStyle = '#a855f7';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, theta1, theta2);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = '11px JetBrains Mono';
+      ctx.fillText('Region A', cx + R + 10, cy + 4);
+
+      ctx.fillStyle = '#a855f7';
+      ctx.fillText('Geodesic γ_A (ER=EPR)', cx - 80, cy - 20);
+
+      requestAnimationFrame(renderPoincare);
+    };
+    renderPoincare();
+  }
+
+  // 5. Pre-Spacetime Positive Grassmannian Amplituhedron Lab
+  initAmplituhedronLab() {
+    const canvas = document.getElementById('amplituhedron-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+
+    const renderAmplituhedron = () => {
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      t += 0.02;
+
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const n = 6;
+      const vertices = [];
+
+      for (let i = 0; i < n; i++) {
+        const theta = (2 * Math.PI * i) / n + t * 0.4;
+        const phi = (4 * Math.PI * i) / n + t * 0.25;
+        const rad = 75 + Math.sin(t + i) * 15;
+        const vx = cx + Math.cos(theta) * rad;
+        const vy = cy + Math.sin(phi) * (rad * 0.7);
+        vertices.push({ x: vx, y: vy });
+      }
+
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          ctx.beginPath();
+          ctx.moveTo(vertices[i].x, vertices[i].y);
+          ctx.lineTo(vertices[j].x, vertices[j].y);
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+
+      vertices.forEach((v, idx) => {
+        ctx.beginPath();
+        ctx.arc(v.x, v.y, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.font = '10px JetBrains Mono';
+        ctx.fillText(`Z${idx + 1}`, v.x + 8, v.y + 4);
+      });
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#f43f5e';
+      ctx.fill();
+      ctx.fillText('Y ∈ G₊(k,n)', cx + 8, cy - 8);
+
+      requestAnimationFrame(renderAmplituhedron);
+    };
+    renderAmplituhedron();
   }
 }
 

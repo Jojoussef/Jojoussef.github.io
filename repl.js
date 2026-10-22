@@ -20,9 +20,12 @@ Available Celestial Observatory Commands:
   help                    List all available terminal commands
   whoami                  Display identity, credentials, and engineering ethos
   manifesto               Print the foundational physical & ontological thesis
+  deconstruct             Dissolve spacetime metric (G_μν -> 0) & unbind Grassmannian
+  reconstruct             Synthesize metric tensor and restore harmonic orbit
+  regime <1-9>            Inspect ontological regime (Noether, Gauge, Soliton, etc.)
+  topology <mode>         Switch manifold (torus | lorenz | clifford | amplituhedron | poincare)
   zizkadb verify          Cryptographic SHA-256 genesis block & Article 12 audit
   arbitrage               Display top audited eSIM price discrimination spreads
-  topology <mode>         Switch 3D manifold topology (torus | lorenz | clifford)
   coords                  Print astronomical ephemeris & Monastir coordinates
   skills                  List core systems, frameworks, and architecture stacks
   upwork                  Display verified Upwork metrics, earnings, and reviews
@@ -247,12 +250,74 @@ Verification Status: 100% IMMUTABLE · ZERO ANOMALIES DETECTED
       return;
     }
 
+    if (cmd === 'deconstruct') {
+      if (window.observatory) window.observatory.deconstructSpacetime();
+      this.print(`[DECONSTRUCT SPACETIME]
+Metric Tensor:      g_μν -> 0 (Riemannian metric dissolved)
+Curvature:          R^ρ_σμν = 0
+Entanglement:       ER = EPR wormholes parted (S_A -> 0)
+Phase Space:        Unbound into Positive Grassmannian G+(k,n)
+Status:             SPACETIME UNBOUND · PRE-SPACETIME ACTIVE
+Hint: Type "reconstruct" to restore the gravitational metric.`);
+      return;
+    }
+
+    if (cmd === 'reconstruct') {
+      if (window.observatory) window.observatory.reconstructSpacetime();
+      this.print(`[RECONSTRUCT SPACETIME]
+Gravitational Pulse: Initiated
+Metric Tensor:       g_μν synthesized (Lorentzian manifold restored)
+Celestial Orbit:     Converged to stable equilibrium
+Status:              HARMONIC STABILITY RESTORED`);
+      return;
+    }
+
+    if (cmd === 'regime') {
+      const idx = parseInt(arg, 10);
+      const regimeDescriptions = {
+        1: `[REGIME 01 · NOETHER CONTINUOUS SYMMETRY]
+Theorem: Continuous global phase invariance guards conserved current: ∂_μ J^μ = 0
+Code Mapping: ZizkaDB cryptographic immutable ledger preserving EU AI Act Article 12 compliance.`,
+        2: `[REGIME 02 · GAUGE CONNECTION & LIGHT]
+Theorem: Locality forces covariant derivative: D_μ = ∂_μ - ieA_μ
+Code Mapping: eSIM currency discrimination & spot FX arbitrage engine where exchange rate volatility acts as vector potential A_μ.`,
+        3: `[REGIME 03 · VACUUM FLUCTUATIONS]
+Theorem: Zero-point quantum energy: E₀ = Σ_k ½ħω_k
+Code Mapping: Ambient asynchronous workers & Celery event queues in perpetual readiness.`,
+        4: `[REGIME 04 · FEYNMAN PATH INTEGRAL]
+Theorem: Constructive interference along stationary action: δS = 0 in exp(iS/ħ)
+Code Mapping: Variational neural networks (VerifyID & Miranda) optimizing loss paths across latent space.`,
+        5: `[REGIME 05 · CONFORMAL CRITICALITY]
+Theorem: 2D Ising knife-edge: T_c = 2J / (k_B ln(1+√2)) with r^(-1/4) power-law correlations.
+Code Mapping: 15M+ event streaming pipeline maintaining throughput across distributed partitions without congestion.`,
+        6: `[REGIME 06 · TOPOLOGICAL SOLITONS]
+Theorem: Sine-Gordon kinks: φ = 4 arctan e^(γ(x-vt)) with conserved topological charge j^μ = (1/2π) ε^{μν} ∂_ν φ.
+Code Mapping: Self-healing idempotent event envelopes preserving causal order across distributed brokers.`,
+        7: `[REGIME 07 · POINCARÉ HYPERBOLIC DISK]
+Theorem: Bulk hyperbolic metric: ds² = 4(dx²+dy²)/(1-x²-y²)² with holographic Bekenstein-Hawking bound S ≤ k_B A / 4ℓ_P².
+Code Mapping: Manim geometry studio projecting continuous high-dimensional manifolds to 2D optical displays.`,
+        8: `[REGIME 08 · RYU-TAKAYANAGI ENTANGLEMENT]
+Theorem: Minimal bulk geodesic area yields entanglement entropy: S_A = Area(γ_A) / 4G (ER = EPR).
+Code Mapping: Distributed consensus & cross-cluster synchronization bridges.`,
+        9: `[REGIME 09 · THE AMPLITUHEDRON JEWEL]
+Theorem: Scattering amplitudes computed from positive Grassmannian volume: Y = C·Z ∈ G₊(k,n), A_n = ⟨ij⟩⁴ / (⟨12⟩⟨23⟩...⟨n1⟩).
+Code Mapping: Spacetime and locality as emergent projections of pure geometric invariants.`
+      };
+      if (regimeDescriptions[idx]) {
+        if (window.soundEngine) window.soundEngine.playRegime(idx);
+        this.print(regimeDescriptions[idx]);
+      } else {
+        this.print(`Usage: regime <1-9>`);
+      }
+      return;
+    }
+
     if (cmd === 'topology') {
-      if (['torus', 'lorenz', 'clifford'].includes(arg)) {
+      if (['torus', 'lorenz', 'clifford', 'amplituhedron', 'poincare'].includes(arg)) {
         if (window.observatory) window.observatory.switchTopology(arg);
         this.print(`[OK] Switched 3D celestial manifold topology to: ${arg.toUpperCase()}`);
       } else {
-        this.print(`Usage: topology <torus | lorenz | clifford>`);
+        this.print(`Usage: topology <torus | lorenz | clifford | amplituhedron | poincare>`);
       }
       return;
     }

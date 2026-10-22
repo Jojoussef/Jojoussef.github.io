@@ -195,6 +195,146 @@ class CelestialObservatory {
     this.cliffordGroup.add(this.cliffordMesh);
     this.cliffordGroup.visible = false;
     this.scene.add(this.cliffordGroup);
+
+    // 4. Pre-Spacetime Positive Grassmannian Amplituhedron (Y = C·Z ∈ G+(k,n))
+    this.amplituhedronGroup = new THREE.Group();
+    this.buildAmplituhedron();
+    this.amplituhedronGroup.visible = false;
+    this.scene.add(this.amplituhedronGroup);
+
+    // 5. Poincaré Hyperbolic Disk & Ryu-Takayanagi Bulk (ER = EPR)
+    this.poincareGroup = new THREE.Group();
+    this.buildPoincareBulk();
+    this.poincareGroup.visible = false;
+    this.scene.add(this.poincareGroup);
+
+    // Deconstruction state vectors
+    this.isDeconstructed = false;
+    this.deconstructProgress = 0.0;
+  }
+
+  buildAmplituhedron() {
+    // 4D Mom-Twistor Vertices projected into 3D (k=2, n=6)
+    this.twistors4D = [];
+    const n = 6;
+    for (let i = 0; i < n; i++) {
+      const theta = (2 * Math.PI * i) / n;
+      const phi = (4 * Math.PI * i) / n;
+      this.twistors4D.push({
+        x: Math.cos(theta) * 5.2,
+        y: Math.sin(theta) * 5.2,
+        z: Math.cos(phi) * 4.8,
+        w: Math.sin(phi) * 4.8
+      });
+    }
+
+    // Geometry container
+    this.amplGeom = new THREE.BufferGeometry();
+    const pos = new Float32Array(n * 3);
+    this.amplGeom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+    // Facet lines connecting twistors
+    const indices = [];
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        indices.push(i, j);
+      }
+    }
+    this.amplGeom.setIndex(indices);
+
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0xf59e0b,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending
+    });
+    this.amplWire = new THREE.LineSegments(this.amplGeom, lineMat);
+    this.amplituhedronGroup.add(this.amplWire);
+
+    // Dual inner crystal facet mesh
+    const innerGeom = new THREE.IcosahedronGeometry(3.6, 0);
+    const innerMat = new THREE.MeshStandardMaterial({
+      color: 0xa855f7,
+      emissive: 0xd97706,
+      emissiveIntensity: 0.6,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.45
+    });
+    this.amplInner = new THREE.Mesh(innerGeom, innerMat);
+    this.amplituhedronGroup.add(this.amplInner);
+
+    // Twistor vertex markers
+    const vertexPointers = new THREE.Points(
+      this.amplGeom,
+      new THREE.PointsMaterial({
+        size: 0.6,
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+      })
+    );
+    this.amplituhedronGroup.add(vertexPointers);
+  }
+
+  buildPoincareBulk() {
+    // 1. Conformal Boundary Ring (Radius 8.8)
+    const boundaryGeom = new THREE.RingGeometry(8.75, 8.85, 96);
+    const boundaryMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.75
+    });
+    this.poincareBoundary = new THREE.Mesh(boundaryGeom, boundaryMat);
+    this.poincareGroup.add(this.poincareBoundary);
+
+    // 2. Hyperbolic Geodesic Circular Arcs
+    const arcCount = 14;
+    const arcGroup = new THREE.Group();
+    for (let i = 0; i < arcCount; i++) {
+      const angle = (2 * Math.PI * i) / arcCount;
+      const arcGeom = new THREE.BufferGeometry();
+      const points = [];
+      const R = 8.8;
+      // Hyperbolic geodesic curve inside unit disk
+      for (let t = -Math.PI * 0.45; t <= Math.PI * 0.45; t += 0.08) {
+        const rad = R * (0.3 + 0.68 * Math.cos(t));
+        const px = Math.cos(angle + t * 0.5) * rad;
+        const py = Math.sin(angle + t * 0.5) * rad;
+        points.push(px, py, 0);
+      }
+      arcGeom.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+      const arcLine = new THREE.Line(arcGeom, new THREE.LineBasicMaterial({
+        color: 0x2dd4bf,
+        transparent: true,
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending
+      }));
+      arcGroup.add(arcLine);
+    }
+    this.poincareGroup.add(arcGroup);
+
+    // 3. Ryu-Takayanagi Entanglement Geodesic Bridge (Minimal Surface gamma_A)
+    const rtGeom = new THREE.BufferGeometry();
+    const rtPoints = [];
+    for (let t = 0; t <= Math.PI; t += 0.05) {
+      // Semicircle geodesic connecting boundary intervals
+      const r = 5.8 * Math.sin(t);
+      const px = -6.2 + 12.4 * (t / Math.PI);
+      const py = r;
+      rtPoints.push(px, py, 0.2);
+    }
+    rtGeom.setAttribute('position', new THREE.Float32BufferAttribute(rtPoints, 3));
+    this.rtLine = new THREE.Line(rtGeom, new THREE.LineBasicMaterial({
+      color: 0xa855f7,
+      linewidth: 3,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    }));
+    this.poincareGroup.add(this.rtLine);
   }
 
   switchTopology(mode) {
@@ -202,16 +342,20 @@ class CelestialObservatory {
     if (this.torusGroup) this.torusGroup.visible = (mode === 'torus');
     if (this.lorenzGroup) this.lorenzGroup.visible = (mode === 'lorenz');
     if (this.cliffordGroup) this.cliffordGroup.visible = (mode === 'clifford');
+    if (this.amplituhedronGroup) this.amplituhedronGroup.visible = (mode === 'amplituhedron');
+    if (this.poincareGroup) this.poincareGroup.visible = (mode === 'poincare');
 
-    const modeIdx = mode === 'torus' ? 0 : (mode === 'lorenz' ? 1 : 2);
-    if (window.soundEngine) window.soundEngine.playTopologyMorph(modeIdx);
+    const modeIndices = { torus: 0, lorenz: 1, clifford: 2, amplituhedron: 3, poincare: 4 };
+    if (window.soundEngine) window.soundEngine.playTopologyMorph(modeIndices[mode] || 0);
 
     const hudTopo = document.getElementById('hud-topology-name');
     if (hudTopo) {
       const labels = {
         torus: 'TORUS KNOT SOLITON (p=2, q=3)',
         lorenz: 'LORENZ ATTRACTOR (σ=10, ρ=28, β=8/3)',
-        clifford: 'CLIFFORD ATTRACTOR (a=-1.4, b=1.6)'
+        clifford: 'CLIFFORD ATTRACTOR (a=-1.4, b=1.6)',
+        amplituhedron: 'AMPLITUHEDRON JEWEL (Y = C · Z ∈ G+(k,n))',
+        poincare: 'POINCARÉ HYPERBOLIC BULK & RYU-TAKAYANAGI (ER = EPR)'
       };
       hudTopo.textContent = labels[mode] || mode.toUpperCase();
     }
@@ -220,6 +364,51 @@ class CelestialObservatory {
       if (btn.getAttribute('data-topo') === mode) btn.classList.add('active');
       else btn.classList.remove('active');
     });
+  }
+
+  // Spacetime Deconstruction: Dissolves metric, repels nodes into Grassmannian dust
+  deconstructSpacetime() {
+    this.isDeconstructed = true;
+    if (window.soundEngine) window.soundEngine.playDeconstruct();
+
+    // Assign randomized non-Euclidean dispersion vectors
+    this.nodes.forEach(node => {
+      node.userData.deconstructTarget = new THREE.Vector3(
+        (Math.random() - 0.5) * 55,
+        (Math.random() - 0.5) * 45,
+        (Math.random() - 0.5) * 55
+      );
+    });
+
+    const overlay = document.getElementById('deconstruct-panel');
+    if (overlay) overlay.classList.add('active');
+
+    const deconstructBtn = document.getElementById('btn-deconstruct');
+    if (deconstructBtn) deconstructBtn.classList.add('active');
+
+    const hudEl = document.getElementById('hud-telemetry');
+    if (hudEl) {
+      hudEl.innerHTML = `<span class="hud-item" style="color:var(--aurora-rose);"><span class="hud-dot" style="background:var(--aurora-rose);"></span>METRIC DISSOLVED · G_μν = 0</span> · <span class="hud-item" style="color:var(--aurora-amber);">G+(k,n) PHASE UNBOUND</span>`;
+    }
+  }
+
+  // Spacetime Reconstruction: Gravitational collapse back to resting harmonic orbit
+  reconstructSpacetime() {
+    this.isDeconstructed = false;
+    if (window.soundEngine) window.soundEngine.playReconstruct();
+
+    const overlay = document.getElementById('deconstruct-panel');
+    if (overlay) overlay.classList.remove('active');
+
+    const deconstructBtn = document.getElementById('btn-deconstruct');
+    if (deconstructBtn) deconstructBtn.classList.remove('active');
+
+    this.updateTelemetryHUD();
+  }
+
+  toggleDeconstruct() {
+    if (this.isDeconstructed) this.reconstructSpacetime();
+    else this.deconstructSpacetime();
   }
 
   recomputeLorenz(sigma = 10.0, rho = 28.0, beta = 2.67) {
@@ -491,12 +680,47 @@ class CelestialObservatory {
       undockBtn.addEventListener('click', () => this.undock());
     }
 
+    // Deconstruct Spacetime buttons
+    const deconstructBtn = document.getElementById('btn-deconstruct');
+    if (deconstructBtn) {
+      deconstructBtn.addEventListener('click', () => this.toggleDeconstruct());
+    }
+    const reconstructBtn = document.getElementById('btn-reconstruct');
+    if (reconstructBtn) {
+      reconstructBtn.addEventListener('click', () => this.reconstructSpacetime());
+    }
+
     // Wire up topology buttons
     document.querySelectorAll('.btn-topology').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const topo = e.currentTarget.getAttribute('data-topo');
         if (topo) this.switchTopology(topo);
       });
+    });
+
+    // Keyboard Shortcuts: 1-5 for topologies, D for deconstruct, M for audio, Esc to undock
+    window.addEventListener('keydown', (e) => {
+      // Don't trigger shortcuts if typing inside inputs or REPL
+      if (e.target.matches('input, textarea, select')) return;
+
+      if (e.key === 'd' || e.key === 'D') {
+        this.toggleDeconstruct();
+      } else if (e.key === '1') {
+        this.switchTopology('torus');
+      } else if (e.key === '2') {
+        this.switchTopology('lorenz');
+      } else if (e.key === '3') {
+        this.switchTopology('clifford');
+      } else if (e.key === '4') {
+        this.switchTopology('amplituhedron');
+      } else if (e.key === '5') {
+        this.switchTopology('poincare');
+      } else if (e.key === 'm' || e.key === 'M') {
+        if (window.soundEngine) window.soundEngine.toggle();
+      } else if (e.key === 'Escape') {
+        if (this.isDeconstructed) this.reconstructSpacetime();
+        else if (this.isDocked) this.undock();
+      }
     });
   }
 
@@ -588,6 +812,34 @@ class CelestialObservatory {
       this.cliffordGroup.rotation.y = this.time * 0.5;
     }
 
+    // 4D Amplituhedron Rotation & Projection to 3D
+    if (this.amplituhedronGroup && this.amplituhedronGroup.visible && this.twistors4D) {
+      const posAttr = this.amplGeom.attributes.position;
+      const d = 12.0;
+      for (let i = 0; i < this.twistors4D.length; i++) {
+        const v = this.twistors4D[i];
+        const x1 = v.x * Math.cos(this.time * 0.35) - v.w * Math.sin(this.time * 0.35);
+        const w1 = v.x * Math.sin(this.time * 0.35) + v.w * Math.cos(this.time * 0.35);
+        const y1 = v.y * Math.cos(this.time * 0.25) - v.z * Math.sin(this.time * 0.25);
+        const z1 = v.y * Math.sin(this.time * 0.25) + v.z * Math.cos(this.time * 0.25);
+        const scale = d / (d - w1);
+        posAttr.setXYZ(i, x1 * scale, y1 * scale, z1 * scale);
+      }
+      posAttr.needsUpdate = true;
+      if (this.amplInner) {
+        this.amplInner.rotation.x = this.time * 0.25;
+        this.amplInner.rotation.y = this.time * 0.45;
+      }
+    }
+
+    // Poincaré Hyperbolic Bulk rotation & entanglement pulse
+    if (this.poincareGroup && this.poincareGroup.visible) {
+      this.poincareGroup.rotation.z = this.time * 0.1;
+      if (this.rtLine) {
+        this.rtLine.material.opacity = 0.75 + Math.sin(this.time * 2.5) * 0.25;
+      }
+    }
+
     // Telemetry HUD updates
     if (!this.lastFrameTime) {
       this.lastFrameTime = performance.now();
@@ -605,20 +857,39 @@ class CelestialObservatory {
 
     // 2. Rotate particle manifold
     if (this.particles) {
-      this.particles.rotation.y = this.time * 0.06;
+      if (this.isDeconstructed) {
+        this.particles.rotation.y = this.time * 0.2;
+        this.particles.scale.lerp(new THREE.Vector3(1.5, 1.5, 1.5), 0.05);
+      } else {
+        this.particles.rotation.y = this.time * 0.06;
+        this.particles.scale.lerp(new THREE.Vector3(1, 1, 1), 0.05);
+      }
     }
 
     // 3. Float & pulse interactive nodes
     this.nodes.forEach((node, idx) => {
       const offset = idx * 1.3;
-      node.position.y = node.userData.defaultPos.y + Math.sin(this.time * 1.5 + offset) * 0.6;
-      node.userData.mesh.rotation.x = this.time * 0.4 + offset;
-      node.userData.mesh.rotation.y = this.time * 0.6 + offset;
-      node.userData.halo.rotation.z = -this.time * 0.5;
+      if (this.isDeconstructed) {
+        if (node.userData.deconstructTarget) {
+          node.position.lerp(node.userData.deconstructTarget, 0.04);
+        }
+        node.userData.mesh.rotation.x += 0.04;
+        node.userData.mesh.rotation.y += 0.06;
+        node.userData.mesh.material.emissiveIntensity = 0.8 + Math.sin(this.time * 6 + offset) * 0.4;
+      } else {
+        const targetY = node.userData.defaultPos.y + Math.sin(this.time * 1.5 + offset) * 0.6;
+        node.position.x += (node.userData.defaultPos.x - node.position.x) * 0.08;
+        node.position.y += (targetY - node.position.y) * 0.08;
+        node.position.z += (node.userData.defaultPos.z - node.position.z) * 0.08;
 
-      // Pulse emissive
-      const pulse = 0.4 + Math.sin(this.time * 2 + offset) * 0.25;
-      node.userData.mesh.material.emissiveIntensity = pulse;
+        node.userData.mesh.rotation.x = this.time * 0.4 + offset;
+        node.userData.mesh.rotation.y = this.time * 0.6 + offset;
+        node.userData.halo.rotation.z = -this.time * 0.5;
+
+        // Pulse emissive
+        const pulse = 0.4 + Math.sin(this.time * 2 + offset) * 0.25;
+        node.userData.mesh.material.emissiveIntensity = pulse;
+      }
     });
 
     // 4. Raycasting when not docked

@@ -101,6 +101,19 @@
     <span class="hud-item"><span class="hud-dot"></span>MONASTIR 35.76°N, 10.82°E</span> · <span class="hud-item">LST 00:00:00</span> · <span class="hud-item">1,800 VERTICES</span> · <span class="hud-item" style="color:#10b981;">120 FPS</span>
   </div>
 
+  <!-- Ontological Continuum: 9 Fundamental Physical Regimes from the Thesis -->
+  <nav class="ontology-ribbon" id="ontology-ribbon" aria-label="Ontological Continuum: 9 Physical Regimes">
+    <button type="button" class="ont-pill" data-regime="1" title="01. Noether Symmetry: Conserved Current">01 ∂_μ J^μ=0</button>
+    <button type="button" class="ont-pill" data-regime="2" title="02. Gauge Light: Covariant Derivative">02 D_μ=∂_μ-ieA_μ</button>
+    <button type="button" class="ont-pill" data-regime="3" title="03. Vacuum Zero-Point Energy">03 E₀=Σ½ħω</button>
+    <button type="button" class="ont-pill" data-regime="4" title="04. Feynman Action Interference">04 e^{iS/ħ}</button>
+    <button type="button" class="ont-pill" data-regime="5" title="05. Ising Conformal Criticality">05 T_c Knife-Edge</button>
+    <button type="button" class="ont-pill" data-regime="6" title="06. Sine-Gordon Topological Soliton">06 4 arctan e^γ</button>
+    <button type="button" class="ont-pill" data-regime="7" title="07. Poincaré Hyperbolic Disk">07 ds² Hyperbolic</button>
+    <button type="button" class="ont-pill" data-regime="8" title="08. Ryu-Takayanagi Entanglement">08 S_A Area/4G</button>
+    <button type="button" class="ont-pill" data-regime="9" title="09. The Amplituhedron Jewel">09 Y=C·Z ∈ G₊</button>
+  </nav>
+
   <!-- Mathematical Topology Switcher -->
   <div class="topology-bar" aria-label="Mathematical Topology Selector">
     <button type="button" class="btn-topology active" data-topo="torus" title="Torus Knot Soliton (p=2, q=3)">
@@ -112,8 +125,17 @@
     <button type="button" class="btn-topology" data-topo="clifford" title="Clifford Strange Attractor (a=-1.4, b=1.6)">
       <span>⨀</span> Clifford
     </button>
+    <button type="button" class="btn-topology" data-topo="amplituhedron" title="Positive Grassmannian Amplituhedron (Y = C·Z ∈ G+(k,n))">
+      <span>✦</span> Amplituhedron
+    </button>
+    <button type="button" class="btn-topology" data-topo="poincare" title="Poincaré Hyperbolic Bulk & Ryu-Takayanagi (ER = EPR)">
+      <span>◎</span> Poincaré
+    </button>
     <button type="button" class="btn-topology btn-terminal-pill" id="btn-repl-toggle" title="Open Celestial REPL Console (Shortcut: ~)">
       <span>&gt;_</span> CLI
+    </button>
+    <button type="button" class="btn-topology btn-deconstruct-pill" id="btn-deconstruct" title="Deconstruct Spacetime Metric (Shortcut: D)">
+      <span>⎋</span> Deconstruct
     </button>
   </div>
 
@@ -190,6 +212,11 @@
         <button type="button" class="ws-tab-btn" data-sys="manim">05 manim-lab</button>
         <button type="button" class="ws-tab-btn" data-sys="manifesto">06 manifesto</button>
         <button type="button" class="ws-tab-btn" data-sys="communicator">07 communicator</button>
+        <button type="button" class="ws-tab-btn" data-sys="feynman">08 feynman</button>
+        <button type="button" class="ws-tab-btn" data-sys="ising">09 ising</button>
+        <button type="button" class="ws-tab-btn" data-sys="soliton">10 soliton</button>
+        <button type="button" class="ws-tab-btn" data-sys="poincare">11 poincare</button>
+        <button type="button" class="ws-tab-btn" data-sys="amplituhedron">12 amplituhedron</button>
       </nav>
 
       <div class="ws-meta-right">
@@ -722,6 +749,311 @@
         </div>
       </div>
 
+      <!-- ====================================================================
+           SYSTEM 8: Feynman Path Integral Simulator
+           ==================================================================== -->
+      <div class="system-view" id="view-feynman">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-cyan); border-color:var(--border-glow-cyan);">QUANTUM ACTION & INTERFERENCE</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">REGIME 04 · STATIONARY PHASE</span>
+          </div>
+
+          <h3 style="font-size:1.35rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Feynman Path Integral: e^{iS[x]/ħ}
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">
+            Every conceivable trajectory between emitter and detector contributes a phase factor e^{iS/ħ}. Off-shell paths cancel into darkness through destructive interference. Only the stationary path δS = 0 survives.
+          </p>
+
+          <div class="sim-box" style="margin-bottom:1rem;">
+            <div class="sim-field">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+                <label for="feynman-hbar">Planck Quantum Action (ħ):</label>
+                <span id="feynman-hbar-val" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--aurora-cyan);">0.250</span>
+              </div>
+              <input type="range" id="feynman-hbar" min="0.02" max="1.50" step="0.01" value="0.25">
+            </div>
+            <div id="feynman-readout" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); margin-top:0.5rem;">
+              ħ = 0.250 · Classical Path Coherence: <span style="color:#38bdf8;">50.0%</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(2,4,10,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:0.75rem; padding:0.5rem; display:flex; justify-content:center;">
+            <canvas id="feynman-canvas" width="560" height="220" style="width:100%; max-width:560px; height:auto; display:block;"></canvas>
+          </div>
+        </div>
+
+        <div class="pane-terminal">
+          <div class="terminal-cmd-bar">$ glow FEYNMAN_PATH_ACTION.md</div>
+          <h3>The Variational Principle & Path Formulation</h3>
+          <p>
+            Richard Feynman's 1948 reformulation established that a quantum particle does not take a single path. Instead, the transition amplitude is the sum over all paths:
+          </p>
+          <pre><code>K(b, a) = ∫ D[x(t)] exp( (i/ħ) ∫ [ ½m(dx/dt)² - V(x) ] dt )</code></pre>
+          <h4>Software Translation by Youssef Benatti</h4>
+          <p>
+            In machine learning architectures like VerifyID and Miranda AI, optimization algorithms perform gradient descent across high-dimensional parameter spaces. The classical converged model weights represent the stationary path minimizing the global empirical loss functional:
+          </p>
+          <pre><code>δL / δθ = 0  (Variational Loss Minimization)</code></pre>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 9: 2D Ising Conformal Criticality
+           ==================================================================== -->
+      <div class="system-view" id="view-ising">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-teal); border-color:var(--border-glow-teal);">SCALE INVARIANCE & RENORMALIZATION</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">REGIME 05 · T_c KNIFE-EDGE</span>
+          </div>
+
+          <h3 style="font-size:1.35rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            2D Ising Lattice: T_c = 2J / (k_B ln(1+√2))
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">
+            At the Onsager critical knife-edge T_c ≈ 2.269, clusters nest inside clusters across every magnification scale, with spin correlations decaying as a pure power law r^{-1/4}.
+          </p>
+
+          <div class="sim-box" style="margin-bottom:1rem;">
+            <div class="sim-field">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+                <label for="ising-temp">Lattice Temperature (T):</label>
+                <span id="ising-temp-val" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--aurora-teal);">2.269</span>
+              </div>
+              <input type="range" id="ising-temp" min="0.50" max="4.50" step="0.05" value="2.269">
+            </div>
+
+            <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+              <button type="button" class="btn-preset" id="btn-ising-cold">Cold (T=1.0)</button>
+              <button type="button" class="btn-preset" id="btn-ising-crit" style="border-color:var(--aurora-teal); color:var(--aurora-teal);">Critical (Tc=2.269)</button>
+              <button type="button" class="btn-preset" id="btn-ising-hot">Hot (T=4.2)</button>
+            </div>
+
+            <div id="ising-state-readout" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); margin-top:0.5rem;">
+              STATE: <span style="color:#2dd4bf;">CRITICAL KNIFE-EDGE (T ≈ Tc)</span> · Correlation r^(-1/4)
+            </div>
+          </div>
+
+          <div style="background:rgba(2,4,10,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:0.75rem; padding:0.5rem; display:flex; justify-content:center;">
+            <canvas id="ising-canvas" width="280" height="280" style="display:block; border-radius:0.5rem;"></canvas>
+          </div>
+        </div>
+
+        <div class="pane-terminal">
+          <div class="terminal-cmd-bar">$ glow ISING_CONFORMAL_FIELD.md</div>
+          <h3>Conformal Invariance & Critical Percolation</h3>
+          <p>
+            Lars Onsager's 1944 exact solution showed that 2D spin lattices exhibit a continuous phase transition at the exact reciprocal root:
+          </p>
+          <pre><code>sinh(2J / k_B T_c) = 1  ==>  T_c = 2J / (k_B ln(1 + √2)) ≈ 2.269 J/k_B</code></pre>
+          <h4>Software Translation by Youssef Benatti</h4>
+          <p>
+            In distributed event backbones (Airflow, Celery, Redis), partitions operate in one of three regimes:
+          </p>
+          <ul>
+            <li><strong>Sub-critical (T &lt; Tc):</strong> Frozen queuing, synchronous blocking.</li>
+            <li><strong>Super-critical (T &gt; Tc):</strong> Packet loss, buffer overflows, unbounded entropy.</li>
+            <li><strong>Critical (T ≈ Tc):</strong> Maximum throughput percolation with self-similar backpressure and scale-invariant resilience across 15M+ events/day.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 10: Sine-Gordon Topological Soliton Collider
+           ==================================================================== -->
+      <div class="system-view" id="view-soliton">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-amber); border-color:rgba(245, 158, 11, 0.4);">TOPOLOGICAL CHARGE INVARIANTS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">REGIME 06 · SOLITON PARTICLES</span>
+          </div>
+
+          <h3 style="font-size:1.35rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Sine-Gordon Solitons: φ = 4 arctan e^{γ(x-vt)}
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">
+            A twist along a chain of coupled pendulums behaves as a lone particle whose winding number is an immutable topological charge j^μ = (1/2π) ε^{μν} ∂_ν φ.
+          </p>
+
+          <div class="sim-box" style="margin-bottom:1rem;">
+            <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+              <button type="button" class="btn-preset" id="btn-inject-kink" style="color:var(--aurora-cyan); border-color:var(--border-glow-cyan);">Inject Kink (Q=+1)</button>
+              <button type="button" class="btn-preset" id="btn-inject-antikink" style="color:var(--aurora-rose); border-color:rgba(244,63,94,0.4);">Inject Anti-Kink (Q=-1)</button>
+              <button type="button" class="btn-preset" id="btn-clear-solitons">Clear Field</button>
+            </div>
+            <div id="soliton-charge-readout" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+              TOPOLOGICAL CHARGE: <span style="color:var(--aurora-cyan); font-weight:700;">Q = 0.00</span> · j^μ Conserved
+            </div>
+          </div>
+
+          <div style="background:rgba(2,4,10,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:0.75rem; padding:0.5rem; display:flex; justify-content:center;">
+            <canvas id="soliton-canvas" width="560" height="200" style="width:100%; max-width:560px; height:auto; display:block;"></canvas>
+          </div>
+        </div>
+
+        <div class="pane-terminal">
+          <div class="terminal-cmd-bar">$ glow TOPOLOGICAL_SOLITONS.md</div>
+          <h3>Nonlinear Wave Mechanics & Topological Charges</h3>
+          <p>
+            The Sine-Gordon equation governs nonlinear relativistic wave propagation:
+          </p>
+          <pre><code>φ_tt - φ_xx + sin(φ) = 0</code></pre>
+          <p>
+            Because the boundary values at infinity must lie in discrete vacua φ = 2πn, the winding number is conserved under continuous deformation:
+          </p>
+          <pre><code>Q = (1/2π) ∫ (∂φ/∂x) dx ∈ ℤ</code></pre>
+          <h4>Software Translation by Youssef Benatti</h4>
+          <p>
+            In distributed stream processing, topological solitons correspond to immutable idempotent messages wrapped with cryptographically signed causal sequence numbers. Network retries, node crashes, and out-of-order deliveries leave the conserved causal topology invariant.
+          </p>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 11: Poincaré Hyperbolic Bulk & Ryu-Takayanagi
+           ==================================================================== -->
+      <div class="system-view" id="view-poincare">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-violet); border-color:var(--border-glow-violet);">HOLOGRAPHY & ENTANGLEMENT</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">REGIME 07 & 08 · ER = EPR</span>
+          </div>
+
+          <h3 style="font-size:1.35rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Poincaré Disk: S_A = Area(γ_A) / 4G
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">
+            In AdS/CFT holography, the entanglement entropy of a boundary region A is given by the area of the minimal geodesic surface γ_A extending through the higher-dimensional hyperbolic bulk.
+          </p>
+
+          <div class="sim-box" style="margin-bottom:1rem;">
+            <div class="sim-field">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+                <label for="poincare-subregion">Boundary Subregion Angle (Δθ):</label>
+                <span id="poincare-subregion-val" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--aurora-violet);">103.1°</span>
+              </div>
+              <input type="range" id="poincare-subregion" min="0.3" max="3.0" step="0.05" value="1.8">
+            </div>
+            <div id="poincare-entropy-readout" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); margin-top:0.5rem;">
+              SUBREGION Δθ: <strong>103.1°</strong> · ENTROPY: <strong style="color:var(--aurora-violet);">S_A = 5.56 / 4G</strong> (ER=EPR)
+            </div>
+          </div>
+
+          <div style="background:rgba(2,4,10,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:0.75rem; padding:0.5rem; display:flex; justify-content:center;">
+            <canvas id="poincare-canvas" width="320" height="260" style="display:block;"></canvas>
+          </div>
+        </div>
+
+        <div class="pane-terminal">
+          <div class="terminal-cmd-bar">$ glow HOLOGRAPHIC_ENTANGLEMENT.md</div>
+          <h3>Ryu-Takayanagi Formula & Holographic Duals</h3>
+          <p>
+            Shinsei Ryu and Tadashi Takayanagi (2006) proved that quantum entanglement in a boundary conformal field theory directly defines the curvature and connectivity of the interior spacetime bulk:
+          </p>
+          <pre><code>S_A = Area(γ_A) / (4 G_Newton)</code></pre>
+          <p>
+            When quantum entanglement S_A fades, the minimal surface γ_A pinches down to a hair-fine throat until the bridge parts, and the spacetime on either side drifts quietly apart.
+          </p>
+          <h4>Software Translation by Youssef Benatti</h4>
+          <p>
+            In distributed consensus and microservices architectures, data coupling and cross-region replication latency define the topology of the system. Systems decoupled from boundary invariants drift into partition splits without strong holographic event reconciliation.
+          </p>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 12: The Amplituhedron Jewel
+           ==================================================================== -->
+      <div class="system-view" id="view-amplituhedron">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-amber); border-color:rgba(245, 158, 11, 0.4);">PRE-SPACETIME GEOMETRIC JEWEL</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">REGIME 09 · POSITIVE GRASSMANNIAN</span>
+          </div>
+
+          <h3 style="font-size:1.35rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            The Amplituhedron: Y = C · Z ∈ G₊(k,n)
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">
+            Beyond space and time: scattering amplitudes in N=4 SYM are computed not by summing thousands of Feynman diagrams, but as the volume of a single geometric polytope inside the positive Grassmannian.
+          </p>
+
+          <div style="background:rgba(2,4,10,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:0.75rem; padding:0.5rem; display:flex; justify-content:center; margin-bottom:1rem;">
+            <canvas id="amplituhedron-canvas" width="360" height="240" style="display:block;"></canvas>
+          </div>
+
+          <div class="sim-box">
+            <div style="font-family:var(--font-mono); font-size:0.75rem; color:#bae6fd; line-height:1.6;">
+              Parke-Taylor Tree Amplitude:<br>
+              <strong style="color:var(--aurora-amber);">A_n = ⟨12⟩⁴ / (⟨12⟩⟨23⟩⟨34⟩⟨45⟩⟨56⟩⟨61⟩)</strong><br>
+              Total Polytope Volume: <strong style="color:var(--aurora-cyan);">Vol = Σ_{Δ∈T} Vol(Δ)</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="pane-terminal">
+          <div class="terminal-cmd-bar">$ glow AMPLITUHEDRON_GEOMETRY.md</div>
+          <h3>Arkani-Hamed & Trnka (2013) Formulation</h3>
+          <p>
+            Locality and quantum unitarity are not fundamental principles. They are emergent consequences of the positive geometry of the Amplituhedron in Grassmannian space G₊(k,n):
+          </p>
+          <pre><code>Y^I_a = C_{a i} Z^I_i   with   C ∈ G₊(k, n)</code></pre>
+          <p>
+            Every triangulation of the polytope represents a different choice of Feynman gauge, yet every cut yields the exact same invariant total volume.
+          </p>
+          <h4>Software Translation by Youssef Benatti</h4>
+          <p>
+            In software engineering, pure functional and declarative architectures treat execution ordering and procedural stepping as emergent artifacts. By encoding invariant data constraints and Merkle proofs directly into the type system, intermediate state mutations dissolve.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       DECONSTRUCT SPACETIME TELEMETRY PANEL
+       ======================================================================== -->
+  <div id="deconstruct-panel" class="deconstruct-panel" role="region" aria-label="Spacetime Deconstruction Telemetry">
+    <div class="deconstruct-box">
+      <div class="deconstruct-header">
+        <span class="deconstruct-badge">SPACETIME UNBOUND · PRE-SPACETIME ACTIVE</span>
+        <span class="deconstruct-metric">g_μν → 0</span>
+      </div>
+      <p class="deconstruct-desc">
+        The continuous Riemannian metric has been dissolved. Coordinates have unbound into the Positive Grassmannian G₊(k,n). Spacetime locality and unitarity are emergent shadows of an unseen polytope.
+      </p>
+      <div class="deconstruct-tensors">
+        <div class="tensor-cell"><span>Riemann:</span> <strong>R^ρ_σμν = 0</strong></div>
+        <div class="tensor-cell"><span>Stress-Energy:</span> <strong>T_μν = 0</strong></div>
+        <div class="tensor-cell"><span>Entanglement:</span> <strong>ER = EPR (Parted)</strong></div>
+        <div class="tensor-cell"><span>Twistor Space:</span> <strong>Z ∈ ℙ³ (Free)</strong></div>
+      </div>
+      <button type="button" class="btn-synthesize-metric" id="btn-reconstruct">
+        ✦ Synthesize Metric (Reconstruct Spacetime)
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FORMULA INSPECTOR OVERLAY
+       ======================================================================== -->
+  <div id="formula-inspector" class="formula-inspector" role="dialog" aria-hidden="true">
+    <div class="fi-card">
+      <div class="fi-top">
+        <span class="fi-regime-num" id="fi-num">REGIME 01</span>
+        <button type="button" class="fi-close" id="fi-close-btn">&times;</button>
+      </div>
+      <h3 class="fi-formula" id="fi-formula">∂_μ J^μ = 0</h3>
+      <h4 class="fi-title" id="fi-title">Noether Continuous Symmetry</h4>
+      <p class="fi-physics" id="fi-physics"></p>
+      <div class="fi-code-box">
+        <span class="fi-code-tag">SOFTWARE TRANSLATION BY YOUSSEF BENATTI</span>
+        <p class="fi-code" id="fi-code"></p>
+      </div>
+      <button type="button" class="fi-launch-btn" id="fi-launch-btn">Launch Dedicated Simulator &rarr;</button>
     </div>
   </div>
 
@@ -801,6 +1133,142 @@
         cursorLabel.style.top = e.clientY + 'px';
       }
     });
+
+    // Ontological Continuum Ribbon & Formula Inspector
+    const regimesData = {
+      1: {
+        num: "REGIME 01",
+        formula: "∂_μ J^μ = 0",
+        title: "Noether Continuous Symmetry",
+        physics: "A field of ink-dark stillness running to every horizon, so evenly symmetric that every shift or turn leaves it unchanged and guards a conserved current.",
+        code: "ZizkaDB AI audit trail database: Continuous cryptographic invariants enforcing EU AI Act Article 12 compliance using SHA-256 Merkle stream verification.",
+        target: "zizkadb"
+      },
+      2: {
+        num: "REGIME 02",
+        formula: "D_μ = ∂_μ - ieA_μ",
+        title: "Gauge Connection & Light",
+        physics: "Locality forces that if phase is free to twist differently at every point, a new field must rise to absorb the difference: that field is light.",
+        code: "eSIM checkout arbitrage engine: Cross-border market tariff distortions and European Central Bank FX spot volatility act as the vector potential A_μ.",
+        target: "esim"
+      },
+      3: {
+        num: "REGIME 03",
+        formula: "E₀ = Σ_k ½ħω_k",
+        title: "Zero-Point Vacuum Energy",
+        physics: "The restless hum of a vacuum that is never quite empty. Across it drift pale-blue swells, (□ + m²)φ = 0, crests that cross untouched.",
+        code: "High-scale asynchronous task workers (Celery, Redis) in perpetual readiness, processing background event batches with zero latency idle overhead.",
+        target: "etl"
+      },
+      4: {
+        num: "REGIME 04",
+        formula: "e^{iS[x]/ħ} · δS = 0",
+        title: "Feynman Path Integral",
+        physics: "Every route fans out in slow-turning colour, cancelling into dusk until only one narrow thread, where δS = 0, burns in steady shade: the true path.",
+        code: "Deep neural network loss optimization (VerifyID, Miranda AI, MedDash): Variational trajectories across high-dimensional parameter spaces.",
+        target: "feynman"
+      },
+      5: {
+        num: "REGIME 05",
+        formula: "T_c = 2J / (k_B ln(1+√2))",
+        title: "Conformal Criticality",
+        physics: "The pattern keeps its character at every scale only at the knife-edge T_c, where correlations fall as a pure power law r^{-1/4}.",
+        code: "15M+ events/day streaming pipeline: Partitioned Kafka/Redis streaming balanced at the critical threshold between congestion and packet loss.",
+        target: "ising"
+      },
+      6: {
+        num: "REGIME 06",
+        formula: "φ = 4 arctan e^{γ(x-vt)}",
+        title: "Sine-Gordon Topological Soliton",
+        physics: "A twist travels along a silver chain of pendulums and becomes a lone bright particle, because its winding number is an immutable topological charge.",
+        code: "Idempotent transactional stream processing: Causal sequence numbers and immutable event envelopes that withstand network partitions.",
+        target: "soliton"
+      },
+      7: {
+        num: "REGIME 07",
+        formula: "ds² = 4(dx²+dy²) / (1 - x² - y²)²",
+        title: "Poincaré Hyperbolic Disk",
+        physics: "The ground curves away into a vast disk tiled by seven-sided cells shrinking toward a glowing rim, satisfying S ≤ k_B A / 4ℓ_P².",
+        code: "ManimGX Geometry Studio: High-performance WebGL vector geometry projecting continuous hyperbolic curvature onto 2D screens.",
+        target: "poincare"
+      },
+      8: {
+        num: "REGIME 08",
+        formula: "S_A = Area(γ_A) / 4G  (ER = EPR)",
+        title: "Ryu-Takayanagi Entanglement",
+        physics: "Threads of entanglement weave cells into one fabric, thick where correlations run deep and thinning to a hair-fine bridge until the spaces drift quietly apart.",
+        code: "Cross-region database replication & distributed consensus: Data coupling bridges that preserve holographic state across geographical regions.",
+        target: "poincare"
+      },
+      9: {
+        num: "REGIME 09",
+        formula: "Y = C · Z ∈ G₊(k,n)",
+        title: "The Positive Amplituhedron",
+        physics: "Beyond spacetime and locality: a faceted crystal whose volume is the scattering amplitude A_n = ⟨ij⟩⁴ / (⟨12⟩⋯⟨n1⟩). Spacetime is a shadow of this jewel.",
+        code: "Pure functional & declarative software architectures: Eliminating intermediate state mutations in favor of invariant mathematical relations.",
+        target: "amplituhedron"
+      }
+    };
+
+    const formulaInspector = document.getElementById('formula-inspector');
+    const fiNum = document.getElementById('fi-num');
+    const fiFormula = document.getElementById('fi-formula');
+    const fiTitle = document.getElementById('fi-title');
+    const fiPhysics = document.getElementById('fi-physics');
+    const fiCode = document.getElementById('fi-code');
+    const fiLaunchBtn = document.getElementById('fi-launch-btn');
+    const fiCloseBtn = document.getElementById('fi-close-btn');
+
+    let currentRegimeTarget = 'zizkadb';
+
+    document.querySelectorAll('.ont-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const rIdx = parseInt(e.currentTarget.getAttribute('data-regime'), 10);
+        const data = regimesData[rIdx];
+        if (!data) return;
+
+        if (window.soundEngine) window.soundEngine.playRegime(rIdx);
+
+        document.querySelectorAll('.ont-pill').forEach(p => p.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+
+        currentRegimeTarget = data.target;
+        if (fiNum) fiNum.textContent = data.num;
+        if (fiFormula) fiFormula.textContent = data.formula;
+        if (fiTitle) fiTitle.textContent = data.title;
+        if (fiPhysics) fiPhysics.textContent = data.physics;
+        if (fiCode) fiCode.textContent = data.code;
+
+        if (formulaInspector) {
+          formulaInspector.classList.add('active');
+          formulaInspector.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    if (fiCloseBtn) {
+      fiCloseBtn.addEventListener('click', () => {
+        if (formulaInspector) {
+          formulaInspector.classList.remove('active');
+          formulaInspector.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    if (fiLaunchBtn) {
+      fiLaunchBtn.addEventListener('click', () => {
+        if (formulaInspector) {
+          formulaInspector.classList.remove('active');
+          formulaInspector.setAttribute('aria-hidden', 'true');
+        }
+        if (['amplituhedron', 'poincare'].includes(currentRegimeTarget) && window.observatory) {
+          window.observatory.switchTopology(currentRegimeTarget);
+        }
+        if (window.workspaceEngine) {
+          window.workspaceEngine.openSystem(currentRegimeTarget);
+        }
+      });
+    }
   </script>
 </body>
 </html>
