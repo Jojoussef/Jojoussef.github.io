@@ -95,7 +95,7 @@
         <div class="text-3xl font-extrabold text-brand mt-3">$7<span class="text-xs font-normal text-muted">/mo</span></div>
         <div class="text-xs text-muted mt-1">or $59/year</div>
         <ul class="mt-4 space-y-2 flex-1"><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Everything in Free</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Price alerts for the destinations you follow</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Full price and coverage data export (CSV + JSON)</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>The pricing-error monitor, updated as it is found</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Early access to each month&#39;s catalogue refresh</span></li></ul>
-        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/pricing/" target="_blank" rel="noopener noreferrer" class="btn-accent mt-5 block text-center text-sm font-semibold px-5 py-2.5 transition">Subscribe</a>
+        <button type="button" data-checkout-plan="pro" class="btn-accent mt-5 block w-full text-center text-sm font-semibold px-5 py-2.5 transition">Subscribe</button>
       </div><div class="card p-5 sm:p-6 flex flex-col ">
         <div class="flex items-center justify-between gap-2">
           <h2 class="text-base font-bold text-strong">Team</h2>
@@ -104,9 +104,14 @@
         <div class="text-3xl font-extrabold text-brand mt-3">$29<span class="text-xs font-normal text-muted">/mo</span></div>
         <div class="text-xs text-muted mt-1">or $249/year</div>
         <ul class="mt-4 space-y-2 flex-1"><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Everything in Pro</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Up to 5 seats</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>API access to the price and coverage data</span></li><li class="text-xs text-muted flex gap-2"><span class="text-accent shrink-0">&#10003;</span><span>Priority support</span></li></ul>
-        <a href="https://youssef-benatti.me/esim-arbitrage-calculator/pricing/" target="_blank" rel="noopener noreferrer" class="btn-primary mt-5 block text-center text-sm font-semibold px-5 py-2.5 transition">Subscribe</a>
+        <button type="button" data-checkout-plan="team" class="btn-primary mt-5 block w-full text-center text-sm font-semibold px-5 py-2.5 transition">Subscribe</button>
       </div>
   </div>
+
+  <section class="card p-5 sm:p-6 mt-6" id="esimAccount">
+    <h2 class="text-base font-bold text-strong">Your account</h2>
+    <div class="mt-2"><!-- the subscription client fills this in --></div>
+  </section>
 
   <section class="card p-5 sm:p-6 mt-6">
     <h2 class="text-base font-bold text-strong">What Pro actually adds</h2>
@@ -209,7 +214,7 @@
     else if (mq.addListener) mq.addListener(onChange);
   }
 })();</script>
-<script>window.ESIM_SUBSCRIPTION_API="https://esim-subscription.evilnode.workers.dev";</script>
+<script>window.ESIM_SUBSCRIPTION={"endpoint":"https://fra.cloud.appwrite.io/v1","project":"6ad9062200163d93497b","function_id":"premium-api"};</script>
 <script src="https://youssef-benatti.me/esim-arbitrage-calculator/assets/subscription.js" defer></script>
 
 </body>
