@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youssef Benatti · Senior AI & Data Systems Engineer</title>
+  
+  <meta name="description" content="Celestial Observatory & Personal Systems Architecture of Youssef Benatti (Jojoussef) — Senior AI & Data Engineer. High-throughput ETL (15M+ events/day), EU AI Act audit databases, and agentic intelligence.">
+  <meta name="keywords" content="Youssef Benatti, Jojoussef, AI Engineer, Data Engineer, ZizkaDB, eSIM Arbitrage, Three.js, Ethereal, Portfolio">
+  <meta name="author" content="Youssef Benatti">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://youssef-benatti.me/">
+  <meta property="og:title" content="Youssef Benatti · Senior AI & Data Systems Engineer">
+  <meta property="og:description" content="Interactive 3D Celestial Observatory: High-throughput ETL, verifiable AI audit databases, and applied intelligence systems.">
+  <meta property="og:site_name" content="Youssef Benatti">
+
+  <!-- Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Structured JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Youssef Benatti",
+    "alternateName": "Jojoussef",
+    "jobTitle": "Senior AI & Data Engineer",
+    "url": "https://youssef-benatti.me",
+    "sameAs": [
+      "https://github.com/Jojoussef",
+      "https://www.upwork.com/freelancers/~01fc3acc8b53d058d2",
+      "https://tn.linkedin.com/in/youssef-benatti-86b157145"
+    ],
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Higher Institute of Informatics and Mathematics of Monastir (ISIMM)"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. AWAKENING BOOTLOADER (Genesis Sequence)
+       ======================================================================== -->
+  <div id="boot-loader" role="status" aria-label="Awakening the Celestial Observatory">
+    <div class="boot-card">
+      <p class="boot-cmd"><span>$</span> zizkadb verify --genesis <b>0x00</b> --core <span>celestial-manifold</span></p>
+      
+      <div class="convergence-chart">
+        <svg viewBox="0 0 400 80" preserveAspectRatio="none">
+          <polyline class="loss-polyline" points="0,75 40,68 80,50 140,42 200,28 260,18 320,12 360,8 400,6"></polyline>
+        </svg>
+      </div>
+
+      <div class="chart-stats">
+        <span>convergence_loss: <strong style="color:var(--aurora-cyan);">0.042</strong></span>
+        <span>manifold_nodes: <strong style="color:#10b981;">5/5 verified</strong></span>
+        <span>resonance: <strong style="color:var(--aurora-violet);">432 Hz</strong></span>
+      </div>
+
+      <ul class="boot-terminal-log">
+        <li>[SYSTEM] Loading mathematical vector manifold & orbital physics...</li>
+        <li>[ZIZKADB] Cryptographic genesis block 0x4a1f confirmed immutable.</li>
+        <li>[OBSERVATORY] Celestial coordinates locked: Monastir (35.76°N, 10.82°E).</li>
+      </ul>
+
+      <div class="boot-enter-actions">
+        <button type="button" class="btn-boot btn-boot-sound" id="btn-enter-sound">
+          ✦ Enter with Sound
+        </button>
+        <button type="button" class="btn-boot btn-boot-mute" id="btn-enter-mute">
+          Enter in Silence
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Celestial Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-label" aria-hidden="true"></div>
+
+  <!-- Persistent Signature Header -->
+  <header class="sig-header">
+    <h1 class="sig-name">Youssef Benatti</h1>
+    <p class="sig-meta">Senior AI & Data Systems Engineer <span>·</span> Monastir, Tunisia</p>
+  </header>
+
+  <!-- Real-time Conceptionist Telemetry HUD -->
+  <div class="telemetry-hud" id="hud-telemetry" aria-label="Real-time Celestial Coordinates & Telemetry">
+    <span class="hud-item"><span class="hud-dot"></span>MONASTIR 35.76°N, 10.82°E</span> · <span class="hud-item">LST 00:00:00</span> · <span class="hud-item">1,800 VERTICES</span> · <span class="hud-item" style="color:#10b981;">120 FPS</span>
+  </div>
+
+  <!-- Mathematical Topology Switcher -->
+  <div class="topology-bar" aria-label="Mathematical Topology Selector">
+    <button type="button" class="btn-topology active" data-topo="torus" title="Torus Knot Soliton (p=2, q=3)">
+      <span>⟡</span> Torus
+    </button>
+    <button type="button" class="btn-topology" data-topo="lorenz" title="Lorenz Strange Attractor (σ=10, ρ=28, β=8/3)">
+      <span>∿</span> Lorenz
+    </button>
+    <button type="button" class="btn-topology" data-topo="clifford" title="Clifford Strange Attractor (a=-1.4, b=1.6)">
+      <span>⨀</span> Clifford
+    </button>
+    <button type="button" class="btn-topology btn-terminal-pill" id="btn-repl-toggle" title="Open Celestial REPL Console (Shortcut: ~)">
+      <span>&gt;_</span> CLI
+    </button>
+  </div>
+
+  <!-- Undock / Back to Orbit Button -->
+  <button type="button" id="btn-undock" hidden aria-label="Undock and return to celestial orbit">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span>Back to Orbit</span>
+  </button>
+
+  <!-- Audio Equalizer Toggle Button -->
+  <button type="button" class="sound-btn" id="sound-btn" aria-label="Toggle celestial audio">
+    <i></i><i></i><i></i><i></i>
+  </button>
+
+  <!-- Drag / Interaction Hint -->
+  <div class="drag-hint" id="drag-hint" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <span>Drag to orbit the constellation <span>·</span> Click any celestial node to dock</span>
+  </div>
+
+  <!-- 3D WebGL Canvas Layer -->
+  <canvas id="celestial-scene" role="img" aria-label="3D Celestial Observatory: Drag to orbit around the quantum manifold, click nodes to dock"></canvas>
+
+  <!-- Constellation Bottom Quick-Jump Bar -->
+  <nav class="constellation-bar" aria-label="Constellation Quick Links">
+    <button type="button" class="constellation-jump" data-sys="esim">
+      <span class="num">01</span>
+      <span>eSIM Arbitrage</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="zizkadb">
+      <span class="num">02</span>
+      <span>ZizkaDB</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="verifyid">
+      <span class="num">03</span>
+      <span>Multimodal AI</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="etl">
+      <span class="num">04</span>
+      <span>15M+ Pipeline</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="manim">
+      <span class="num">05</span>
+      <span>Manim Lab</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="manifesto">
+      <span class="num">06</span>
+      <span>Manifesto</span>
+    </button>
+    <button type="button" class="constellation-jump" data-sys="communicator">
+      <span class="num">07</span>
+      <span>Communicator</span>
+    </button>
+  </nav>
+
+  <!-- ========================================================================
+       2. ETHEREAL TILING WORKSPACE MODAL (The Transcended Desktop)
+       ======================================================================== -->
+  <div id="workspace-modal" role="dialog" aria-modal="true" aria-label="System Docking Workspace">
+    
+    <!-- Window Topbar -->
+    <div class="ws-topbar">
+      <div class="ws-window-controls">
+        <button type="button" class="ws-btn-dot ws-dot-close" id="ws-close-btn" title="Close & Undock"></button>
+        <button type="button" class="ws-btn-dot ws-dot-min" title="Minimize"></button>
+        <button type="button" class="ws-btn-dot ws-dot-max" title="Full View"></button>
+      </div>
+
+      <nav class="ws-tabs" aria-label="System Workspaces">
+        <button type="button" class="ws-tab-btn active" data-sys="esim">01 esim-arbitrage</button>
+        <button type="button" class="ws-tab-btn" data-sys="zizkadb">02 zizkadb</button>
+        <button type="button" class="ws-tab-btn" data-sys="verifyid">03 vision-health</button>
+        <button type="button" class="ws-tab-btn" data-sys="etl">04 etl-pipeline</button>
+        <button type="button" class="ws-tab-btn" data-sys="manim">05 manim-lab</button>
+        <button type="button" class="ws-tab-btn" data-sys="manifesto">06 manifesto</button>
+        <button type="button" class="ws-tab-btn" data-sys="communicator">07 communicator</button>
+      </nav>
+
+      <div class="ws-meta-right">
+        <span id="ws-breadcrumb">YB://observatory/nodes/esim</span>
+        <span id="ws-clock">00:00:00 · Monastir</span>
+      </div>
+    </div>
+
+    <!-- Content Viewport -->
+    <div class="ws-content-viewport">
+
+      <!-- ====================================================================
+           SYSTEM 1: eSIM Price Truth & Arbitrage Optimizer
+           ==================================================================== -->
+      <div class="system-view active" id="view-esim">
+        <!-- Left Pane: Live Mini Arbitrage Simulator -->
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-cyan); border-color:var(--border-glow-cyan);">LIVE SIMULATION ENGINE</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">94 DESTINATIONS · 136,040 PRICES</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            eSIM Checkout Arbitrage & Inversion Engine
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Audit vendor pricing catalogues against official European Central Bank (ECB) spot rates. Test real-time arbitrage savings by changing checkout currencies below.
+          </p>
+
+          <div class="sim-box">
+            <div class="sim-field">
+              <label for="mini-dest">Destination Country:</label>
+              <select id="mini-dest">
+                <option value="USA">United States (USA)</option>
+                <option value="JPN">Japan</option>
+                <option value="KEN">Kenya</option>
+                <option value="DOM">Dominican Republic</option>
+                <option value="TUN">Tunisia</option>
+                <option value="FRA">France</option>
+              </select>
+            </div>
+
+            <div class="sim-field">
+              <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+                <label for="mini-days">Trip Duration:</label>
+                <span id="mini-days-val" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--aurora-cyan);">7 Days</span>
+              </div>
+              <input type="range" id="mini-days" min="1" max="90" step="1" value="7">
+            </div>
+
+            <div class="sim-field">
+              <label for="mini-ccy">Your Local Currency:</label>
+              <select id="mini-ccy">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="COP">COP (Colombian Peso)</option>
+                <option value="ILS">ILS (Israeli Shekel)</option>
+                <option value="CAD">CAD ($)</option>
+                <option value="HKD">HKD ($)</option>
+              </select>
+            </div>
+
+            <!-- Anomaly Presets -->
+            <div style="margin-top:1rem;">
+              <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Catalog Glitch Presets:</span>
+              <div class="preset-btn-row">
+                <button type="button" class="btn-glitch-preset" data-dest="KEN" data-days="5" data-ccy="COP">Kenya 5d (COP Glitch)</button>
+                <button type="button" class="btn-glitch-preset" data-dest="DOM" data-days="26" data-ccy="EUR">Dominica 26d Inversion</button>
+                <button type="button" class="btn-glitch-preset" data-dest="USA" data-days="26" data-ccy="USD">USA 26d Volume Sweet Spot</button>
+              </div>
+            </div>
+
+            <div class="sim-verdict-card" id="mini-verdict">
+              Calculating spot spread...
+            </div>
+          </div>
+
+          <a href="https://youssef-benatti.me/esim-arbitrage-calculator/" target="_blank" rel="noopener noreferrer" class="btn-open-app">
+            <span>Launch Full 94-Country Production Suite</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+
+        <!-- Right Pane: Terminal README -->
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow README.md --style=ethereal</div>
+          <h3>eSIM Price Truth & Arbitrage Optimizer</h3>
+          <p>
+            An algorithmic price discrimination auditor for global telecom data plans. Analyzed 136,040 audited prices across 94 international destinations and 20 fiat currencies.
+          </p>
+
+          <h4>Why It Was Built</h4>
+          <p>
+            Global eSIM vendors often maintain disparate, unpegged local pricing matrices. Travelers paying in local inflated currencies (e.g. Colombian Peso or Israeli Shekel) get overcharged by up to <strong>79%</strong> compared to spot conversion rates. This engine reveals the hidden arbitrage table and automatically detects 224 duration inversions where buying more days is cheaper than fewer days.
+          </p>
+
+          <h4>Architecture & Methodology</h4>
+          <ul>
+            <li><strong>Spot FX Normalization:</strong> Cross-references vendor catalog prices against European Central Bank (ECB) reference rates.</li>
+            <li><strong>Duration Inversion Detection:</strong> Automated monoid verification flagging non-monotonic price curves.</li>
+            <li><strong>Competitor Break-Even Curve:</strong> Solves for exact GB/day consumption thresholds against Saily, Airalo, and Roamless.</li>
+          </ul>
+
+          <div class="dep-chip-row">
+            <span class="dep-chip">Tailwind CSS</span>
+            <span class="dep-chip">Chart.js</span>
+            <span class="dep-chip">ECB Spot Engine</span>
+            <span class="dep-chip">Static Site Generator</span>
+          </div>
+
+          <p style="margin-top:1.5rem; font-family:var(--font-mono); font-size:0.8125rem;">
+            <a href="https://github.com/Jojoussef/esim-arbitrage-calculator" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">
+              github.com/Jojoussef/esim-arbitrage-calculator ↗
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 2: ZizkaDB (EU AI Act Article 12 Audit Database)
+           ==================================================================== -->
+      <div class="system-view" id="view-zizkadb">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-violet); border-color:var(--border-glow-violet);">EU AI ACT ARTICLE 12</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CRYPTOGRAPHIC IMMUTABILITY</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            ZizkaDB AI Agent Audit Trail
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Tamper-evident, checksum-backed decision logs with session replay, drift detection, and time-travel debugging for autonomous AI systems.
+          </p>
+
+          <div class="sim-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:#fff;">Live Decision Stream Inspector:</span>
+              <button type="button" class="btn-glitch-preset" id="btn-tamper-test" style="border-color:rgba(239, 68, 68, 0.4); color:#fca5a5;">
+                Simulate Payload Tamper
+              </button>
+            </div>
+
+            <div class="terminal-window" style="height:170px; overflow-y:auto; margin:0;" id="zizka-tamper-log">
+              <div class="terminal-line"><span class="terminal-prompt">#</span> <span class="terminal-cmd">Block #41208: agent_goal="Rebalance Portfolio" [VERIFIED]</span></div>
+              <div class="terminal-line"><span class="terminal-prompt">#</span> <span class="terminal-cmd">Block #41209: agent_tool="execute_trade" [CHECKSUM VALID]</span></div>
+              <div class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="terminal-hash">hash: sha256:8f4c2e91a0b3e6d1c9...</span></div>
+              <div class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="terminal-valid">STATUS: Article 12 Compliance OK. No Drift.</span></div>
+            </div>
+
+            <div style="display:flex; gap:0.5rem; margin-top:0.75rem;">
+              <input type="text" id="zizka-custom-payload" placeholder="Type custom agent action payload to hash..." style="flex:1; background:rgba(3,7,18,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:0.5rem; padding:0.4rem 0.75rem; color:#fff; font-family:var(--font-mono); font-size:0.75rem;">
+              <button type="button" class="btn-glitch-preset" id="btn-zizka-append" style="border-color:var(--border-glow-cyan); color:var(--aurora-cyan); white-space:nowrap;">
+                Append Block
+              </button>
+            </div>
+          </div>
+
+          <a href="https://github.com/Jojoussef/ZizkaDB" target="_blank" rel="noopener noreferrer" class="btn-open-app">
+            <span>Explore ZizkaDB Architecture on GitHub</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow ZIZKADB.md --compliance=EU_AI_ACT</div>
+          <h3>Deterministic AI Audit Infrastructure</h3>
+          <p>
+            As autonomous AI agents execute financial trades, medical intakes, and enterprise workflows, unverified black-box decisions pose existential legal and operational risks.
+          </p>
+
+          <h4>Core Capabilities</h4>
+          <ul>
+            <li><strong>Tamper-Evident Merkle Chains:</strong> Every tool invocation, LLM completion, and state transition is cryptographically chained and checksummed.</li>
+            <li><strong>Time-Travel Debugging:</strong> Step backwards through multi-agent collaboration states to isolate hallucinations or decision drift.</li>
+            <li><strong>MCP Server Integration:</strong> Native Model Context Protocol support allows seamless logging for Claude Desktop, Gemini, and custom agents.</li>
+          </ul>
+
+          <div class="dep-chip-row">
+            <span class="dep-chip">Python SDK</span>
+            <span class="dep-chip">TypeScript</span>
+            <span class="dep-chip">MCP Tools</span>
+            <span class="dep-chip">SQLite / PostgreSQL</span>
+          </div>
+
+          <p style="margin-top:1.5rem; font-family:var(--font-mono); font-size:0.8125rem;">
+            <a href="https://github.com/Jojoussef/ZizkaDB" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">
+              github.com/Jojoussef/ZizkaDB ↗
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 3: VerifyID & Miranda AI (Vision & Clinical AI)
+           ==================================================================== -->
+      <div class="system-view" id="view-verifyid">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-teal); border-color:var(--border-glow-teal);">COMPUTER VISION & HEALTH</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">LIVE PRODUCTION APPS</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            VerifyID & Miranda AI Medical Assistant
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Two deployed production systems demonstrating computer vision document verification and clinical LLM workflows.
+          </p>
+
+          <div class="sim-box">
+            <h4 style="color:#fff; font-size:1rem; margin-bottom:0.5rem;">1. VerifyID Platform</h4>
+            <p style="font-size:0.8125rem; color:var(--text-dim); margin-bottom:0.75rem;">
+              Automated document verification with real-time OCR, 3D camera positioning guidance, and facial liveness matching. Built with multi-cloud failover (AWS, Azure AI Vision, GCP).
+            </p>
+            <a href="https://id-verification-pearl.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8125rem;">
+              <span>Open VerifyID Live App ↗</span>
+            </a>
+
+            <div style="height:1px; background:rgba(255,255,255,0.08); margin:1.25rem 0;"></div>
+
+            <h4 style="color:#fff; font-size:1rem; margin-bottom:0.5rem;">2. Miranda AI (Cardiology Assistant)</h4>
+            <p style="font-size:0.8125rem; color:var(--text-dim); margin-bottom:0.75rem;">
+              Intelligent clinical scheduling and triage web application. Features dual-mode consultation (quick vs. deep analysis), HIPAA-compliant file parsing, and Stripe booking.
+            </p>
+            <a href="https://miranda-medical-assistant.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8125rem;">
+              <span>Open Miranda AI Live App ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow MULTIMODAL_AI.md</div>
+          <h3>Multimodal AI & Clinical Triage Engineering</h3>
+          <p>
+            Architected to eliminate manual document validation latency and simplify clinical patient intake through deterministic, privacy-first architectures.
+          </p>
+
+          <h4>Engineering Highlights</h4>
+          <ul>
+            <li><strong>Liveness & Anti-Spoofing:</strong> Micro-motion optical flow analysis verifying physical presence before biometric enrollment.</li>
+            <li><strong>Multi-Cloud Failover:</strong> Dynamic routing across AWS Rekognition, Azure AI Vision, and Google Cloud ensuring 99.9% uptime.</li>
+            <li><strong>Doctor Dashboard (MedDash):</strong> Accompanied by a complete practice management suite built with Next.js, Firebase, and PostgreSQL (<a href="https://med-dash-ruby.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">med-dash-ruby.vercel.app</a>).</li>
+          </ul>
+
+          <div class="dep-chip-row">
+            <span class="dep-chip">Next.js 15</span>
+            <span class="dep-chip">Azure AI Vision</span>
+            <span class="dep-chip">GPT-4o-mini</span>
+            <span class="dep-chip">Stripe</span>
+            <span class="dep-chip">Firebase</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 4: High-Scale ETL Pipeline (15M+ Events/Day)
+           ==================================================================== -->
+      <div class="system-view" id="view-etl">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-amber); border-color:rgba(245, 158, 11, 0.4);">DATA INFRASTRUCTURE</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">$8.2K+ UPWORK CONTRACT · 406 HOURS</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            15M+ Daily Events ETL Infrastructure
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Production analytics engine built for an enterprise analytics SaaS. Transforms raw telemetry streams into sub-second aggregated dashboards.
+          </p>
+
+          <div class="sim-box">
+            <h4 style="color:#fff; font-size:0.95rem; margin-bottom:0.75rem; font-family:var(--font-mono);">
+              Dataflow Architecture Schema:
+            </h4>
+            <div style="display:flex; flex-direction:column; gap:0.5rem; font-family:var(--font-mono); font-size:0.75rem;">
+              <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
+                1. Ingestion: FastAPI Webhook & Redis Queue (Buffer & Backpressure)
+              </div>
+              <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
+                2. Orchestration: Apache Airflow DAGs (Hourly micro-batches & daily rollups)
+              </div>
+              <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
+                3. Transformation: dbt models with declarative incremental materializations
+              </div>
+              <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
+                4. Storage: PostgreSQL with declarative time-series range partitioning
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Open-Source Upstream Footprint:</span>
+            <div class="dep-chip-row">
+              <span class="dep-chip">HoloViz panel</span>
+              <span class="dep-chip">IBM docling</span>
+              <span class="dep-chip">UK AISI inspect_ai</span>
+              <span class="dep-chip">Dex OIDC</span>
+              <span class="dep-chip">Google Blockly</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow PIPELINE_ARCHITECTURE.md</div>
+          <h3>High-Throughput Asynchronous Engineering</h3>
+          <p>
+            When telemetry reaches millions of events daily, naive CRUD database writes fail. This system resolved locking bottlenecks and delivered deterministic query performance.
+          </p>
+
+          <h4>Key Technical Wins</h4>
+          <ul>
+            <li><strong>Partitioning & Pruning:</strong> Partitioned Postgres tables by epoch ranges, allowing the query planner to skip 94% of storage blocks during analytical scans.</li>
+            <li><strong>Worker Concurrency:</strong> Tuned Celery event loops over RabbitMQ, achieving zero dropped payloads during burst traffic spikes.</li>
+            <li><strong>dbt Data Quality Tests:</strong> Automated regression assertions ensuring zero financial discrepancies across hourly client metric rollups.</li>
+          </ul>
+
+          <div class="dep-chip-row">
+            <span class="dep-chip">Apache Airflow</span>
+            <span class="dep-chip">dbt</span>
+            <span class="dep-chip">PostgreSQL</span>
+            <span class="dep-chip">Redis</span>
+            <span class="dep-chip">Docker</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 5: ManimGX Geometry Studio (Hopf Fibration & Vectors)
+           ==================================================================== -->
+      <div class="system-view" id="view-manim">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-cyan); border-color:var(--border-glow-cyan);">MATHEMATICAL TOPOLOGY</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">MANIMGX VECTOR PHYSICS</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Vector Manifold & Topology Studio
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Dynamic continuous geometry projections generated directly from differential equations. Toggle modes below to analyze manifold phase portraits in real time.
+          </p>
+
+          <div class="sim-box" style="text-align:center;">
+            <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.75rem;">
+              <button type="button" class="btn-glitch-preset btn-manim-mode active" data-mode="hopf">Hopf Fibration (S³→S²)</button>
+              <button type="button" class="btn-glitch-preset btn-manim-mode" data-mode="epicycle">Fourier Epicycles</button>
+              <button type="button" class="btn-glitch-preset btn-manim-mode" data-mode="lorenz">Lorenz Phase (X-Z)</button>
+            </div>
+            <canvas id="manim-canvas" width="440" height="200" style="width:100%; height:200px; background:#02040a; border-radius:0.75rem; border:1px solid rgba(255,255,255,0.08);"></canvas>
+          </div>
+
+          <div class="terminal-card" style="font-family:var(--font-mono); font-size:0.78rem; color:#94a3b8; background:rgba(2,4,10,0.85); padding:0.75rem 1rem; border-radius:0.75rem; border:1px solid rgba(255,255,255,0.06); line-height:1.5;">
+            <div style="color:var(--aurora-teal); font-weight:600; margin-bottom:0.25rem;">Hopf Map Canonical Formulation:</div>
+            <div>η: S³ → S² ⊂ ℂ × ℝ, &nbsp; (z₀, z₁) ↦ (2 z₀ z̄₁, |z₀|² - |z₁|²)</div>
+            <div style="color:#64748b; font-size:0.72rem; margin-top:0.35rem;">Every fiber is an unknotted circle; any two fibers form a Hopf link with linking number 1.</div>
+          </div>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow MANIMGX_STUDIO.md</div>
+          <h3>Mathematical Rigor in Software Design</h3>
+          <p>
+            Standard user interfaces treat geometry as static decoration. Conceptionist Maximalism models computational spaces after physical and topological invariants.
+          </p>
+
+          <h4>Foundational Theorems</h4>
+          <ul>
+            <li><strong>Hopf Fibration:</strong> Dissects 4-dimensional sphere S³ into an infinite family of circles mapped onto S², creating Villarceau circle tori.</li>
+            <li><strong>Spectral Decompositions:</strong> Fourier epicyclic harmonics reconstructing arbitrary closed Jordan curves via complex exponential sums.</li>
+            <li><strong>Chaotic Strange Attractors:</strong> Proving deterministic unpredictability through bounded dissipative non-linear differential phases.</li>
+          </ul>
+
+          <div class="dep-chip-row">
+            <span class="dep-chip">ManimGX</span>
+            <span class="dep-chip">Topology</span>
+            <span class="dep-chip">Vector Physics</span>
+            <span class="dep-chip">Three.js</span>
+            <span class="dep-chip">Web Audio</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 6: Conceptionist & Maximalist Manifesto
+           ==================================================================== -->
+      <div class="system-view" id="view-manifesto">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-rose); border-color:rgba(244, 63, 94, 0.4);">CONCEPTIONIST METHODOLOGY</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">MATHEMATICAL VECTOR DYNAMICS</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Dynamic Manifold Parameter Mutator
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Modify non-linear differential flow parameters below to recalculate the 2,800-vertex Lorenz strange attractor in the 3D celestial observatory in real time.
+          </p>
+
+          <div class="sim-box">
+            <div style="margin-bottom:0.75rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8; margin-bottom:0.25rem;">
+                <span>σ (Prandtl Ratio):</span>
+                <strong id="val-sigma" style="color:var(--aurora-cyan);">10.0</strong>
+              </div>
+              <input type="range" id="range-sigma" min="4" max="24" step="0.5" value="10" style="width:100%;">
+            </div>
+
+            <div style="margin-bottom:0.75rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8; margin-bottom:0.25rem;">
+                <span>ρ (Rayleigh Number):</span>
+                <strong id="val-rho" style="color:var(--aurora-violet);">28.0</strong>
+              </div>
+              <input type="range" id="range-rho" min="14" max="48" step="1" value="28" style="width:100%;">
+            </div>
+
+            <div style="margin-bottom:0.75rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8; margin-bottom:0.25rem;">
+                <span>β (Geometric Factor):</span>
+                <strong id="val-beta" style="color:var(--aurora-teal);">2.67</strong>
+              </div>
+              <input type="range" id="range-beta" min="1.0" max="4.5" step="0.1" value="2.67" style="width:100%;">
+            </div>
+
+            <button type="button" id="btn-mutate-manifold" class="btn-open-app" style="margin-top:0.5rem; justify-content:center;">
+              <span>✦ Recompute Vector Flow in 3D Space</span>
+            </button>
+          </div>
+
+          <div class="terminal-card" style="font-family:var(--font-mono); font-size:0.8rem; line-height:1.6; color:#94a3b8; background:rgba(2,4,10,0.85); padding:1rem; border-radius:0.75rem; border:1px solid rgba(255,255,255,0.06);">
+            <div style="color:var(--aurora-cyan); margin-bottom:0.25rem;">// Continuous Non-Linear Differential Equations</div>
+            <div>dx/dt = σ · (y - x)</div>
+            <div>dy/dt = x · (ρ - z) - y</div>
+            <div>dz/dt = x · y - β · z</div>
+          </div>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow MANIFESTO.md --doctrine=conceptionist_maximalism</div>
+          <h3>The Conceptionist & Maximalist Manifesto</h3>
+          <p style="font-style:italic; color:#94a3b8; margin-bottom:1rem;">
+            By Youssef Benatti · Monastir, Tunisia
+          </p>
+
+          <blockquote style="border-left:2px solid var(--aurora-cyan); padding:0.75rem 1rem; margin-bottom:1.5rem; background:rgba(2,4,10,0.6); border-radius:0.5rem; font-family:var(--font-mono); font-size:0.75rem; line-height:1.7; color:#bae6fd;">
+            "Picture a sea with no water in it: a field of ink-dark stillness running to every horizon without a single fixed grain, so evenly symmetric that every shift or turn leaves it unchanged and guards a conserved current, <code>∂_μ J^μ = 0</code>, and so insistent on locality that if its phase is free to twist differently at every point, a new field must rise to absorb the difference, <code>D_μ = ∂_μ − ieA_μ</code>, and that field is light. It shimmers faintly with the restless hum of a vacuum that is never quite empty, <code>E₀ = Σ_k ½ħω_k</code>. Across it drift pale-blue swells, <code>(□ + m²)φ = 0</code>, each a crest that can cross another untouched, like two beams of light passing through each other. Below them, every conceivable route from one point to another fans out in slow-turning colour, each stamped with its own phase, <code>e^{iS[x]/ħ}</code>, coral to violet to teal, the hues spinning faster toward the margins and cancelling into dusk until only one narrow thread, where <code>δS = 0</code>, burns in a single steady shade: the true path. Pull back and the swells blur into broader swells and the coastline into a coarser coastline, with blue and amber blotches nesting inside blotches like frost on a window. The pattern keeps its character at every scale only at the knife-edge <code>T_c = 2J / (k_B ln(1+√2))</code>, where correlations fall as a pure power law, <code>r^{−1/4}</code>, and everywhere else it dissolves into static or a single flat colour. A twist travels along a silver chain of pendulums, <code>φ_tt − φ_xx + sin φ = 0</code>, in the shape <code>φ = 4 arctan e^{γ(x−vt)}</code>, and as it passes it becomes a lone bright particle, because its winding number is a charge, <code>j^μ = (1/2π) ε^{μν} ∂_ν φ</code>: the same shape wearing a second name. Farther out the ground curves away into a vast disk, <code>ds² = 4(dx² + dy²) / (1 − x² − y²)²</code>, tiled by identical seven-sided cells that shrink toward a glowing rim, each one the same true size, so that the area within and the circle of light at the edge grow in step, <code>4π sinh²(R/2) ≈ 2π sinh R</code>, and the rim could describe everything held inside it, <code>S ≤ k_B A / 4ℓ_P²</code>. Across the interior, threads of entanglement weave the cells into one fabric, <code>S_A = Area(γ_A) / 4G</code>, thick where the correlations run deep and thinning, as they fade, to a hair-fine bridge, <code>ER = EPR</code>, until a last strand parts and the space on either side drifts quietly apart. Beyond the rim even the stage goes: no ground, no clock, only a faceted crystal, <code>Y = C·Z</code> with <code>C ∈ G₊(k,n)</code>, whose volume is the answer to a scattering that once took tens of thousands of diagrams and now takes one line, <code>A_n = ⟨ij⟩⁴ / (⟨12⟩⟨23⟩⋯⟨n1⟩)</code>, every way of cutting it, <code>Vol = Σ_{Δ∈T} Vol(Δ)</code>, a different account of the same jewel. It may be that the field, the paths, the scales and the tiles are all shadows cast by a shape that was never in space at all."
+          </blockquote>
+
+          <h4>1. Beyond Sterile Corporate Minimalism</h4>
+          <p>
+            The software web has been flattened by generic SaaS cards, empty whitespace, and boilerplate marketing templates. True engineering is not about hiding complexity under grey rectangles. It is about making deep systems tangible, legible, and sublime.
+          </p>
+
+          <h4>2. The Interface as a Living Mathematical System</h4>
+          <p>
+            An interface should be a computational artifact in its own right. Parametric manifolds, chaos phase spaces, and procedural 432 Hz harmonic synthesis transform a passive portfolio into a living observatory of mathematical ideas.
+          </p>
+
+          <h4>3. Cryptographic and Algorithmic Verifiability</h4>
+          <p>
+            Never ask visitors to take technical claims on faith. Expose the math directly. Whether verifying EU AI Act Article 12 compliance via SHA-256 Merkle chains (ZizkaDB) or auditing global telecom currency spreads (eSIM), true engineering proves itself through live execution.
+          </p>
+
+          <h4>4. A Singular Perspective</h4>
+          <p>
+            Great software carries an unmistakable authorship. Grounded in Monastir (ISIMM), mathematical rigor, high-throughput streaming systems, and digital autonomy.
+          </p>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SYSTEM 6: Celestial Communicator (Upwork & Contact)
+           ==================================================================== -->
+      <div class="system-view" id="view-communicator">
+        <div class="pane-simulator">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag-pill" style="color:var(--aurora-rose); border-color:rgba(244, 63, 94, 0.4);">UPWORK VERIFIED</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">$29.00/HR · &gt;30 HRS/WEEK</span>
+          </div>
+
+          <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
+            Youssef Benatti · Engagement Terminal
+          </h3>
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
+            Delivered $10K+ in contracts on Upwork with a 100% 5-star rating and multiple long-term repeat client partnerships. Open for high-impact contracts and technical leadership.
+          </p>
+
+          <div class="sim-box">
+            <h4 style="color:#fff; font-size:0.9rem; margin-bottom:0.75rem;">Verified Upwork Client Endorsements:</h4>
+            
+            <div style="font-size:0.8125rem; font-style:italic; color:#cbd5e1; margin-bottom:0.75rem; border-left:2px solid var(--aurora-cyan); padding-left:0.75rem;">
+              "⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️ Fantastic work — highly recommended! Outstanding experience from start to finish. The freelancer was honest, responsive, and incredibly skilled in solving several tricky issues..."
+            </div>
+            <div style="font-size:0.8125rem; font-style:italic; color:#cbd5e1; margin-bottom:0.75rem; border-left:2px solid var(--aurora-violet); padding-left:0.75rem;">
+              "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ Absolutely brilliant developer! Rebuilt the website scraping functionality to work more efficiently and reliably. Clear, timely, and professional."
+            </div>
+            <div style="font-size:0.8125rem; font-style:italic; color:#cbd5e1; border-left:2px solid var(--aurora-teal); padding-left:0.75rem;">
+              "Youssef handled everything from scratch to publishing the apps on both Apple AppStore and Google Playstore." (274 hours)
+            </div>
+          </div>
+
+          <a href="https://www.upwork.com/freelancers/~01fc3acc8b53d058d2" target="_blank" rel="noopener noreferrer" class="btn-open-app">
+            <span>Hire Directly on Upwork ↗</span>
+          </a>
+        </div>
+
+        <div class="pane-readme">
+          <div class="terminal-cmd-bar">$ glow CONTACT.md</div>
+          <h3>Direct Channels & Collaboration</h3>
+          <p>
+            Whether you need high-throughput asynchronous data pipelines, an immutable agentic audit trail, or an end-to-end full-stack AI web product, let's connect.
+          </p>
+
+          <h4>Coordinates</h4>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:benattiyoussef@isimsf.u-sfax.tn" style="color:var(--aurora-cyan);">benattiyoussef@isimsf.u-sfax.tn</a></li>
+            <li><strong>Location:</strong> Monastir, Tunisia (UTC+1, available for global overlap)</li>
+            <li><strong>GitHub:</strong> <a href="https://github.com/Jojoussef" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">github.com/Jojoussef</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://tn.linkedin.com/in/youssef-benatti-86b157145" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">linkedin.com/in/youssef-benatti-86b157145</a></li>
+            <li><strong>Upwork:</strong> <a href="https://www.upwork.com/freelancers/~01fc3acc8b53d058d2" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">upwork.com/freelancers/~01fc3acc8b53d058d2</a></li>
+          </ul>
+
+          <h4>Academic Credentials</h4>
+          <p style="font-size:0.875rem;">
+            Engineer's Degree in Software Engineering · Higher Institute of Informatics and Mathematics of Monastir (ISIMM, 2022–2026).
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       3. CELESTIAL REPL TERMINAL OVERLAY (UNIX CLI)
+       ======================================================================== -->
+  <div id="repl-modal" role="dialog" aria-modal="true" aria-label="Celestial Terminal REPL">
+    <div class="repl-window">
+      <div class="repl-topbar">
+        <div class="ws-window-controls">
+          <button type="button" class="ws-btn-dot ws-dot-close" id="repl-close-btn" title="Close Terminal"></button>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:#94a3b8; margin-left:0.5rem;">youssef@observatory:~ (zsh)</span>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--aurora-cyan);">Type "help" · Press "~" or Esc to dismiss</span>
+      </div>
+      <div class="repl-body">
+        <div id="repl-output"></div>
+        <div class="repl-prompt-line">
+          <span class="repl-prompt-user">youssef@observatory:~$</span>
+          <input type="text" id="repl-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="sound.js"></script>
+  <script src="scene.js"></script>
+  <script src="workspace.js"></script>
+  <script src="repl.js"></script>
+
+  <script>
+    // Bootloader sequence dismissal
+    const bootLoader = document.getElementById('boot-loader');
+    const btnEnterSound = document.getElementById('btn-enter-sound');
+    const btnEnterMute = document.getElementById('btn-enter-mute');
+    const soundBtn = document.getElementById('sound-btn');
+
+    function dismissBoot(withSound) {
+      if (withSound && window.soundEngine) {
+        window.soundEngine.enable();
+        if (soundBtn) soundBtn.classList.add('playing');
+      }
+      if (bootLoader) bootLoader.classList.add('dismissed');
+    }
+
+    if (btnEnterSound) btnEnterSound.addEventListener('click', () => dismissBoot(true));
+    if (btnEnterMute) btnEnterMute.addEventListener('click', () => dismissBoot(false));
+
+    // Sound toggle button in header
+    if (soundBtn) {
+      soundBtn.addEventListener('click', () => {
+        if (window.soundEngine) {
+          const isPlaying = window.soundEngine.toggle();
+          if (isPlaying) soundBtn.classList.add('playing');
+          else soundBtn.classList.remove('playing');
+        }
+      });
+    }
+
+    // Custom Celestial Cursor Tracking
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorRing = document.querySelector('.cursor-ring');
+    const cursorLabel = document.querySelector('.cursor-label');
+
+    window.addEventListener('mousemove', (e) => {
+      if (cursorDot) {
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+      }
+      if (cursorRing) {
+        cursorRing.style.left = e.clientX + 'px';
+        cursorRing.style.top = e.clientY + 'px';
+      }
+      if (cursorLabel) {
+        cursorLabel.style.left = e.clientX + 'px';
+        cursorLabel.style.top = e.clientY + 'px';
+      }
+    });
+  </script>
+</body>
+</html>

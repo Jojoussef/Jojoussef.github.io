@@ -1,0 +1,914 @@
+/* ==========================================================================
+   ETHEREAL SPATIAL OBSERVATORY - DESIGN SYSTEM
+   Cosmic Obsidian · Celestial Luminescence · Translucent Tiling Workspace
+   Inspired by raomuhammadhamza.tech, transcended into an ethereal paradigm.
+   ========================================================================== */
+
+:root {
+  --bg-deep: #030712;
+  --bg-cosmic: #070d24;
+  --bg-translucent: rgba(7, 13, 36, 0.75);
+  --bg-pane: rgba(15, 23, 42, 0.6);
+  --bg-terminal: #02040a;
+
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-glow-cyan: rgba(56, 189, 248, 0.45);
+  --border-glow-violet: rgba(168, 85, 247, 0.45);
+  --border-glow-teal: rgba(45, 212, 191, 0.45);
+
+  --aurora-cyan: #38bdf8;
+  --aurora-teal: #2dd4bf;
+  --aurora-violet: #a855f7;
+  --aurora-amber: #f59e0b;
+  --aurora-rose: #f43f5e;
+
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* 3D WebGL Canvas Layer */
+#celestial-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: block;
+}
+
+/* ==========================================================================
+   1. AWAKENING BOOTLOADER (Inspired by train.py in raomuhammadhamza.tech)
+   ========================================================================== */
+#boot-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(circle at 50% 50%, #0a1128 0%, #030712 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+#boot-loader.dismissed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-card {
+  width: 90%;
+  max-width: 540px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
+  font-family: var(--font-mono);
+}
+
+.boot-cmd {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+.boot-cmd b { color: var(--aurora-cyan); }
+.boot-cmd span { color: var(--aurora-teal); }
+
+.convergence-chart {
+  width: 100%;
+  height: 80px;
+  background: rgba(2, 4, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.convergence-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.loss-polyline {
+  fill: none;
+  stroke: var(--aurora-cyan);
+  stroke-width: 2;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: drawLoss 2.2s ease-out forwards;
+}
+
+@keyframes drawLoss {
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.boot-terminal-log {
+  list-style: none;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  height: 55px;
+  overflow: hidden;
+}
+.boot-terminal-log li {
+  margin-bottom: 0.25rem;
+}
+
+.boot-enter-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-boot {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.25s ease;
+}
+
+.btn-boot-sound {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.3));
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #bae6fd;
+}
+.btn-boot-sound:hover {
+  background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-violet));
+  color: #030712;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-boot-mute {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+}
+.btn-boot-mute:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   2. CUSTOM CELESTIAL CURSOR
+   ========================================================================== */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--aurora-cyan);
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  pointer-events: none;
+  z-index: 998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+}
+
+.cursor-ring.hovering {
+  width: 55px;
+  height: 55px;
+  border-color: var(--aurora-teal);
+  background: rgba(45, 212, 191, 0.08);
+}
+
+.cursor-label {
+  position: fixed;
+  pointer-events: none;
+  z-index: 997;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5eead4;
+  background: rgba(3, 7, 18, 0.85);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  transform: translate(24px, 12px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.cursor-label.visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   3. PERSISTENT FLOATING UI (Header, Controls, Hints)
+   ========================================================================== */
+.sig-header {
+  position: fixed;
+  top: 1.75rem;
+  left: 2rem;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.sig-name {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+}
+
+.sig-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  letter-spacing: 0.04em;
+}
+
+/* Real-time Conceptionist Telemetry HUD */
+.telemetry-hud {
+  position: fixed;
+  top: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+.telemetry-hud .hud-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--aurora-cyan);
+  margin-right: 0.4rem;
+  box-shadow: 0 0 8px var(--aurora-cyan);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Mathematical Topology Selector Bar */
+.topology-bar {
+  position: fixed;
+  top: 1.75rem;
+  right: 5.5rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 0.25rem 0.35rem;
+}
+
+.btn-topology {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-topology:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-topology.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #bae6fd;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+}
+
+/* Undock / Back to Orbit Button */
+#btn-undock {
+  position: fixed;
+  top: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glow-cyan);
+  color: #bae6fd;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+  transition: all 0.25s ease;
+}
+
+#btn-undock:hover {
+  background: var(--aurora-cyan);
+  color: #030712;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+}
+
+#btn-undock[hidden] {
+  display: none !important;
+}
+
+/* Sound Toggle with Equalizer bars */
+.sound-btn {
+  position: fixed;
+  top: 1.75rem;
+  right: 2rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sound-btn:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.sound-btn i {
+  width: 2.5px;
+  height: 12px;
+  background-color: var(--text-dim);
+  border-radius: 2px;
+  transition: height 0.2s ease, background-color 0.2s ease;
+}
+
+.sound-btn.playing i {
+  background-color: var(--aurora-cyan);
+  animation: soundBar 1s ease-in-out infinite alternate;
+}
+
+.sound-btn.playing i:nth-child(2) { animation-delay: 0.2s; height: 18px; }
+.sound-btn.playing i:nth-child(3) { animation-delay: 0.4s; height: 14px; }
+.sound-btn.playing i:nth-child(4) { animation-delay: 0.1s; height: 8px; }
+
+@keyframes soundBar {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.3); }
+}
+
+/* Drag Hint */
+.drag-hint {
+  position: fixed;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  transition: opacity 0.6s ease;
+}
+
+.drag-hint.faded {
+  opacity: 0;
+}
+
+/* Constellation Navigation Pill (Docked bottom) */
+.constellation-bar {
+  position: fixed;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.6rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.constellation-jump {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.constellation-jump span.num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--aurora-cyan);
+}
+
+.constellation-jump:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   4. ETHEREAL TILING WORKSPACE MODAL (The Transcended Desktop)
+   ========================================================================== */
+#workspace-modal {
+  position: fixed;
+  inset: 2.5rem;
+  z-index: 40;
+  background: var(--bg-translucent);
+  backdrop-filter: blur(34px);
+  -webkit-backdrop-filter: blur(34px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  box-shadow: 0 30px 100px -20px rgba(0, 0, 0, 0.9), 0 0 60px rgba(56, 189, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.96);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+}
+
+#workspace-modal.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* Workspace Window Top Bar */
+.ws-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: rgba(2, 4, 10, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.ws-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ws-btn-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+.ws-btn-dot:hover { filter: brightness(1.2); }
+.ws-dot-close { background: #ef4444; }
+.ws-dot-min { background: #f59e0b; }
+.ws-dot-max { background: #10b981; }
+
+.ws-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ws-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ws-tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ws-tab-btn.active {
+  color: var(--aurora-cyan);
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.25);
+  font-weight: 700;
+}
+
+.ws-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--text-muted);
+}
+
+/* Workspace Split Panes */
+.ws-content-viewport {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.system-view {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.system-view.active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Pane: Interactive Live Simulator */
+.pane-simulator {
+  background: rgba(10, 16, 38, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right Pane: Terminal README (`glow`) */
+.pane-readme {
+  background: var(--bg-terminal);
+  padding: 2.25rem;
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  color: #cbd5e1;
+}
+
+.pane-readme h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.pane-readme h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--aurora-cyan);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.pane-readme p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.pane-readme ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: #94a3b8;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.terminal-cmd-bar {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--aurora-teal);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dep-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
+.dep-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #bae6fd;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.btn-open-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-violet));
+  color: #030712;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  transition: all 0.25s;
+}
+
+.btn-open-app:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+}
+
+/* Simulator Form Elements */
+.sim-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.sim-field {
+  margin-bottom: 1.25rem;
+}
+
+.sim-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.sim-field select, .sim-field input[type="range"] {
+  width: 100%;
+  background: rgba(3, 7, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.sim-verdict-card {
+  background: rgba(45, 212, 191, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #ccfbf1;
+  line-height: 1.5;
+  margin-top: 1.25rem;
+}
+
+.preset-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.btn-glitch-preset {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-glitch-preset:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fde68a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  #workspace-modal {
+    inset: 1rem;
+  }
+  .system-view.active {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .pane-simulator {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ==========================================================================
+   4. CELESTIAL REPL TERMINAL OVERLAY
+   ========================================================================== */
+.btn-terminal-pill {
+  color: var(--aurora-cyan) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+.btn-terminal-pill:hover {
+  background: rgba(56, 189, 248, 0.2) !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+#repl-modal {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  width: 90%;
+  max-width: 780px;
+  height: 480px;
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#repl-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.repl-window {
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 4, 10, 0.92);
+  backdrop-filter: blur(28px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 1rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.repl-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: rgba(15, 23, 42, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.repl-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+#repl-output {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.repl-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-bottom: 0.5rem;
+}
+.repl-system { color: var(--aurora-cyan); }
+.repl-user { color: #f1f5f9; font-weight: 700; }
+.repl-output { color: #94a3b8; }
+.repl-error { color: #f43f5e; font-weight: 600; }
+
+.repl-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.repl-prompt-user {
+  color: var(--aurora-cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+#repl-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #fff;
+  caret-color: var(--aurora-cyan);
+}
+
