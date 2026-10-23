@@ -162,6 +162,19 @@
   <!-- Atmospheric Void: chromatic radial gradient behind WebGL (z:0, transparent canvas on top at z:1) -->
   <div id="quantum-atmosphere" aria-hidden="true"></div>
 
+  <!-- Stage-Parametrized Optical Glass Lens (z:2, refracts WebGL & atmosphere behind foreground text) -->
+  <div id="quantum-glass-lens" aria-hidden="true">
+    <canvas id="lens-optic-canvas" width="520" height="520"></canvas>
+    <div class="lens-fresnel-sheen"></div>
+    <div class="lens-caustic-ring"></div>
+  </div>
+
+  <!-- Optical Lens Prescription Readout (top-right open-space balance to .sig-header) -->
+  <div class="lens-optic-readout" id="lens-optic-hud" aria-hidden="true">
+    <span id="lens-optic-name">CROWN SINGLET · f=85mm</span>
+    <span id="lens-optic-params">n = 1.24 · Δλ = 3.5nm · σ = 1.5px</span>
+  </div>
+
   <!-- SVG Film Grain Overlay -->
   <svg id="grain-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <filter id="grain-filter">
@@ -2170,6 +2183,9 @@
 
         const stageIdx = getActiveStageIndex();
         updateAtmosphere(stageIdx);
+        if (window.observatory && typeof window.observatory.setLensStage === 'function') {
+          window.observatory.setLensStage(stageIdx);
+        }
 
         if (stageIdx !== currentStageIdx) {
           currentStageIdx = stageIdx;
