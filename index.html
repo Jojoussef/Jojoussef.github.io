@@ -52,7 +52,7 @@
   <!-- ========================================================================
        1. AWAKENING BOOTLOADER (Genesis Sequence)
        ======================================================================== -->
-  <div id="boot-loader" role="status" aria-label="Awakening the Celestial Observatory">
+  <div id="boot-loader" class="dismissed" role="status" aria-label="Awakening the Celestial Observatory">
     <div class="boot-card">
       <p class="boot-cmd"><span>$</span> zizkadb verify --genesis <b>0x00</b> --core <span>celestial-manifold</span></p>
       
@@ -179,57 +179,57 @@
       <div id="horizon-ruler-head"></div>
     </div>
     <div id="horizon-ticks">
-      <span class="h-tick h-tick-major" data-stage="0" title="Hero">
+      <span class="h-tick h-tick-major h-tick-active" data-stage="0" title="00 Ingress">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">INGRESS</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="1" title="01 Noether">
+      <span class="h-tick h-tick-minor" data-stage="1" title="01 Noether Symmetry">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">01</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="2" title="02 Vacuum">
+      <span class="h-tick h-tick-minor" data-stage="2" title="02 Quantum Vacuum">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">02</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="3" title="03 Feynman">
+      <span class="h-tick h-tick-minor" data-stage="3" title="03 Feynman Paths">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">03</span>
       </span>
-      <span class="h-tick h-tick-major" data-stage="4" title="04 Ising">
+      <span class="h-tick h-tick-major" data-stage="4" title="04 Ising Criticality">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">T_c</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="5" title="05 Soliton">
+      <span class="h-tick h-tick-minor" data-stage="5" title="05 Sine-Gordon Soliton">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">05</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="6" title="06 Poincaré">
+      <span class="h-tick h-tick-major" data-stage="6" title="06 eSIM Arbitrage">
         <span class="h-tick-line"></span>
-        <span class="h-tick-label">06</span>
+        <span class="h-tick-label">FX</span>
       </span>
-      <span class="h-tick h-tick-major" data-stage="7" title="07 Holography">
+      <span class="h-tick h-tick-major" data-stage="7" title="07 ZizkaDB Audit">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">ZIZKA</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="8" title="08 15M+ Streaming">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">15M</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="9" title="09 Vision AI">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">ViT</span>
+      </span>
+      <span class="h-tick h-tick-major" data-stage="10" title="10 Holographic AdS">
         <span class="h-tick-line"></span>
         <span class="h-tick-label">ER=EPR</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="8" title="08 Entanglement">
+      <span class="h-tick h-tick-major" data-stage="11" title="11 Amplituhedron Jewel">
         <span class="h-tick-line"></span>
-        <span class="h-tick-label">08</span>
+        <span class="h-tick-label">G₊</span>
       </span>
-      <span class="h-tick h-tick-minor" data-stage="9" title="09 Amplituhedron">
+      <span class="h-tick h-tick-minor" data-stage="12" title="12 Terminal Ingress">
         <span class="h-tick-line"></span>
-        <span class="h-tick-label">09</span>
-      </span>
-      <span class="h-tick h-tick-minor" data-stage="10" title="10 Systems">
-        <span class="h-tick-line"></span>
-        <span class="h-tick-label">10</span>
-      </span>
-      <span class="h-tick h-tick-minor" data-stage="11" title="11 eSIM">
-        <span class="h-tick-line"></span>
-        <span class="h-tick-label">11</span>
-      </span>
-      <span class="h-tick h-tick-major" data-stage="12" title="12 ZizkaDB">
-        <span class="h-tick-line"></span>
-        <span class="h-tick-label">ZIZKA</span>
+        <span class="h-tick-label">END</span>
       </span>
     </div>
     <div id="horizon-stage-readout">
@@ -238,9 +238,9 @@
     </div>
   </div>
 
-  <!-- Floating Navigation Dock (detached bottom bar) -->
+  <!-- Floating Navigation Dock (single unified bottom bar) -->
   <div id="float-dock" aria-label="Navigation dock">
-    <button type="button" class="dock-origin-btn" title="35.76°N 10.82°E — Monastir, Tunisia">
+    <button type="button" class="dock-origin-btn" onclick="document.getElementById('stage-0').scrollIntoView({ behavior: 'smooth' });" title="35.76°N 10.82°E · Monastir, Tunisia">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
       </svg>
@@ -256,13 +256,18 @@
     </button>
     <div class="dock-divider"></div>
     <nav class="dock-chapters" aria-label="Chapter navigation">
-      <button class="dock-chapter-btn" data-target="stage-0">Origin</button>
-      <button class="dock-chapter-btn" data-target="stage-1">Gauge</button>
-      <button class="dock-chapter-btn" data-target="stage-4">Criticality</button>
-      <button class="dock-chapter-btn" data-target="stage-7">Holography</button>
-      <button class="dock-chapter-btn" data-target="stage-9">Jewel</button>
-      <button class="dock-chapter-btn" data-target="stage-12">ZizkaDB</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-0">Origin</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-1">Gauge</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-4">T_c</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-6">eSIM FX</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-7">ZizkaDB</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-8">15M+ ETL</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-11">Jewel</button>
     </nav>
+    <div class="dock-divider"></div>
+    <button type="button" class="dock-workspace-btn" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('esim');" title="Open Tiling System Dossiers">
+      ⤢ Dossiers
+    </button>
   </div>
 
   <!-- Constellation Bottom Quick-Jump Bar -->
@@ -406,6 +411,7 @@
           <p class="quantum-text">
             Below the swells, every conceivable route from one point to another fans out in slow-turning color, each stamped with its own phase, e^{iS[x]/ħ}, coral to violet to teal. The hues spin faster toward the margins and cancel into dusk through destructive interference until only one narrow thread, where δS = 0, burns in a single steady shade: the classical path.
           </p>
+          <span class="margin-annotation" aria-hidden="true">wild trajectories cancel at the margins · only δS = 0 survives ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Cost-function minimization and path finding in network routing and arbitrage graphs. Non-stationary paths cancel out leaving the optimal settlement route.
           </div>
@@ -459,6 +465,7 @@
           <p class="quantum-text">
             The pattern keeps its character at every scale only at the knife-edge critical temperature T_c = 2.269 J/k_B, where correlations decay as a pure power law r^{−1/4}. Anywhere else, it dissolves into high-temperature white noise or low-temperature magnetic freeze.
           </p>
+          <span class="margin-annotation" aria-hidden="true">Onsager's exact knife-edge · scale invariance across every zoom ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Self-similar scale-free load balancing and cascading failover in high-throughput streaming systems. Criticality marks the boundary of optimal throughput.
           </div>
@@ -517,6 +524,7 @@
           <p class="quantum-text">
             A twist travels along a silver chain of pendulums, φ_tt − φ_xx + sin φ = 0, in the shape φ = 4 arctan e^{γ(x−vt)}. As it passes it becomes a lone bright particle, because its winding number is a topological charge, j^μ = (1/2π) ε^{μν} ∂_ν φ: the same shape wearing a second name.
           </p>
+          <span class="margin-annotation" aria-hidden="true">a wave that refuses to disperse · geometry acting as a particle ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Cryptographic immutability and append-only event ledgers. Topological invariants cannot be destroyed by local perturbations.
           </div>
@@ -570,6 +578,7 @@
           <p class="quantum-text">
             Audited 136,040 live vendor prices across 94 global tourist destinations against official European Central Bank (ECB) spot feeds. Discovered severe pricing inversions and unpegged checkout spreads reaching +78.4% in high-volatility currency pairs like Colombian Peso and Israeli Shekel.
           </p>
+          <span class="margin-annotation" aria-hidden="true">136,040 SKUs benchmarked · negative cycles in live checkout graphs ↓</span>
           <div class="quantum-architecture-spec">
             <strong>PRODUCTION IMPLEMENTATION:</strong> Automated negative-cycle graph detection via Bellman-Ford algorithm to exploit multi-hop currency settlement loops.
           </div>
@@ -651,6 +660,7 @@
           <p class="quantum-text">
             Designed an immutable, append-only audit database complying with Article 12 requirements for High-Risk AI Systems under the European Union AI Act. Every model inference, decision boundary change, and training weight delta is hashed into a SHA-256 Merkle tree DAG with zero runtime overhead on production inference pipelines.
           </p>
+          <span class="margin-annotation" aria-hidden="true">every weight delta hashed · Article 12 non-repudiation in &lt;0.4ms ↓</span>
           <div class="quantum-architecture-spec">
             <strong>COMPLIANCE STANDARD:</strong> Cryptographic chain-of-custody verification. Guarantees mathematical non-repudiation for institutional compliance audits.
           </div>
@@ -710,6 +720,7 @@
           <p class="quantum-text">
             Architected real-time streaming ingestion processing over 15 million operational events daily. Deployed Apache Kafka partitioned topic topologies with consumer group auto-rebalancing, vectorized transformations in Go and Rust, and ultra-dense columnar storage in ClickHouse.
           </p>
+          <span class="margin-annotation" aria-hidden="true">15M+ events/day sustained · p99 under 12ms with zero dropped frames ↓</span>
           <div class="quantum-architecture-spec">
             <strong>STREAMING ARCHITECTURE:</strong> Exactly-once delivery semantics via Kafka transactional producers. Micro-batched vector inserts into ClickHouse MergeTree tables.
           </div>
@@ -762,6 +773,7 @@
           <p class="quantum-text">
             Engineered clinical intake pipelines and computer vision classification engines. Built hybrid Vision Transformer (ViT) and CNN architectures for automated dermatological triage and clinical diagnostic assistance, accompanied by cross-lingual document verification with sub-second optical character extraction.
           </p>
+          <span class="margin-annotation" aria-hidden="true">on-device TensorRT FP16 · 500k+ documents verified without WAN leakage ↓</span>
           <div class="quantum-architecture-spec">
             <strong>LOCAL INFERENCE:</strong> PyTorch models compiled to TensorRT FP16 engine graphs running on edge hardware with strict on-device data sovereignty.
           </div>
@@ -814,6 +826,7 @@
           <p class="quantum-text">
             The ground curves away into a vast disk, ds² = 4(dx² + dy²) / (1 − x² − y²)², tiled by identical seven-sided cells that shrink toward a glowing rim, each one the same true size. Across the interior, threads of entanglement weave the cells into one fabric, S_A = Area(γ_A) / 4G.
           </p>
+          <span class="margin-annotation" aria-hidden="true">boundary entanglement weaves bulk geometry · cut the thread and space parts ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Holographic distributed consensus and cross-datacenter state coupling. Boundary data replication mirrors minimal bulk geodesic surfaces.
           </div>
@@ -866,6 +879,7 @@
           <p class="quantum-text">
             Beyond the rim even the stage goes: no ground, no clock, only a faceted crystal, Y = C·Z with C ∈ G₊(k,n), whose volume is the answer to a scattering that once took tens of thousands of Feynman diagrams and now takes one single line, A_n = ⟨ij⟩⁴ / (⟨12⟩⟨23⟩⋯⟨n1⟩). Every way of triangulating it is a different account of the same jewel.
           </p>
+          <span class="margin-annotation" aria-hidden="true">spacetime and locality dissolve · volume in G₊(k,n) is the amplitude ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Pure functional declarative programming. Eliminating intermediate state mutations in favor of invariant mathematical relations.
           </div>
@@ -915,6 +929,7 @@
           <p class="quantum-text">
             Senior AI and Data Systems Engineer graduating from the Higher Institute of Informatics and Mathematics of Monastir (ISIMM, 2022 to 2026). Top-Rated on Upwork with a 100% job success score across international enterprise clients.
           </p>
+          <span class="margin-annotation" aria-hidden="true">from the positive Grassmannian back to Monastir · ready to build ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SPECIALIZATIONS:</strong> High-throughput streaming (15M+ events/day), EU AI Act Article 12 audit databases, algorithmic spot-rate arbitrage engines, and edge vision models.
           </div>
@@ -2062,37 +2077,37 @@
        ========================================================================= */
     (function () {
 
-      /* Stage atmosphere color palettes: [inner highlight, outer deep] */
+      /* Stage atmosphere color palettes: [inner highlight, outer deep] matching stage-0..stage-12 */
       const STAGE_PALETTES = [
         /* 0  Ingress         */ ['rgba(14, 26, 64, 0.92)',  'rgba(3, 7, 18, 1)'],
-        /* 1  Noether Gauge   */ ['rgba(10, 22, 60, 0.94)',  'rgba(5, 10, 30, 1)'],
-        /* 2  Vacuum Foam     */ ['rgba(5, 14, 40, 0.96)',   'rgba(2, 4, 12, 1)'],
-        /* 3  Feynman Paths   */ ['rgba(15, 8, 48, 0.95)',   'rgba(8, 3, 22, 1)'],
-        /* 4  Ising T_c       */ ['rgba(60, 28, 8, 0.92)',   'rgba(18, 6, 2, 1)'],
-        /* 5  Sine-Gordon     */ ['rgba(4, 28, 32, 0.94)',   'rgba(2, 8, 10, 1)'],
-        /* 6  Poincaré Disk   */ ['rgba(8, 6, 52, 0.95)',    'rgba(3, 2, 20, 1)'],
-        /* 7  Holography ER=EPR */['rgba(38, 8, 58, 0.93)',  'rgba(12, 2, 20, 1)'],
-        /* 8  Entanglement    */ ['rgba(28, 6, 50, 0.94)',   'rgba(8, 2, 18, 1)'],
-        /* 9  Amplituhedron   */ ['rgba(8, 40, 28, 0.93)',   'rgba(2, 12, 8, 1)'],
-        /* 10 Systems Arc     */ ['rgba(6, 20, 44, 0.94)',   'rgba(2, 6, 16, 1)'],
-        /* 11 eSIM Arbitrage  */ ['rgba(10, 40, 20, 0.92)',  'rgba(3, 12, 6, 1)'],
-        /* 12 ZizkaDB         */ ['rgba(8, 22, 60, 0.95)',   'rgba(3, 8, 22, 1)'],
+        /* 1  Noether Gauge   */ ['rgba(10, 28, 68, 0.94)',  'rgba(4, 10, 28, 1)'],
+        /* 2  Vacuum Foam     */ ['rgba(8, 18, 48, 0.96)',   'rgba(2, 5, 14, 1)'],
+        /* 3  Feynman Paths   */ ['rgba(24, 12, 58, 0.95)',  'rgba(8, 3, 22, 1)'],
+        /* 4  Ising T_c       */ ['rgba(68, 32, 8, 0.92)',   'rgba(18, 6, 2, 1)'],
+        /* 5  Sine-Gordon     */ ['rgba(6, 36, 42, 0.94)',   'rgba(2, 8, 12, 1)'],
+        /* 6  eSIM Arbitrage  */ ['rgba(10, 44, 28, 0.92)',  'rgba(3, 12, 7, 1)'],
+        /* 7  ZizkaDB Audit   */ ['rgba(38, 12, 58, 0.94)',  'rgba(10, 3, 20, 1)'],
+        /* 8  15M+ Streaming  */ ['rgba(10, 28, 56, 0.94)',  'rgba(3, 8, 18, 1)'],
+        /* 9  Vision AI       */ ['rgba(28, 14, 52, 0.94)',  'rgba(8, 3, 18, 1)'],
+        /* 10 Holographic AdS */ ['rgba(44, 10, 62, 0.93)',  'rgba(12, 2, 22, 1)'],
+        /* 11 Amplituhedron   */ ['rgba(8, 46, 34, 0.93)',   'rgba(2, 12, 9, 1)'],
+        /* 12 Terminal        */ ['rgba(14, 28, 64, 0.95)',  'rgba(3, 7, 18, 1)'],
       ];
 
       const STAGE_LABELS = [
         'INGRESS · MONASTIR 35.76°N',
-        '01 · Noether Symmetries',
+        '01 · Noether Gauge Symmetry',
         '02 · Quantum Vacuum Foam',
-        '03 · Feynman Path Integral',
+        '03 · Feynman Path Integrals',
         '04 · Ising Criticality T_c',
-        '05 · Sine-Gordon Soliton',
-        '06 · Poincaré Hyperbolic Disk',
-        '07 · Holography · ER = EPR',
-        '08 · Ryu-Takayanagi S_A',
-        '09 · Amplituhedron Y = C·Z',
-        '10 · Systems Architecture',
-        '11 · eSIM Arbitrage Engine',
-        '12 · ZizkaDB · Cryptographic Audit',
+        '05 · Sine-Gordon Solitons',
+        '06 · eSIM Arbitrage Engine',
+        '07 · ZizkaDB Article 12 Audit',
+        '08 · 15M+ Streaming Pipeline',
+        '09 · Multimodal Vision AI',
+        '10 · Holographic AdS · ER=EPR',
+        '11 · Amplituhedron Y = C·Z',
+        '12 · Celestial Terminal',
       ];
 
       const atm = document.getElementById('quantum-atmosphere');
@@ -2101,36 +2116,41 @@
       const stageLabel = document.getElementById('horizon-stage-label');
       const depthVal = document.getElementById('horizon-depth-val');
       const dockSoundBtn = document.getElementById('dock-sound-btn');
+      const stageEls = Array.from(document.querySelectorAll('.quantum-stage'));
 
       let currentStageIdx = 0;
       let ticking = false;
 
-      function lerp(a, b, t) {
-        return a + (b - a) * t;
-      }
-
       function getScrollProgress() {
-        const body = document.body;
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const maxScroll = body.scrollHeight - window.innerHeight;
-        return maxScroll > 0 ? Math.min(1, scrollTop / maxScroll) : 0;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        return maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
       }
 
-      function updateAtmosphere(progress) {
-        if (!atm) return;
-        const totalStages = STAGE_PALETTES.length;
-        const rawIdx = progress * (totalStages - 1);
-        const lo = Math.floor(rawIdx);
-        const hi = Math.min(lo + 1, totalStages - 1);
-        const t = rawIdx - lo;
-        const [innerLo, outerLo] = STAGE_PALETTES[lo];
-        const [innerHi, outerHi] = STAGE_PALETTES[hi];
+      function getActiveStageIndex() {
+        if (!stageEls.length) return 0;
+        const midY = window.innerHeight * 0.45;
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i < stageEls.length; i++) {
+          const r = stageEls[i].getBoundingClientRect();
+          const center = (r.top + r.bottom) * 0.5;
+          const dist = Math.abs(center - midY);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestIdx = i;
+          }
+        }
+        return bestIdx;
+      }
 
-        /* Build gradient: ellipse radiating from bottom-center upward */
+      function updateAtmosphere(stageIdx) {
+        if (!atm) return;
+        const [innerC, outerC] = STAGE_PALETTES[stageIdx] || STAGE_PALETTES[0];
         atm.style.background = `radial-gradient(
           ellipse 120vw 140vh at 50% 120%,
-          ${t < 0.5 ? innerLo : innerHi} 0%,
-          ${t < 0.5 ? outerLo : outerHi} 100%
+          ${innerC} 0%,
+          ${outerC} 100%
         )`;
       }
 
@@ -2140,25 +2160,31 @@
         rulerFill.style.width = pct + '%';
         rulerHead.style.left = pct + '%';
 
-        const totalStages = STAGE_LABELS.length;
-        const stageIdx = Math.min(Math.floor(progress * totalStages), totalStages - 1);
+        const stageIdx = getActiveStageIndex();
+        updateAtmosphere(stageIdx);
 
         if (stageIdx !== currentStageIdx) {
           currentStageIdx = stageIdx;
-          stageLabel.textContent = STAGE_LABELS[stageIdx];
+          stageLabel.textContent = STAGE_LABELS[stageIdx] || STAGE_LABELS[0];
 
           /* Highlight active tick */
           document.querySelectorAll('.h-tick').forEach((tick, idx) => {
             tick.classList.toggle('h-tick-active', idx === stageIdx);
           });
 
+          /* Highlight active dock button */
+          const activeId = 'stage-' + stageIdx;
+          document.querySelectorAll('.dock-chapter-btn').forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.target === activeId);
+          });
+
           /* Trigger regime audio if enabled */
-          if (window.soundEngine && window.soundEngine.enabled && stageIdx > 0 && stageIdx <= 9) {
-            window.soundEngine.playRegime(stageIdx);
+          if (window.soundEngine && window.soundEngine.enabled && stageIdx > 0) {
+            window.soundEngine.playRegime(((stageIdx - 1) % 9) + 1);
           }
         }
 
-        const planckDepth = (progress * 12.89).toFixed(2);
+        const planckDepth = (progress * 12.00).toFixed(2);
         depthVal.textContent = planckDepth + ' ℓₚ';
       }
 
@@ -2167,7 +2193,6 @@
         ticking = true;
         requestAnimationFrame(() => {
           const p = getScrollProgress();
-          updateAtmosphere(p);
           updateRuler(p);
           if (window.soundEngine && window.soundEngine.enabled) {
             window.soundEngine.modulateScroll(p);
@@ -2178,8 +2203,7 @@
 
       window.addEventListener('scroll', onScroll, { passive: true });
       /* Initial render */
-      updateAtmosphere(0);
-      updateRuler(0);
+      updateRuler(getScrollProgress());
 
       /* -----------------------------------------------------------------------
          Tick click navigation: clicking a horizon ruler tick scrolls to stage

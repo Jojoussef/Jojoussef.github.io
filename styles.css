@@ -80,6 +80,7 @@ html, body {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  display: none;
 }
 
 .boot-card {
@@ -1634,10 +1635,14 @@ html, body {
     rgba(14, 26, 64, 0.92) 0%,
     rgba(3, 7, 18, 1) 100%
   );
+  transition: background 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: background;
 }
 
-#celestial-scene { z-index: 1; position: fixed; }
+#celestial-scene {
+  z-index: 1;
+  position: fixed;
+}
 
 #grain-overlay {
   position: fixed;
@@ -1649,22 +1654,62 @@ html, body {
   mix-blend-mode: overlay;
 }
 
-/* Eight-layer optical glass on cards */
-.quantum-card {
+/* Eight-layer optical glass on cards and hero */
+.quantum-card,
+.hero-box {
   isolation: isolate;
   position: relative;
 }
-.quantum-card::after {
+
+.quantum-card::after,
+.hero-box::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
-    rgba(255,255,255,0.12) -0.3em -0.3em 0.1em -0.35em inset,
-    rgba(255,255,255,0.2) 0.3em 0.3em 0.1em -0.35em inset,
-    rgba(180,180,180,0.08) 0 0 2em inset;
+    rgba(255, 255, 255, 0.14) -0.28em -0.28em 0.09em -0.32em inset,
+    rgba(255, 255, 255, 0.22) 0.28em 0.28em 0.09em -0.32em inset,
+    rgba(179, 179, 179, 0.16) 0.18em 0.28em 0.09em -0.18em inset,
+    rgba(179, 179, 179, 0.10) -0.18em -0.28em 0.09em -0.18em inset,
+    rgba(242, 242, 242, 0.08) 0 0 1.75em inset;
   mix-blend-mode: overlay;
+}
+
+/* Prevent any grid/flex child overflow on desktop & mobile */
+.quantum-card {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+  max-width: min(1260px, 100%);
+  box-sizing: border-box;
+}
+
+.hero-box {
+  width: 100%;
+  max-width: min(960px, 100%);
+  box-sizing: border-box;
+}
+
+.quantum-narrative,
+.quantum-sim-column {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.quantum-actions-row,
+.quantum-header-meta,
+.quantum-sim-header,
+.quantum-sim-btn-row {
+  flex-wrap: wrap;
+}
+
+.quantum-formula-badge,
+.hero-badge {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  text-align: center;
 }
 
 /* Editorial serif upgrade */
@@ -1674,9 +1719,10 @@ html, body {
   font-weight: 500;
   font-style: italic;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.12;
   color: #f0f4ff;
 }
+
 .hero-title {
   font-family: 'Newsreader', Georgia, serif;
   font-weight: 500;
@@ -1687,194 +1733,494 @@ html, body {
 .margin-annotation {
   display: block;
   font-family: 'Caveat', cursive;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: rgba(56,189,248,0.62);
-  transform: rotate(-1.5deg);
+  color: rgba(56, 189, 248, 0.78);
+  transform: rotate(-1.2deg);
   transform-origin: left center;
-  margin: 0.25rem 0 0.75rem 0.1rem;
+  margin: 0.15rem 0 0.95rem 0.1rem;
   line-height: 1.3;
   pointer-events: none;
 }
+
 .hero-annotation {
   display: block;
   font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: rgba(168,85,247,0.7);
+  color: rgba(192, 132, 252, 0.85);
   transform: rotate(-1.2deg);
-  margin: 0.2rem 0 1.25rem;
+  margin: 0.1rem 0 1.35rem;
 }
 
-/* Kinetic horizon ruler */
+/* ==========================================================================
+   UNIFIED TOP HUD & NON-OVERLAPPING SPATIAL DISCIPLINE
+   ========================================================================== */
+
+/* 1. Top-Left Signature: refined scale so it never collides with ruler */
+.sig-header {
+  position: fixed;
+  top: 14px;
+  left: 24px;
+  z-index: 55;
+  pointer-events: none;
+}
+
+.sig-name {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1.05;
+}
+
+.sig-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  letter-spacing: 0.04em;
+}
+
+/* 2. Hide redundant center telemetry pill & duplicate sound button (handled by ruler & dock) */
+.telemetry-hud {
+  display: none !important;
+}
+
+.sound-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* 3. Top-Center Kinetic Horizon Ruler: positioned in the clear channel between sig-header and topology-bar */
 #horizon-ruler {
   position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 50;
-  height: 48px;
+  top: 12px;
+  left: 42%;
+  transform: translateX(-50%);
+  width: min(390px, 27vw);
+  z-index: 55;
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  padding: 6px 1.5rem 0;
+  padding: 6px 16px 7px;
   box-sizing: border-box;
-  background: rgba(3,7,18,0.75);
-  backdrop-filter: saturate(120%) blur(12px);
-  -webkit-backdrop-filter: saturate(120%) blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-radius: 999px;
+  background: rgba(8, 13, 32, 0.78);
+  backdrop-filter: saturate(130%) blur(16px);
+  -webkit-backdrop-filter: saturate(130%) blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
+
 #horizon-ruler-track {
   position: relative;
-  width: 100%; height: 2px;
-  background: rgba(255,255,255,0.07);
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.09);
   border-radius: 1px;
   margin-top: 2px;
 }
+
 #horizon-ruler-fill {
   position: absolute;
-  left: 0; top: 0; height: 100%; width: 0%;
-  background: linear-gradient(90deg, rgba(56,189,248,0.8) 0%, rgba(168,85,247,0.8) 60%, rgba(45,212,191,0.9) 100%);
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.9) 0%, rgba(168, 85, 247, 0.9) 60%, rgba(45, 212, 191, 0.95) 100%);
   border-radius: 1px;
   transition: width 0.15s linear;
   will-change: width;
 }
+
 #horizon-ruler-head {
   position: absolute;
-  top: -3px; left: 0%;
-  width: 8px; height: 8px;
+  top: -3px;
+  left: 0%;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 6px rgba(56,189,248,0.8);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.95);
   transform: translateX(-50%);
   transition: left 0.15s linear;
   will-change: left;
   pointer-events: none;
 }
+
 #horizon-ticks {
   display: flex;
   align-items: flex-end;
-  width: 100%; height: 20px;
+  width: 100%;
+  height: 18px;
   pointer-events: auto;
 }
+
 .h-tick {
-  display: flex; flex-direction: column; align-items: center;
-  flex: 1; gap: 1px; cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 1px;
+  cursor: pointer;
 }
+
 .h-tick-line {
-  display: block; width: 1px;
-  background: rgba(255,255,255,0.25);
+  display: block;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.24);
   border-radius: 1px;
 }
-.h-tick-major .h-tick-line { height: 12px; background: rgba(255,255,255,0.55); }
-.h-tick-minor .h-tick-line { height: 7px; }
+
+.h-tick-major .h-tick-line {
+  height: 9px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.h-tick-minor .h-tick-line {
+  height: 5px;
+}
+
 .h-tick-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.5rem;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.06em;
-  white-space: nowrap; line-height: 1;
+  font-size: 0.46rem;
+  color: rgba(255, 255, 255, 0.34);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  line-height: 1;
   text-transform: uppercase;
   user-select: none;
   transition: color 0.2s;
 }
-.h-tick-major .h-tick-label { color: rgba(255,255,255,0.55); }
-.h-tick:hover .h-tick-label, .h-tick-active .h-tick-label { color: rgba(56,189,248,1); }
-.h-tick:hover .h-tick-line, .h-tick-active .h-tick-line { background: rgba(56,189,248,0.8); }
+
+.h-tick-major .h-tick-label {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.h-tick:hover .h-tick-label,
+.h-tick-active .h-tick-label {
+  color: rgba(56, 189, 248, 1);
+  font-weight: 700;
+}
+
+.h-tick:hover .h-tick-line,
+.h-tick-active .h-tick-line {
+  background: rgba(56, 189, 248, 0.95);
+}
+
 #horizon-stage-readout {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 14px; margin-top: 2px;
+  height: 13px;
+  margin-top: 2px;
   pointer-events: none;
 }
+
 #horizon-stage-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.08em;
+  font-size: 0.55rem;
+  color: rgba(226, 232, 240, 0.72);
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 #horizon-depth-val {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  color: rgba(56,189,248,0.7);
-  letter-spacing: 0.06em; white-space: nowrap;
+  font-size: 0.55rem;
+  color: rgba(56, 189, 248, 0.85);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
-/* Floating navigation dock */
+/* 4. Top-Right Topology Bar: compact so it never touches center ruler */
+.topology-bar {
+  top: 14px;
+  right: 20px;
+  z-index: 55;
+  padding: 0.2rem 0.3rem;
+  gap: 0.2rem;
+}
+
+.btn-topology {
+  font-size: 0.65rem;
+  padding: 0.3rem 0.55rem;
+  gap: 0.25rem;
+}
+
+/* 5. Ontology Ribbon: dock cleanly inside top document flow instead of fixed over cards */
+.ontology-ribbon {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 5.25rem auto -4.5rem;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+/* ==========================================================================
+   UNIFIED BOTTOM NAVIGATION DOCK
+   ========================================================================== */
+
+/* Hide redundant legacy bottom bars so only #float-dock appears */
+.constellation-bar,
+.drag-hint {
+  display: none !important;
+}
+
 #float-dock {
   position: fixed;
-  bottom: 18px; left: 50%;
+  bottom: 16px;
+  left: 50%;
   transform: translateX(-50%);
-  z-index: 200;
-  display: flex; align-items: center; gap: 0;
-  padding: 8px 14px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 7px 14px;
   box-sizing: border-box;
-  border-radius: 28px;
-  background: rgba(10,14,36,0.82);
-  backdrop-filter: saturate(120%) blur(14px);
-  -webkit-backdrop-filter: saturate(120%) blur(14px);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -2px 0 rgba(0,0,0,0.3);
+  border-radius: 999px;
+  background: rgba(8, 13, 32, 0.84);
+  backdrop-filter: saturate(130%) blur(18px);
+  -webkit-backdrop-filter: saturate(130%) blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35);
   isolation: isolate;
+  max-width: calc(100vw - 1.5rem);
 }
+
 .dock-origin-btn {
-  display: flex; align-items: center; gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(56,189,248,0.8);
-  background: none; border: none; cursor: default;
-  padding: 0 10px 0 0; letter-spacing: 0.06em; white-space: nowrap; opacity: 0.8;
+  font-size: 0.64rem;
+  color: rgba(56, 189, 248, 0.9);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 8px 2px 2px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
+
 .dock-divider {
-  width: 1px; height: 20px;
-  background: rgba(255,255,255,0.1);
-  margin: 0 10px; flex-shrink: 0;
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 8px;
+  flex-shrink: 0;
 }
+
 .dock-sound-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer; color: rgba(255,255,255,0.65);
-  transition: background 0.2s, color 0.2s; padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+  flex-shrink: 0;
 }
-.dock-sound-btn:hover, .dock-sound-active {
-  background: rgba(56,189,248,0.15);
-  color: rgba(56,189,248,1);
-  border-color: rgba(56,189,248,0.35);
+
+.dock-sound-btn:hover,
+.dock-sound-active {
+  background: rgba(56, 189, 248, 0.18);
+  color: rgba(56, 189, 248, 1);
+  border-color: rgba(56, 189, 248, 0.4);
 }
-.dock-wave-1, .dock-wave-2 { transition: opacity 0.2s; }
+
+.dock-wave-1,
+.dock-wave-2 {
+  transition: opacity 0.2s;
+}
+
 .dock-sound-btn:not(.dock-sound-active) .dock-wave-1,
-.dock-sound-btn:not(.dock-sound-active) .dock-wave-2 { opacity: 0.2; }
-.dock-chapters { display: flex; align-items: center; gap: 2px; }
+.dock-sound-btn:not(.dock-sound-active) .dock-wave-2 {
+  opacity: 0.2;
+}
+
+.dock-chapters {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
 .dock-chapter-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem; letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.5);
-  background: none; border: none; cursor: pointer;
-  padding: 4px 8px; border-radius: 12px;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: rgba(226, 232, 240, 0.65);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 999px;
   transition: background 0.18s, color 0.18s;
-  white-space: nowrap; text-transform: uppercase;
-}
-.dock-chapter-btn:hover {
-  background: rgba(56,189,248,0.12);
-  color: rgba(56,189,248,1);
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
-/* Push content below ruler */
-#quantum-continuum { padding-top: 48px; }
+.dock-chapter-btn:hover,
+.dock-chapter-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+}
 
-@media (max-width: 768px) {
-  #horizon-ruler { height: 40px; }
-  #horizon-ticks { height: 14px; }
-  .h-tick-label { display: none; }
-  .h-tick-major .h-tick-label { display: block; font-size: 0.42rem; }
-  #float-dock { bottom: 12px; padding: 6px 10px; }
-  .dock-chapter-btn { padding: 4px 5px; font-size: 0.55rem; }
-  .dock-origin-btn span { display: none; }
-  .quantum-card-title { font-size: 1.9rem; }
+.dock-workspace-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #bae6fd;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
 }
-@media (max-width: 480px) {
-  .dock-chapters .dock-chapter-btn:nth-child(n+4) { display: none; }
+
+.dock-workspace-btn:hover {
+  background: var(--aurora-cyan);
+  color: #030712;
 }
+
+/* Ensure comfortable bottom clearance on stages */
+#quantum-continuum {
+  padding-top: 12px;
+  padding-bottom: 4rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (1280px, 1024px, 900px, 640px)
+   ========================================================================== */
+@media (max-width: 1280px) {
+  .sig-header {
+    display: none;
+  }
+  #horizon-ruler {
+    left: 20px;
+    transform: none;
+    width: min(440px, 44vw);
+  }
+}
+
+@media (max-width: 1024px) {
+  .quantum-card {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1.75rem;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  #horizon-ruler {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 5px 12px 6px;
+  }
+  .h-tick-label {
+    display: none;
+  }
+  .h-tick-major .h-tick-label {
+    display: block;
+    font-size: 0.44rem;
+  }
+  .topology-bar {
+    top: 48px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 1.5rem);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .topology-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .ontology-ribbon {
+    margin: 5.75rem auto -3.5rem;
+    width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 1.5rem);
+  }
+  #float-dock {
+    bottom: 10px;
+    padding: 6px 10px;
+    max-width: calc(100vw - 1rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #float-dock::-webkit-scrollbar {
+    display: none;
+  }
+  .dock-origin-btn span {
+    display: none;
+  }
+  .dock-chapter-btn {
+    padding: 4px 6px;
+    font-size: 0.54rem;
+  }
+  .quantum-card-title {
+    font-size: 1.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .quantum-stage {
+    padding: 4.5rem 0.75rem 4rem;
+  }
+  .stage-hero {
+    padding-top: 5.5rem;
+  }
+  .quantum-card {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1.2rem 1rem;
+    gap: 1.15rem;
+  }
+  .quantum-sim-column {
+    padding: 1rem;
+  }
+  .quantum-metrics-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .dock-chapters .dock-chapter-btn:nth-child(n+5) {
+    display: none;
+  }
+}
+
