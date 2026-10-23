@@ -207,9 +207,9 @@
         <span class="h-tick-line"></span>
         <span class="h-tick-label">FX</span>
       </span>
-      <span class="h-tick h-tick-major" data-stage="7" title="07 ZizkaDB Audit">
+      <span class="h-tick h-tick-major" data-stage="7" title="07 Open Source & ZizkaDB">
         <span class="h-tick-line"></span>
-        <span class="h-tick-label">ZIZKA</span>
+        <span class="h-tick-label">OSS</span>
       </span>
       <span class="h-tick h-tick-minor" data-stage="8" title="08 15M+ Streaming">
         <span class="h-tick-line"></span>
@@ -260,7 +260,7 @@
       <button type="button" class="dock-chapter-btn" data-target="stage-1">Gauge</button>
       <button type="button" class="dock-chapter-btn" data-target="stage-4">T_c</button>
       <button type="button" class="dock-chapter-btn" data-target="stage-6">eSIM FX</button>
-      <button type="button" class="dock-chapter-btn" data-target="stage-7">ZizkaDB</button>
+      <button type="button" class="dock-chapter-btn" data-target="stage-7">OSS · ZizkaDB</button>
       <button type="button" class="dock-chapter-btn" data-target="stage-8">15M+ ETL</button>
       <button type="button" class="dock-chapter-btn" data-target="stage-11">Jewel</button>
     </nav>
@@ -594,7 +594,7 @@
           </div>
           <div class="quantum-actions-row">
             <a href="https://youssef-benatti.me/esim-arbitrage-calculator/" target="_blank" rel="noopener" class="btn-quantum-inspect">✦ Open Live Production App ↗</a>
-            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-7').scrollIntoView({ behavior: 'smooth' });">Next: ZizkaDB Audit ↓</button>
+            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-7').scrollIntoView({ behavior: 'smooth' });">Next: Open Source &amp; ZizkaDB ↓</button>
           </div>
         </div>
         <div class="quantum-sim-column">
@@ -644,52 +644,57 @@
       </div>
     </section>
 
-    <!-- STAGE 7: Cryptographic Determinism: ZizkaDB EU AI Act Audit Trail -->
+    <!-- STAGE 7: Open Source Contributions & ZizkaDB Cryptographic Audit -->
     <section class="quantum-stage" id="stage-7" data-stage="7">
       <div class="quantum-card">
         <div class="quantum-narrative">
           <div class="quantum-header-meta">
-            <span class="quantum-stage-num">SYSTEM 02</span>
-            <span class="quantum-formula-badge">SHA-256 Merkle DAG · EU AI Act Article 12</span>
+            <span class="quantum-stage-num">SYSTEM 02 · OPEN SOURCE</span>
+            <span class="quantum-formula-badge">ZizkaDB · HoloViz Panel · UK AISI Inspect AI · IBM Docling · CNCF Dex</span>
           </div>
-          <h2 class="quantum-card-title">ZizkaDB: Verifiable AI Audit Trail</h2>
+          <h2 class="quantum-card-title">Open Source Contributions and Verifiable AI Infrastructure</h2>
           <p class="quantum-text">
-            Designed an immutable, append-only audit database complying with Article 12 requirements for High-Risk AI Systems under the European Union AI Act. Every model inference, decision boundary change, and training weight delta is hashed into a SHA-256 Merkle tree DAG with zero runtime overhead on production inference pipelines.
+            Upstream patches across scientific visualization, AI safety evaluation, document intelligence, federated identity, and EU AI Act Article 12 audit databases. In <code>ZIZKA-AI-SL/ZizkaDB</code>, extended SHA-256 event checksums to bind <code>actor_id</code>, <code>role</code>, <code>organization_id</code>, and <code>prev_hash</code> with dedicated row and event verification endpoints.
           </p>
-          <span class="margin-annotation" aria-hidden="true">every weight delta hashed · Article 12 non-repudiation in &lt;0.4ms ↓</span>
+          <span class="margin-annotation" aria-hidden="true">merged in holoviz/panel · approved by UK AISI maintainers · SHA-256 chain verification ↓</span>
           <div class="quantum-architecture-spec">
-            <strong>COMPLIANCE STANDARD:</strong> Cryptographic chain-of-custody verification. Guarantees mathematical non-repudiation for institutional compliance audits.
+            <strong>UPSTREAM PR LEDGER:</strong><br>
+            • <a href="https://github.com/holoviz/panel/pull/8901" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">holoviz/panel #8901 (MERGED)</a>: Handle <code>value=None</code> in <code>DateRangeSlider._sync_values</code><br>
+            • <a href="https://github.com/UKGovernmentBEIS/inspect_ai/pull/5987" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">UKGovernmentBEIS/inspect_ai #5987 (APPROVED)</a>: Prevent empty completions scoring as correct in <code>model_graded_qa</code> and <code>choice</code><br>
+            • <a href="https://github.com/ZIZKA-AI-SL/ZizkaDB/pull/231" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">ZIZKA-AI-SL/ZizkaDB #231</a>: Cover audit fields in SHA-256 event checksum and add <code>/verify</code> endpoints<br>
+            • <a href="https://github.com/docling-project/docling/pull/4993" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">docling-project/docling #4993 (11/11 CI)</a>: Preserve nested list hierarchy across empty Word paragraphs<br>
+            • <a href="https://github.com/dexidp/dex/pull/5100" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">dexidp/dex #5100 (CI PASS)</a>: Return <code>UserNotInRequiredGroupsError</code> in GitHub OIDC connector
           </div>
           <div class="quantum-metrics-grid">
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">HASH ALGORITHM</span>
-              <span class="quantum-metric-val">SHA-256 Native</span>
+              <span class="quantum-metric-label">UPSTREAM PRS</span>
+              <span class="quantum-metric-val">5 Ecosystems</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">LOG INTEGRITY</span>
-              <span class="quantum-metric-val">100% Immutable</span>
+              <span class="quantum-metric-label">QUALITY ENGINE</span>
+              <span class="quantum-metric-val">15 Automated Gates</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">PROOF OVERHEAD</span>
-              <span class="quantum-metric-val">&lt; 0.4ms Latency</span>
+              <span class="quantum-metric-label">ZIZKADB HASH</span>
+              <span class="quantum-metric-val">SHA-256 Chain</span>
             </div>
           </div>
           <div class="quantum-actions-row">
-            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('zizkadb');">⤢ Inspect Article 12 Dossier</button>
-            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-8').scrollIntoView({ behavior: 'smooth' });">Next: 15M+ Pipeline ↓</button>
+            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('zizkadb');">⤢ Inspect Open Source Dossier</button>
+            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-8').scrollIntoView({ behavior: 'smooth' });">Next: Distributed Systems ↓</button>
           </div>
         </div>
         <div class="quantum-sim-column">
           <div class="quantum-sim-header">
-            <span class="quantum-sim-tag">CRYPTOGRAPHIC VERIFIER</span>
+            <span class="quantum-sim-tag">ZIZKADB #231 VERIFIER</span>
             <span class="quantum-sim-status" id="audit-status-badge">GENESIS BLOCK 0x4A1F</span>
           </div>
           <div class="quantum-architecture-spec" id="audit-proof-log" style="font-family:var(--font-mono); font-size:0.72rem; max-height:140px; overflow-y:auto;">
-            [MERKLE TREE ROOT PROOF]<br>
+            [MERKLE TREE ROOT PROOF · ZIZKADB PR #231]<br>
             Block #000492: sha256:7f83b1657ff1...<br>
             Block #000493: sha256:3a91c841b2e8...<br>
             Block #000494: sha256:8c5b3e2101df...<br>
-            Status: Validated across 1,024 leaves
+            Fields bound: actor_id · role · organization_id · prev_hash
           </div>
           <div class="quantum-sim-controls">
             <div class="quantum-sim-btn-row">
@@ -697,28 +702,32 @@
               <button type="button" class="btn-sim-action" id="btn-test-tamper" style="color:var(--aurora-rose);">Simulate Bit Tamper</button>
             </div>
             <div class="quantum-readout" id="tamper-verdict-box">
-              Click above to verify Merkle root consistency or test tamper resistance.
+              Click above to verify SHA-256 event checksum consistency or test tamper detection.
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- STAGE 8: High-Scale Distributed Pipeline -->
+    <!-- STAGE 8: Distributed Pipelines, x402 M2M Broker & Banking Migration -->
     <section class="quantum-stage" id="stage-8" data-stage="8">
       <div class="quantum-card">
         <div class="quantum-narrative">
           <div class="quantum-header-meta">
-            <span class="quantum-stage-num">SYSTEM 03</span>
-            <span class="quantum-formula-badge">Throughput ≥ 15M ev/day · p99 &lt; 12ms · ClickHouse + Kafka</span>
+            <span class="quantum-stage-num">SYSTEM 03 · DISTRIBUTED INFRA</span>
+            <span class="quantum-formula-badge">15M+ ev/day · x402 EIP-3009 MCP · Rust + Node + Python</span>
           </div>
-          <h2 class="quantum-card-title">High-Scale Distributed ETL Pipeline</h2>
+          <h2 class="quantum-card-title">Distributed ETL, x402 M2M Data Broker and Banking Migration</h2>
           <p class="quantum-text">
-            Architected real-time streaming ingestion processing over 15 million operational events daily. Deployed Apache Kafka partitioned topic topologies with consumer group auto-rebalancing, vectorized transformations in Go and Rust, and ultra-dense columnar storage in ClickHouse.
+            High-throughput ingestion processing over 15 million daily telemetry events alongside three autonomous data engines: the <code>scrappy</code> M2M Data Broker enforcing off-chain EIP-3009 USDC micropayments over MCP, the <code>AutoGEO</code> Rust and TypeScript microservice cluster, and an AI core banking migration platform converting Cassiopae schemas to Xloan.
           </p>
-          <span class="margin-annotation" aria-hidden="true">15M+ events/day sustained · p99 under 12ms with zero dropped frames ↓</span>
+          <span class="margin-annotation" aria-hidden="true">15M+ events/day · EIP-3009 x402 settlement on Base · Cassiopae-to-Xloan AI migration ↓</span>
           <div class="quantum-architecture-spec">
-            <strong>STREAMING ARCHITECTURE:</strong> Exactly-once delivery semantics via Kafka transactional producers. Micro-batched vector inserts into ClickHouse MergeTree tables.
+            <strong>SYSTEMS PORTFOLIO:</strong><br>
+            • <strong>15M+ Daily Events ETL:</strong> FastAPI webhooks, Redis backpressure, Airflow DAGs, dbt, and range-partitioned PostgreSQL / ClickHouse<br>
+            • <strong>x402 M2M Data Broker (<code>ztye-scrappy</code>):</strong> MCP server with EIP-3009 / EIP-712 cryptographic payment verification, RFC 3986 Redis stampede locking, and LocalStack SQS Base Mainnet settlement<br>
+            • <strong>AutoGEO Engine (<code>autogeo-audit-engine</code>):</strong> High-concurrency Rust stealth crawler (2 CPU / 2GB cap), Node.js orchestrator, GPT-4o-mini parser, and Remotion video renderer<br>
+            • <strong>Financial Migration Engine (<code>PFE</code>):</strong> 1.7 MB Python and TypeScript system automating schema mapping and transformation rules from Cassiopae to Xloan
           </div>
           <div class="quantum-metrics-grid">
             <div class="quantum-metric-box">
@@ -726,52 +735,56 @@
               <span class="quantum-metric-val">15,000,000+</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">QUERY P99</span>
-              <span class="quantum-metric-val">&lt; 12ms Latency</span>
+              <span class="quantum-metric-label">M2M PROTOCOL</span>
+              <span class="quantum-metric-val">MCP + x402 EIP-3009</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">COMPRESSION</span>
-              <span class="quantum-metric-val">7.2x Ratio</span>
+              <span class="quantum-metric-label">CORE MIGRATION</span>
+              <span class="quantum-metric-val">Cassiopae → Xloan</span>
             </div>
           </div>
           <div class="quantum-actions-row">
-            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('etl');">⤢ Inspect Pipeline Topology</button>
-            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-9').scrollIntoView({ behavior: 'smooth' });">Next: Vision AI ↓</button>
+            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('etl');">⤢ Inspect Systems Topology</button>
+            <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-9').scrollIntoView({ behavior: 'smooth' });">Next: Vision &amp; Clinical AI ↓</button>
           </div>
         </div>
         <div class="quantum-sim-column">
           <div class="quantum-sim-header">
-            <span class="quantum-sim-tag">STREAMING INGESTION</span>
+            <span class="quantum-sim-tag">POLYGLOT CLUSTER TELEMETRY</span>
             <span class="quantum-sim-status">174.2 EPS REAL-TIME</span>
           </div>
           <div class="quantum-architecture-spec" style="font-family:var(--font-mono); font-size:0.75rem;">
-            Kafka Cluster: 6 Brokers · 32 Partitions<br>
-            Lag: 0 ms across all consumer groups<br>
-            Sink: ClickHouse Columnar Cluster (MergeTree)<br>
-            Deduplication: RocksDB Key-Value State
+            Ingestion: FastAPI + Redis Stampede Lock (RFC 3986)<br>
+            M2M Settlement: x402 EIP-3009 (0.05 USDC · Base) + SQS<br>
+            Crawler Node: Rust Async Stealth Worker (2 CPU / 2GB)<br>
+            Banking Engine: Cassiopae → Xloan Semantic Mapper
           </div>
           <div class="quantum-readout">
-            BACKPRESSURE: Active adaptive credit-based flow control. Zero dropped records across peak traffic spikes.
+            BACKPRESSURE: Credit-based flow control with epoch-partitioned PostgreSQL pruning 94% of cold blocks during analytical scans.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- STAGE 9: Multimodal Vision & Miranda AI -->
+    <!-- STAGE 9: Multimodal Vision, Clinical AI & Edge Inference -->
     <section class="quantum-stage" id="stage-9" data-stage="9">
       <div class="quantum-card">
         <div class="quantum-narrative">
           <div class="quantum-header-meta">
-            <span class="quantum-stage-num">SYSTEM 04</span>
-            <span class="quantum-formula-badge">F1 = 0.948 · ViT + TensorRT FP16 Quantization</span>
+            <span class="quantum-stage-num">SYSTEM 04 · APPLIED AI</span>
+            <span class="quantum-formula-badge">VerifyID · Miranda AI · Seha CNAM · YuccaInfo GED · Metal/ONNX</span>
           </div>
-          <h2 class="quantum-card-title">VerifyID and Miranda AI: Multimodal Vision Intake</h2>
+          <h2 class="quantum-card-title">Multimodal Vision, Clinical Triage and Edge Inference</h2>
           <p class="quantum-text">
-            Engineered clinical intake pipelines and computer vision classification engines. Built hybrid Vision Transformer (ViT) and CNN architectures for automated dermatological triage and clinical diagnostic assistance, accompanied by cross-lingual document verification with sub-second optical character extraction.
+            Production identity verification, cardiology decision support, national health-insurance digitization, and local Metal/ONNX inference servers. Built across Next.js 15, FastAPI, Rust <code>granian</code>, PyTorch, and multi-cloud vision providers with strict patient and biometric data sovereignty.
           </p>
-          <span class="margin-annotation" aria-hidden="true">on-device TensorRT FP16 · 500k+ documents verified without WAN leakage ↓</span>
+          <span class="margin-annotation" aria-hidden="true">live clinical &amp; biometric apps · CNAM claims digitization · sub-50ms Metal/ONNX inference ↓</span>
           <div class="quantum-architecture-spec">
-            <strong>LOCAL INFERENCE:</strong> PyTorch models compiled to TensorRT FP16 engine graphs running on edge hardware with strict on-device data sovereignty.
+            <strong>DEPLOYED REPOSITORIES:</strong><br>
+            • <a href="https://id-verification-pearl.vercel.app" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">VerifyID (<code>id-verification</code>) ↗</a>: Real-time ID OCR, 3D camera guidance, facial matching, and liveness across AWS Textract/Rekognition, Azure Face, and Google Vision<br>
+            • <a href="https://miranda-medical-assistant.vercel.app" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">Miranda AI &amp; MedDash ↗</a>: Cardiology AI consultation suite (642 KB TypeScript) paired with <a href="https://med-dash-ruby.vercel.app" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">MedDash</a> practice analytics<br>
+            • <a href="https://github.com/Jojoussef/it-impact-app" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">Seha (<code>it-impact-app</code>) ↗</a> &amp; <a href="https://github.com/Jojoussef/yuccainfo_ged_backend" target="_blank" rel="noopener" style="color:var(--aurora-cyan); text-decoration:none;">YuccaInfo GED ↗</a>: CNAM health-insurance claims platform and Tesseract OCR + Transformer document classifier<br>
+            • <strong>Edge Solver (<code>local-solver</code>):</strong> Rust <code>granian</code> ASGI server running Apple Silicon Metal (<code>mlx-whisper</code>) and ONNX Runtime (<code>ddddocr</code>) in &lt;42ms
           </div>
           <div class="quantum-metrics-grid">
             <div class="quantum-metric-box">
@@ -779,32 +792,32 @@
               <span class="quantum-metric-val">0.948 Score</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">INFERENCE TIME</span>
-              <span class="quantum-metric-val">42ms Latency</span>
+              <span class="quantum-metric-label">EDGE INFERENCE</span>
+              <span class="quantum-metric-val">42ms Metal/ONNX</span>
             </div>
             <div class="quantum-metric-box">
-              <span class="quantum-metric-label">PROCESSED DOCS</span>
-              <span class="quantum-metric-val">500,000+ Verified</span>
+              <span class="quantum-metric-label">PRODUCTION APPS</span>
+              <span class="quantum-metric-val">6 Live Systems</span>
             </div>
           </div>
           <div class="quantum-actions-row">
-            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('verifyid');">⤢ Inspect Vision Architecture</button>
+            <button type="button" class="btn-quantum-inspect" onclick="if(window.workspaceEngine) window.workspaceEngine.openSystem('verifyid');">⤢ Inspect Vision &amp; Clinical Suite</button>
             <button type="button" class="btn-quantum-link" onclick="document.getElementById('stage-10').scrollIntoView({ behavior: 'smooth' });">Next: AdS Bulk ↓</button>
           </div>
         </div>
         <div class="quantum-sim-column">
           <div class="quantum-sim-header">
-            <span class="quantum-sim-tag">INFERENCE BENCHMARKS</span>
-            <span class="quantum-sim-status">TENSORRT FP16</span>
+            <span class="quantum-sim-tag">INFERENCE &amp; CLINICAL STACK</span>
+            <span class="quantum-sim-status">METAL · ONNX · MULTI-CLOUD</span>
           </div>
           <div class="quantum-architecture-spec" style="font-family:var(--font-mono); font-size:0.75rem;">
-            Model Backbone: ViT-B/16 + ConvNeXt Tiny<br>
-            Quantization: Int8 Calibrated TensorRT<br>
-            Batch Size: 1 (Real-time clinical flow)<br>
-            Zero-Shot OCR Extraction: PaddleOCR + TrOCR
+            Biometric Failover: AWS Rekognition · Azure Face · GCP Vision<br>
+            Edge Runtime: Granian (Rust ASGI) + ONNX Runtime + MLX Metal<br>
+            Document GED: Django REST + Tesseract OCR + Transformers<br>
+            E-Commerce Core: TuniCommerce (Medusa + Next.js 15 Storefront)
           </div>
           <div class="quantum-readout">
-            PRIVACY COMPLIANCE: Zero biometric telemetry sent over public WAN. Fully compliant with HIPAA and GDPR standards.
+            SOVEREIGN EXECUTION: Local Metal and ONNX inference eliminates external API round-trips while preserving HIPAA and GDPR compliance.
           </div>
         </div>
       </div>
@@ -977,7 +990,7 @@
     </button>
     <button type="button" class="constellation-jump" data-sys="zizkadb">
       <span class="num">02</span>
-      <span>ZizkaDB</span>
+      <span>OSS &amp; ZizkaDB</span>
     </button>
     <button type="button" class="constellation-jump" data-sys="verifyid">
       <span class="num">03</span>
@@ -985,7 +998,7 @@
     </button>
     <button type="button" class="constellation-jump" data-sys="etl">
       <span class="num">04</span>
-      <span>15M+ Pipeline</span>
+      <span>15M+ &amp; x402</span>
     </button>
     <button type="button" class="constellation-jump" data-sys="manim">
       <span class="num">05</span>
@@ -1016,9 +1029,9 @@
 
       <nav class="ws-tabs" aria-label="System Workspaces">
         <button type="button" class="ws-tab-btn active" data-sys="esim">01 esim-arbitrage</button>
-        <button type="button" class="ws-tab-btn" data-sys="zizkadb">02 zizkadb</button>
+        <button type="button" class="ws-tab-btn" data-sys="zizkadb">02 oss-zizkadb</button>
         <button type="button" class="ws-tab-btn" data-sys="verifyid">03 vision-health</button>
-        <button type="button" class="ws-tab-btn" data-sys="etl">04 etl-pipeline</button>
+        <button type="button" class="ws-tab-btn" data-sys="etl">04 etl-x402</button>
         <button type="button" class="ws-tab-btn" data-sys="manim">05 manim-lab</button>
         <button type="button" class="ws-tab-btn" data-sys="manifesto">06 manifesto</button>
         <button type="button" class="ws-tab-btn" data-sys="communicator">07 communicator</button>
@@ -1111,197 +1124,196 @@
       </div>
 
       <!-- ====================================================================
-           SYSTEM 2: ZizkaDB (EU AI Act Article 12 Audit Database)
+           SYSTEM 2: Open Source Contributions & ZizkaDB Audit Infrastructure
            ==================================================================== -->
       <div class="system-view" id="view-zizkadb">
-                <div class="pane-architecture">
+        <div class="pane-architecture">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="tag-pill" style="color:var(--aurora-violet); border-color:var(--border-glow-violet);">EU AI ACT COMPLIANCE</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ARTICLE 12 · HIGH RISK AI</span>
+            <span class="tag-pill" style="color:var(--aurora-violet); border-color:var(--border-glow-violet);">UPSTREAM OPEN SOURCE</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">5 ECOSYSTEMS · 15 GATES</span>
           </div>
 
           <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
-            ZizkaDB: Cryptographic Audit Trail
+            Open Source Contributions &amp; ZizkaDB
           </h3>
-          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1.5rem;">
-            Cryptographic ledger delivering immutable proof logs for High-Risk AI Systems. Hashes model inferences and decision deltas into a SHA-256 Merkle tree DAG with zero inference overhead.
+          <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5; margin-bottom:1.25rem;">
+            Grouped upstream engineering contributions spanning EU AI Act Article 12 cryptographic audit databases, reactive visualization frameworks, LLM safety benchmarks, enterprise document parsers, and CNCF identity providers.
           </p>
 
-          <div class="quantum-architecture-spec" style="margin-bottom:1.5rem;">
-            <strong>COMPLIANCE INVARIANTS:</strong><br>
-            • Article 12 Compliance: Automated logging of operational events<br>
-            • Cryptographic Standard: Native Web Crypto SHA-256 Merkle tree<br>
-            • Chain Verification: Zero tamper tolerance with strict chain-of-custody<br>
-            • Overhead: Sub-millisecond hashing pipeline
+          <div class="quantum-architecture-spec" style="margin-bottom:1.25rem;">
+            <strong>VERIFIED UPSTREAM PULL REQUESTS:</strong><br>
+            • <a href="https://github.com/holoviz/panel/pull/8901" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">holoviz/panel #8901 (MERGED)</a>: Guard <code>DateRangeSlider._sync_values</code> against <code>value=None</code> before tuple unpacking<br>
+            • <a href="https://github.com/UKGovernmentBEIS/inspect_ai/pull/5987" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">UKGovernmentBEIS/inspect_ai #5987 (APPROVED)</a>: Reject empty model completions in <code>model_graded_qa</code> and <code>choice</code> scorers<br>
+            • <a href="https://github.com/ZIZKA-AI-SL/ZizkaDB/pull/231" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">ZIZKA-AI-SL/ZizkaDB #231</a>: Bind <code>actor_id</code>, <code>role</code>, <code>organization_id</code>, and <code>prev_hash</code> into SHA-256 event checksums + add <code>/verify</code> endpoints<br>
+            • <a href="https://github.com/docling-project/docling/pull/4993" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">docling-project/docling #4993 (11/11 CI)</a>: Preserve nested list counters across empty Word paragraphs<br>
+            • <a href="https://github.com/dexidp/dex/pull/5100" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">dexidp/dex #5100 (CI PASS)</a>: Return typed <code>UserNotInRequiredGroupsError</code> in GitHub OIDC connector
           </div>
 
           <div style="margin-top:auto;">
             <button type="button" class="btn-quantum-inspect" style="width:100%; justify-content:center;" onclick="if(window.workspaceEngine) window.workspaceEngine.close(); document.getElementById('stage-7').scrollIntoView({ behavior: 'smooth' });">
-              ✦ Scroll to Live Simulation Stage
+              ✦ Scroll to Live Verification Stage
             </button>
           </div>
         </div>
 
         <div class="pane-readme">
-          <div class="terminal-cmd-bar">$ glow ZIZKADB.md --compliance=EU_AI_ACT</div>
-          <h3>Deterministic AI Audit Infrastructure</h3>
+          <div class="terminal-cmd-bar">$ glow OPEN_SOURCE_AND_ZIZKADB.md</div>
+          <h3>Upstream Open Source &amp; Autonomous Quality Gate Engine</h3>
           <p>
-            As autonomous AI agents execute financial trades, medical intakes, and enterprise workflows, unverified black-box decisions pose existential legal and operational risks.
+            Every upstream contribution is validated through a custom 15-gate verification pipeline (<code>OSs-Contribution</code> / <code>oss-agent</code>) enforcing minimal diff surfaces, mandatory unit test deltas, repository policy compliance, and DCO sign-offs.
           </p>
 
-          <h4>Core Capabilities</h4>
+          <h4>Technical Highlights by Ecosystem</h4>
           <ul>
-            <li><strong>Tamper-Evident Merkle Chains:</strong> Every tool invocation, LLM completion, and state transition is cryptographically chained and checksummed.</li>
-            <li><strong>Time-Travel Debugging:</strong> Step backwards through multi-agent collaboration states to isolate hallucinations or decision drift.</li>
-            <li><strong>MCP Server Integration:</strong> Native Model Context Protocol support allows seamless logging for Claude Desktop, Gemini, and custom agents.</li>
+            <li><strong>ZIZKA-AI-SL/ZizkaDB (<a href="https://github.com/ZIZKA-AI-SL/ZizkaDB/pull/231" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">PR #231</a>):</strong> Closed an EU AI Act Article 12 audit integrity gap where <code>actor_id</code>, <code>role</code>, <code>organization_id</code>, and <code>prev_hash</code> were excluded from event SHA-256 checksums, and exposed <code>GET /events/{id}/verify</code> and <code>GET /rows/{table}/{pk}/verify</code>.</li>
+            <li><strong>UKGovernmentBEIS/inspect_ai (<a href="https://github.com/UKGovernmentBEIS/inspect_ai/pull/5987" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">PR #5987</a>):</strong> Approved by two core maintainers at the UK AI Safety Institute. Fixed false-positive grading where empty completions bypassed evaluation criteria.</li>
+            <li><strong>holoviz/panel (<a href="https://github.com/holoviz/panel/pull/8901" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">PR #8901</a>):</strong> Merged upstream into <code>main</code>. Fixed reactive parameter synchronization crashes when clearing date range bounds.</li>
+            <li><strong>docling-project/docling (<a href="https://github.com/docling-project/docling/pull/4993" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">PR #4993</a>) &amp; dexidp/dex (<a href="https://github.com/dexidp/dex/pull/5100" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">PR #5100</a>):</strong> Document structure preservation in IBM Research's Docling parser and group-authorization error classification in CNCF Dex (Go).</li>
           </ul>
 
           <div class="dep-chip-row">
-            <span class="dep-chip">Python SDK</span>
-            <span class="dep-chip">TypeScript</span>
-            <span class="dep-chip">MCP Tools</span>
-            <span class="dep-chip">SQLite / PostgreSQL</span>
+            <span class="dep-chip">Python</span>
+            <span class="dep-chip">Go (CNCF Dex)</span>
+            <span class="dep-chip">SHA-256 Audit</span>
+            <span class="dep-chip">EU AI Act Art. 12</span>
+            <span class="dep-chip">15-Gate CI Engine</span>
           </div>
-
-          <p style="margin-top:1.5rem; font-family:var(--font-mono); font-size:0.8125rem;">
-            <a href="https://github.com/Jojoussef/ZizkaDB" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan); text-decoration:none;">
-              github.com/Jojoussef/ZizkaDB ↗
-            </a>
-          </p>
         </div>
       </div>
 
       <!-- ====================================================================
-           SYSTEM 3: VerifyID & Miranda AI (Vision & Clinical AI)
+           SYSTEM 3: Multimodal Vision, Clinical AI & Edge Inference
            ==================================================================== -->
       <div class="system-view" id="view-verifyid">
         <div class="pane-simulator">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="tag-pill" style="color:var(--aurora-teal); border-color:var(--border-glow-teal);">COMPUTER VISION & HEALTH</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">LIVE PRODUCTION APPS</span>
+            <span class="tag-pill" style="color:var(--aurora-teal); border-color:var(--border-glow-teal);">VISION · CLINICAL · EDGE</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">6 PRODUCTION SYSTEMS</span>
           </div>
 
           <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
-            VerifyID & Miranda AI Medical Assistant
+            VerifyID, Miranda AI, Seha &amp; Edge Solver
           </h3>
           <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
-            Two deployed production systems demonstrating computer vision document verification and clinical LLM workflows.
+            Deployed clinical, identity verification, national health-insurance, and local hardware-accelerated inference systems.
           </p>
 
           <div class="sim-box">
-            <h4 style="color:#fff; font-size:1rem; margin-bottom:0.5rem;">1. VerifyID Platform</h4>
-            <p style="font-size:0.8125rem; color:var(--text-dim); margin-bottom:0.75rem;">
-              Automated document verification with real-time OCR, 3D camera positioning guidance, and facial liveness matching. Built with multi-cloud failover (AWS, Azure AI Vision, GCP).
+            <h4 style="color:#fff; font-size:0.95rem; margin-bottom:0.35rem;">1. VerifyID Biometric Platform (<code>id-verification</code>)</h4>
+            <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:0.5rem;">
+              Real-time passport and ID OCR, 3D camera guidance, facial matching, and liveness detection with automatic failover across AWS Textract/Rekognition, Azure Face API, and Google Vision.
             </p>
-            <a href="https://id-verification-pearl.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8125rem;">
+            <a href="https://id-verification-pearl.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8rem;">
               <span>Open VerifyID Live App ↗</span>
             </a>
 
-            <div style="height:1px; background:rgba(255,255,255,0.08); margin:1.25rem 0;"></div>
+            <div style="height:1px; background:rgba(255,255,255,0.08); margin:0.85rem 0;"></div>
 
-            <h4 style="color:#fff; font-size:1rem; margin-bottom:0.5rem;">2. Miranda AI (Cardiology Assistant)</h4>
-            <p style="font-size:0.8125rem; color:var(--text-dim); margin-bottom:0.75rem;">
-              Intelligent clinical scheduling and triage web application. Features dual-mode consultation (quick vs. deep analysis), HIPAA-compliant file parsing, and Stripe booking.
+            <h4 style="color:#fff; font-size:0.95rem; margin-bottom:0.35rem;">2. Miranda AI Cardiology &amp; MedDash (<code>miranda-medical-assistant</code>)</h4>
+            <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:0.5rem;">
+              Cardiology consultation, medical file analysis, and appointment triage in Next.js 15 (642 KB TypeScript), paired with the <a href="https://med-dash-ruby.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">MedDash</a> role-based clinical analytics suite.
             </p>
-            <a href="https://miranda-medical-assistant.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8125rem;">
+            <a href="https://miranda-medical-assistant.vercel.app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8rem;">
               <span>Open Miranda AI Live App ↗</span>
+            </a>
+
+            <div style="height:1px; background:rgba(255,255,255,0.08); margin:0.85rem 0;"></div>
+
+            <h4 style="color:#fff; font-size:0.95rem; margin-bottom:0.35rem;">3. Seha CNAM Claims (<code>it-impact-app</code>) &amp; YuccaInfo GED</h4>
+            <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:0.4rem;">
+              AI platform digitizing Tunisian CNAM health-insurance claims alongside a Django REST + Next.js enterprise document manager using Tesseract OCR and HuggingFace Transformers.
+            </p>
+            <a href="https://github.com/Jojoussef/it-impact-app" target="_blank" rel="noopener noreferrer" class="project-btn" style="font-size:0.8rem;">
+              <span>Inspect Seha Repository ↗</span>
             </a>
           </div>
         </div>
 
         <div class="pane-readme">
-          <div class="terminal-cmd-bar">$ glow MULTIMODAL_AI.md</div>
-          <h3>Multimodal AI & Clinical Triage Engineering</h3>
+          <div class="terminal-cmd-bar">$ glow APPLIED_VISION_AND_EDGE.md</div>
+          <h3>Edge Metal/ONNX Inference &amp; Full-Stack Platforms</h3>
           <p>
-            Architected to eliminate manual document validation latency and simplify clinical patient intake through deterministic, privacy-first architectures.
+            Built to eliminate cloud round-trip latency and protect sensitive biometric and medical records through on-device acceleration and resilient multi-provider routing.
           </p>
 
-          <h4>Engineering Highlights</h4>
+          <h4>Additional Local &amp; Private Repositories</h4>
           <ul>
-            <li><strong>Liveness & Anti-Spoofing:</strong> Micro-motion optical flow analysis verifying physical presence before biometric enrollment.</li>
-            <li><strong>Multi-Cloud Failover:</strong> Dynamic routing across AWS Rekognition, Azure AI Vision, and Google Cloud ensuring 99.9% uptime.</li>
-            <li><strong>Doctor Dashboard (MedDash):</strong> Accompanied by a complete practice management suite built with Next.js, Firebase, and PostgreSQL (<a href="https://med-dash-ruby.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">med-dash-ruby.vercel.app</a>).</li>
+            <li><strong>Local Edge Solver (<code>local-solver</code>):</strong> High-speed local challenge and verification microservice running on <code>granian</code> (Rust ASGI HTTP server) and FastAPI. Combines Apple Silicon Metal (<code>mlx-whisper</code>) and CUDA (<code>faster-whisper</code>) audio transcription with ONNX Runtime (<code>ddddocr</code>) optical recognition in under 42ms.</li>
+            <li><strong>YuccaInfo Smart GED (<a href="https://github.com/Jojoussef/yuccainfo_ged_backend" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">Backend</a> &amp; <a href="https://github.com/Jojoussef/yuccainfo_ged_frontend" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-cyan);">Frontend</a>):</strong> Automated OCR extraction, zero-shot Transformer document classification, and PostgreSQL full-text indexing.</li>
+            <li><strong>TuniCommerce (<code>TuniCommerce</code>):</strong> Full-stack headless e-commerce architecture pairing a Medusa commerce engine (<code>tunicommerce-medusa-backend</code>) with a Next.js 15 storefront (<code>tunicommerce-next-storefront</code>).</li>
           </ul>
 
           <div class="dep-chip-row">
             <span class="dep-chip">Next.js 15</span>
-            <span class="dep-chip">Azure AI Vision</span>
-            <span class="dep-chip">GPT-4o-mini</span>
-            <span class="dep-chip">Stripe</span>
-            <span class="dep-chip">Firebase</span>
+            <span class="dep-chip">Granian Rust ASGI</span>
+            <span class="dep-chip">ONNX Runtime</span>
+            <span class="dep-chip">MLX Metal</span>
+            <span class="dep-chip">Django REST</span>
+            <span class="dep-chip">Medusa</span>
           </div>
         </div>
       </div>
 
       <!-- ====================================================================
-           SYSTEM 4: High-Scale ETL Pipeline (15M+ Events/Day)
+           SYSTEM 4: Distributed ETL, x402 M2M Broker & Banking Migration
            ==================================================================== -->
       <div class="system-view" id="view-etl">
         <div class="pane-simulator">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="tag-pill" style="color:var(--aurora-amber); border-color:rgba(245, 158, 11, 0.4);">DATA INFRASTRUCTURE</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">$8.2K+ UPWORK CONTRACT · 406 HOURS</span>
+            <span class="tag-pill" style="color:var(--aurora-amber); border-color:rgba(245, 158, 11, 0.4);">DISTRIBUTED SYSTEMS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">15M+ EV/DAY · MCP x402 · RUST</span>
           </div>
 
           <h3 style="font-size:1.4rem; font-weight:700; color:#fff; margin:0.75rem 0 0.5rem;">
-            15M+ Daily Events ETL Infrastructure
+            15M+ ETL, x402 M2M Broker &amp; Banking Migration
           </h3>
           <p style="font-size:0.875rem; color:var(--text-dim); line-height:1.5;">
-            Production analytics engine built for an enterprise analytics SaaS. Transforms raw telemetry streams into sub-second aggregated dashboards.
+            Four production data systems spanning high-volume event streaming, cryptographic agent-to-agent data brokerage, polyglot Rust/Node crawling, and core banking schema migration.
           </p>
 
           <div class="sim-box">
-            <h4 style="color:#fff; font-size:0.95rem; margin-bottom:0.75rem; font-family:var(--font-mono);">
-              Dataflow Architecture Schema:
+            <h4 style="color:#fff; font-size:0.9rem; margin-bottom:0.65rem; font-family:var(--font-mono);">
+              Engineered Systems Matrix:
             </h4>
-            <div style="display:flex; flex-direction:column; gap:0.5rem; font-family:var(--font-mono); font-size:0.75rem;">
+            <div style="display:flex; flex-direction:column; gap:0.5rem; font-family:var(--font-mono); font-size:0.74rem;">
               <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
-                1. Ingestion: FastAPI Webhook & Redis Queue (Buffer & Backpressure)
+                1. <strong>15M+ Daily Events ETL:</strong> FastAPI Webhooks → Redis Backpressure → Airflow DAGs → dbt → Epoch-Partitioned PostgreSQL ($8.2K+ Upwork contract · 406 hrs)
               </div>
               <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
-                2. Orchestration: Apache Airflow DAGs (Hourly micro-batches & daily rollups)
+                2. <strong>x402 M2M Data Broker (<code>ztye-scrappy</code>):</strong> MCP Server → HTTP 402 Challenge → EIP-3009 / EIP-712 Signed USDC Auth → RFC 3986 Redis Cache → LocalStack SQS Base Mainnet Settlement
               </div>
               <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
-                3. Transformation: dbt models with declarative incremental materializations
+                3. <strong>AutoGEO Audit Cluster (<code>autogeo-audit-engine</code>):</strong> Node/TS Orchestrator → Rust Stealth Crawler (2 CPU / 2GB cap) → GPT-4o-mini Parser → Remotion Video Renderer + S3
               </div>
               <div style="padding:0.5rem; background:rgba(255,255,255,0.03); border-radius:0.35rem; border:1px solid rgba(255,255,255,0.06);">
-                4. Storage: PostgreSQL with declarative time-series range partitioning
+                4. <strong>Core Banking Migration (<code>PFE</code>):</strong> Cassiopae → Xloan AI Schema Analyzer, Semantic Mapping Workshop Engine, and Automated Anomaly Validator (1.7 MB Python/TS)
               </div>
-            </div>
-          </div>
-
-          <div style="margin-top:1.5rem;">
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Open-Source Upstream Footprint:</span>
-            <div class="dep-chip-row">
-              <span class="dep-chip">HoloViz panel</span>
-              <span class="dep-chip">IBM docling</span>
-              <span class="dep-chip">UK AISI inspect_ai</span>
-              <span class="dep-chip">Dex OIDC</span>
-              <span class="dep-chip">Google Blockly</span>
             </div>
           </div>
         </div>
 
         <div class="pane-readme">
-          <div class="terminal-cmd-bar">$ glow PIPELINE_ARCHITECTURE.md</div>
-          <h3>High-Throughput Asynchronous Engineering</h3>
+          <div class="terminal-cmd-bar">$ glow DISTRIBUTED_ARCHITECTURES.md</div>
+          <h3>Cryptographic M2M Settlement &amp; High-Scale Ingestion</h3>
           <p>
-            When telemetry reaches millions of events daily, naive CRUD database writes fail. This system resolved locking bottlenecks and delivered deterministic query performance.
+            From autonomous AI agents settling micropayments on Base Mainnet to financial institutions migrating core lending portfolios, these architectures enforce strict determinism under load.
           </p>
 
-          <h4>Key Technical Wins</h4>
+          <h4>Deep-Dive Architecture Specs</h4>
           <ul>
-            <li><strong>Partitioning & Pruning:</strong> Partitioned Postgres tables by epoch ranges, allowing the query planner to skip 94% of storage blocks during analytical scans.</li>
-            <li><strong>Worker Concurrency:</strong> Tuned Celery event loops over RabbitMQ, achieving zero dropped payloads during burst traffic spikes.</li>
-            <li><strong>dbt Data Quality Tests:</strong> Automated regression assertions ensuring zero financial discrepancies across hourly client metric rollups.</li>
+            <li><strong>Agent-to-Agent x402 Protocol (<code>ztye-scrappy</code>):</strong> Exposes real-time web extraction over the Model Context Protocol (MCP). Unpaid calls trigger a structured 402 challenge. Agents then sign an off-chain EIP-3009 authorization (0.05 USDC on Base) verified cryptographically before asynchronous SQS batch settlement and S3 cold-storage snapshotting.</li>
+            <li><strong>Cassiopae to Xloan Financial Migration (<code>PFE</code>):</strong> Replaces manual banking migration workshops with AI-assisted semantic field matching, automated SQL/Python transformation synthesis, and dry-run integrity assertions.</li>
+            <li><strong>Partition Pruning at 15M+ Events/Day:</strong> Epoch-range table partitioning in PostgreSQL skips 94% of cold storage blocks during analytical rollups, paired with Celery/RabbitMQ backpressure.</li>
           </ul>
 
           <div class="dep-chip-row">
+            <span class="dep-chip">Rust</span>
+            <span class="dep-chip">MCP &amp; x402 EIP-3009</span>
             <span class="dep-chip">Apache Airflow</span>
             <span class="dep-chip">dbt</span>
-            <span class="dep-chip">PostgreSQL</span>
-            <span class="dep-chip">Redis</span>
-            <span class="dep-chip">Docker</span>
+            <span class="dep-chip">PostgreSQL 16</span>
+            <span class="dep-chip">Redis 7</span>
+            <span class="dep-chip">LocalStack S3/SQS</span>
           </div>
         </div>
       </div>
@@ -2098,9 +2110,9 @@
         '04 · Ising Criticality T_c',
         '05 · Sine-Gordon Solitons',
         '06 · eSIM Arbitrage Engine',
-        '07 · ZizkaDB Article 12 Audit',
-        '08 · 15M+ Streaming Pipeline',
-        '09 · Multimodal Vision AI',
+        '07 · Open Source & ZizkaDB',
+        '08 · 15M+ ETL & x402 Broker',
+        '09 · Vision, Clinical & Edge AI',
         '10 · Holographic AdS · ER=EPR',
         '11 · Amplituhedron Y = C·Z',
         '12 · Celestial Terminal',

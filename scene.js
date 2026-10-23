@@ -731,9 +731,9 @@ class CelestialObservatory {
     // Subtle harmonic anchors along the scroll spline (no solid 3D boxes or polyhedra crowding space)
     const nodeDefs = [
       { id: 'esim', title: 'eSIM Arbitrage Optimizer', category: 'Spot FX & Price Inversions', position: new THREE.Vector3(-14, 3, 6), color: 0x38bdf8, soundIdx: 0 },
-      { id: 'zizkadb', title: 'ZizkaDB AI Audit Trail', category: 'EU AI Act Article 12 Compliance', position: new THREE.Vector3(14, 5, -4), color: 0xa855f7, soundIdx: 1 },
-      { id: 'verifyid', title: 'VerifyID & Miranda AI', category: 'Multimodal Vision & Clinical Intake', position: new THREE.Vector3(-9, -7, -10), color: 0x2dd4bf, soundIdx: 2 },
-      { id: 'etl', title: 'High-Scale ETL Pipeline', category: '15M+ Events/Day Architecture', position: new THREE.Vector3(10, -6, 11), color: 0xf59e0b, soundIdx: 3 }
+      { id: 'zizkadb', title: 'Open Source & ZizkaDB', category: '5 Upstream PRs & Article 12 Audit', position: new THREE.Vector3(14, 5, -4), color: 0xa855f7, soundIdx: 1 },
+      { id: 'verifyid', title: 'VerifyID, Miranda & Seha', category: 'Vision, Clinical & Metal/ONNX Edge', position: new THREE.Vector3(-9, -7, -10), color: 0x2dd4bf, soundIdx: 2 },
+      { id: 'etl', title: '15M+ ETL & x402 Broker', category: 'Distributed Pipelines & Banking Migration', position: new THREE.Vector3(10, -6, 11), color: 0xf59e0b, soundIdx: 3 }
     ];
 
     nodeDefs.forEach((def) => {
