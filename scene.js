@@ -72,6 +72,7 @@ class CelestialObservatory {
     this.scene.add(pointLightViolet);
 
     // 4. Build Core Celestial & Quantum Spacetime Elements
+    this.pointTexture = this.createRadialPointTexture();
     this.buildCelestialCore();
     this.buildParticleManifold();
     this.buildQuantumVacuum();
@@ -88,6 +89,25 @@ class CelestialObservatory {
     requestAnimationFrame(this.animate);
   }
 
+  createRadialPointTexture() {
+    const size = 64;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const half = size / 2;
+    const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.7)');
+    grad.addColorStop(0.7, 'rgba(255, 255, 255, 0.18)');
+    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
+  }
+
   buildCelestialCore() {
     this.currentTopology = 'torus';
 
@@ -100,19 +120,19 @@ class CelestialObservatory {
       emissiveIntensity: 0.6,
       wireframe: true,
       transparent: true,
-      opacity: 0.35
+      opacity: 0.28
     });
     this.coreKnot = new THREE.Mesh(knotGeom, knotMat);
     this.torusGroup.add(this.coreKnot);
 
-    const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.25 });
-    const ringGeom1 = new THREE.RingGeometry(6.5, 6.7, 64);
+    const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.18 });
+    const ringGeom1 = new THREE.RingGeometry(6.5, 6.62, 64);
     this.ring1 = new THREE.Mesh(ringGeom1, ringMat1);
     this.ring1.rotation.x = Math.PI * 0.35;
     this.torusGroup.add(this.ring1);
 
-    const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.2 });
-    const ringGeom2 = new THREE.RingGeometry(8.2, 8.4, 64);
+    const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.15 });
+    const ringGeom2 = new THREE.RingGeometry(8.2, 8.32, 64);
     this.ring2 = new THREE.Mesh(ringGeom2, ringMat2);
     this.ring2.rotation.y = Math.PI * 0.25;
     this.ring2.rotation.x = -Math.PI * 0.2;
@@ -195,10 +215,12 @@ class CelestialObservatory {
     cliffGeom.setAttribute('color', new THREE.BufferAttribute(cliffColors, 3));
 
     const cliffMat = new THREE.PointsMaterial({
-      size: 0.28,
+      size: 0.38,
+      map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.75,
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
     this.cliffordMesh = new THREE.Points(cliffGeom, cliffMat);
@@ -269,7 +291,7 @@ class CelestialObservatory {
       emissiveIntensity: 0.6,
       wireframe: true,
       transparent: true,
-      opacity: 0.45
+      opacity: 0.35
     });
     this.amplInner = new THREE.Mesh(innerGeom, innerMat);
     this.amplituhedronGroup.add(this.amplInner);
@@ -278,10 +300,12 @@ class CelestialObservatory {
     const vertexPointers = new THREE.Points(
       this.amplGeom,
       new THREE.PointsMaterial({
-        size: 0.6,
+        size: 0.85,
+        map: this.pointTexture,
         color: 0x38bdf8,
         transparent: true,
         opacity: 0.9,
+        depthWrite: false,
         blending: THREE.AdditiveBlending
       })
     );
@@ -444,7 +468,7 @@ class CelestialObservatory {
   }
 
   buildParticleManifold() {
-    const particleCount = 1800;
+    const particleCount = 1200;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -455,8 +479,8 @@ class CelestialObservatory {
 
     for (let i = 0; i < particleCount; i++) {
       const theta = Math.random() * Math.PI * 2;
-      const radius = 6 + Math.random() * 26;
-      const y = (Math.random() - 0.5) * 22;
+      const radius = 6 + Math.random() * 28;
+      const y = (Math.random() - 0.5) * 24;
 
       positions[i * 3] = Math.cos(theta) * radius;
       positions[i * 3 + 1] = y;
@@ -472,10 +496,12 @@ class CelestialObservatory {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.22,
+      size: 0.34,
+      map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.7,
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
 
@@ -484,7 +510,7 @@ class CelestialObservatory {
   }
 
   buildQuantumVacuum() {
-    this.vacuumCount = 2400;
+    this.vacuumCount = 1600;
     const geom = new THREE.BufferGeometry();
     const pos = new Float32Array(this.vacuumCount * 3);
     const colors = new Float32Array(this.vacuumCount * 3);
@@ -527,10 +553,12 @@ class CelestialObservatory {
     geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: 0.28,
+      size: 0.38,
+      map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.78,
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
 
@@ -539,13 +567,13 @@ class CelestialObservatory {
 
     // Virtual particle dipole pairs pool
     this.virtualPairs = [];
-    const pairCount = 36;
+    const pairCount = 28;
     for (let p = 0; p < pairCount; p++) {
       const pairGroup = new THREE.Group();
       
       const particleMatPlus = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0 });
       const particleMatMinus = new THREE.MeshBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0 });
-      const sphereGeom = new THREE.SphereGeometry(0.2, 8, 8);
+      const sphereGeom = new THREE.SphereGeometry(0.16, 12, 12);
 
       const pPlus = new THREE.Mesh(sphereGeom, particleMatPlus);
       const pMinus = new THREE.Mesh(sphereGeom, particleMatMinus);
@@ -575,7 +603,7 @@ class CelestialObservatory {
   }
 
   buildEntanglementTensorNetwork() {
-    this.tensorLineCount = 180;
+    this.tensorLineCount = 110;
     const geom = new THREE.BufferGeometry();
     const positions = new Float32Array(this.tensorLineCount * 2 * 3);
     geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -583,7 +611,7 @@ class CelestialObservatory {
     const mat = new THREE.LineBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.18,
       blending: THREE.AdditiveBlending
     });
 
@@ -592,7 +620,7 @@ class CelestialObservatory {
   }
 
   buildWavefunctionClouds() {
-    this.wavefunctionCount = 950;
+    this.wavefunctionCount = 700;
     const geom = new THREE.BufferGeometry();
     const pos = new Float32Array(this.wavefunctionCount * 3);
     const colors = new Float32Array(this.wavefunctionCount * 3);
@@ -626,10 +654,12 @@ class CelestialObservatory {
     geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: 0.32,
+      size: 0.42,
+      map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.55,
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
 
@@ -680,16 +710,16 @@ class CelestialObservatory {
     this.targetScrollProgress = Math.max(0, Math.min(1, progress));
 
     // Dynamic topology shifts along the quantum continuum
-    if (this.targetScrollProgress > 0.90) {
+    if (this.targetScrollProgress > 0.85) {
       if (this.currentTopology !== 'amplituhedron') this.switchTopology('amplituhedron');
-    } else if (this.targetScrollProgress > 0.78 && this.targetScrollProgress <= 0.90) {
+    } else if (this.targetScrollProgress > 0.72 && this.targetScrollProgress <= 0.85) {
       if (this.currentTopology !== 'poincare') this.switchTopology('poincare');
-    } else if (this.targetScrollProgress > 0.32 && this.targetScrollProgress <= 0.48) {
+    } else if (this.targetScrollProgress > 0.45 && this.targetScrollProgress <= 0.72) {
+      if (this.currentTopology !== 'clifford') this.switchTopology('clifford');
+    } else if (this.targetScrollProgress > 0.22 && this.targetScrollProgress <= 0.45) {
       if (this.currentTopology !== 'lorenz') this.switchTopology('lorenz');
     } else {
-      if (!['torus', 'amplituhedron', 'poincare', 'lorenz'].includes(this.currentTopology)) {
-        this.switchTopology('torus');
-      }
+      if (this.currentTopology !== 'torus') this.switchTopology('torus');
     }
 
     if (window.soundEngine && typeof window.soundEngine.modulateScroll === 'function') {
@@ -698,160 +728,38 @@ class CelestialObservatory {
   }
 
   buildInteractiveNodes() {
-    // 12 Celestial Nodes representing Youssef's core systems & conceptionist continuum
+    // Subtle harmonic anchors along the scroll spline (no solid 3D boxes or polyhedra crowding space)
     const nodeDefs = [
-      {
-        id: 'esim',
-        title: 'eSIM Arbitrage Optimizer',
-        category: 'Spot FX & Price Inversions',
-        position: new THREE.Vector3(-14, 3, 6),
-        geometry: new THREE.OctahedronGeometry(2.0, 1),
-        color: 0x38bdf8,
-        emissive: 0x0284c7,
-        soundIdx: 0
-      },
-      {
-        id: 'zizkadb',
-        title: 'ZizkaDB AI Audit Trail',
-        category: 'EU AI Act Article 12 Compliance',
-        position: new THREE.Vector3(14, 5, -4),
-        geometry: new THREE.BoxGeometry(2.4, 3.6, 2.4),
-        color: 0xa855f7,
-        emissive: 0x7e22ce,
-        soundIdx: 1
-      },
-      {
-        id: 'verifyid',
-        title: 'VerifyID & Miranda AI',
-        category: 'Multimodal Vision & Clinical Intake',
-        position: new THREE.Vector3(-9, -7, -10),
-        geometry: new THREE.DodecahedronGeometry(2.1),
-        color: 0x2dd4bf,
-        emissive: 0x0f766e,
-        soundIdx: 2
-      },
-      {
-        id: 'etl',
-        title: 'High-Scale ETL Pipeline',
-        category: '15M+ Events/Day Architecture',
-        position: new THREE.Vector3(10, -6, 11),
-        geometry: new THREE.TorusGeometry(1.8, 0.6, 16, 48),
-        color: 0xf59e0b,
-        emissive: 0xb45309,
-        soundIdx: 3
-      },
-      {
-        id: 'feynman',
-        title: 'Feynman Path Integrals',
-        category: 'Phase Interference & Least Action',
-        position: new THREE.Vector3(7, 4, 18),
-        geometry: new THREE.TorusGeometry(1.9, 0.4, 16, 40),
-        color: 0x38bdf8,
-        emissive: 0x0284c7,
-        soundIdx: 2
-      },
-      {
-        id: 'ising',
-        title: 'Conformal Ising Lattice',
-        category: 'Scale Invariance & Criticality',
-        position: new THREE.Vector3(12, -3, 14),
-        geometry: new THREE.BoxGeometry(2.2, 2.2, 2.2),
-        color: 0xf59e0b,
-        emissive: 0xb45309,
-        soundIdx: 3
-      },
-      {
-        id: 'soliton',
-        title: 'Sine-Gordon Solitons',
-        category: 'Topological Charge & Pendulum Waves',
-        position: new THREE.Vector3(-10, -5, 12),
-        geometry: new THREE.CylinderGeometry(1.2, 1.2, 3.0, 16),
-        color: 0x2dd4bf,
-        emissive: 0x0f766e,
-        soundIdx: 1
-      },
-      {
-        id: 'poincare',
-        title: 'Poincaré Hyperbolic Bulk',
-        category: 'AdS/CFT & Ryu-Takayanagi ER=EPR',
-        position: new THREE.Vector3(0, 4, -12),
-        geometry: new THREE.RingGeometry(2.2, 2.7, 32),
-        color: 0xa855f7,
-        emissive: 0x7e22ce,
-        soundIdx: 4
-      },
-      {
-        id: 'amplituhedron',
-        title: 'Positive Amplituhedron',
-        category: 'Grassmannian Kinematics & Scattering',
-        position: new THREE.Vector3(0, 1, 9),
-        geometry: new THREE.IcosahedronGeometry(2.4, 1),
-        color: 0xf43f5e,
-        emissive: 0xbe123c,
-        soundIdx: 0
-      },
-      {
-        id: 'manifesto',
-        title: 'Conceptionist Manifesto',
-        category: 'Architectural Philosophy & Theory',
-        position: new THREE.Vector3(0, 11, -8),
-        geometry: new THREE.IcosahedronGeometry(2.3, 0),
-        color: 0xf43f5e,
-        emissive: 0xbe123c,
-        soundIdx: 4
-      },
-      {
-        id: 'manim',
-        title: 'ManimGX Geometry Lab',
-        category: 'Mathematical Manifolds & Hopf Fibration',
-        position: new THREE.Vector3(13, -7, -11),
-        geometry: new THREE.TorusKnotGeometry(1.6, 0.45, 64, 16, 2, 5),
-        color: 0x38bdf8,
-        emissive: 0x0284c7,
-        soundIdx: 2
-      },
-      {
-        id: 'communicator',
-        title: 'Celestial Terminal',
-        category: 'Upwork Top-Rated & Comms',
-        position: new THREE.Vector3(0, -11, 4),
-        geometry: new THREE.OctahedronGeometry(2.0, 0),
-        color: 0x818cf8,
-        emissive: 0x4f46e5,
-        soundIdx: 5
-      }
+      { id: 'esim', title: 'eSIM Arbitrage Optimizer', category: 'Spot FX & Price Inversions', position: new THREE.Vector3(-14, 3, 6), color: 0x38bdf8, soundIdx: 0 },
+      { id: 'zizkadb', title: 'ZizkaDB AI Audit Trail', category: 'EU AI Act Article 12 Compliance', position: new THREE.Vector3(14, 5, -4), color: 0xa855f7, soundIdx: 1 },
+      { id: 'verifyid', title: 'VerifyID & Miranda AI', category: 'Multimodal Vision & Clinical Intake', position: new THREE.Vector3(-9, -7, -10), color: 0x2dd4bf, soundIdx: 2 },
+      { id: 'etl', title: 'High-Scale ETL Pipeline', category: '15M+ Events/Day Architecture', position: new THREE.Vector3(10, -6, 11), color: 0xf59e0b, soundIdx: 3 }
     ];
 
-    nodeDefs.forEach((def, index) => {
+    nodeDefs.forEach((def) => {
       const group = new THREE.Group();
       group.position.copy(def.position);
 
-      // Crystalline Mesh
-      const mat = new THREE.MeshStandardMaterial({
+      const sphereGeom = new THREE.SphereGeometry(0.35, 16, 16);
+      const mat = new THREE.MeshBasicMaterial({
         color: def.color,
-        emissive: def.emissive,
-        emissiveIntensity: 0.5,
-        metalness: 0.2,
-        roughness: 0.1,
         transparent: true,
-        opacity: 0.85
+        opacity: 0.45
       });
-      const mesh = new THREE.Mesh(def.geometry, mat);
+      const mesh = new THREE.Mesh(sphereGeom, mat);
       group.add(mesh);
 
-      // Glowing Halo Ring around Node
-      const haloGeom = new THREE.RingGeometry(2.8, 3.0, 32);
+      const haloGeom = new THREE.RingGeometry(1.6, 1.66, 48);
       const haloMat = new THREE.MeshBasicMaterial({
         color: def.color,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.4
+        opacity: 0.16
       });
       const halo = new THREE.Mesh(haloGeom, haloMat);
       halo.rotation.x = Math.PI * 0.5;
       group.add(halo);
 
-      // Store metadata
       group.userData = {
         id: def.id,
         title: def.title,

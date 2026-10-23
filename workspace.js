@@ -359,8 +359,7 @@ class EtherealWorkspace {
     }
 
     const renderFeynman = () => {
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       t += 0.03;
 
       const startX = 40, startY = canvas.height / 2;
@@ -372,7 +371,7 @@ class EtherealWorkspace {
         const phase = (offset * offset * 0.45) / hbar + t;
         const isClassical = Math.abs(offset) < 3.0;
 
-        let opacity = isClassical ? 0.95 : Math.max(0.04, (0.45 / (1 + (offset * offset * 0.2) / hbar)));
+        let opacity = isClassical ? 0.95 : Math.max(0.06, (0.5 / (1 + (offset * offset * 0.2) / hbar)));
         let color = isClassical ? '#38bdf8' : `hsl(${(phase * 60) % 360}, 85%, 65%)`;
 
         ctx.beginPath();
@@ -403,7 +402,7 @@ class EtherealWorkspace {
     renderFeynman();
   }
 
-  // 2. Interactive 2D Ising Conformal Criticality Lab
+  // 2. Interactive 2D Ising Conformal Criticality Lab (Circular Conformal Spin Field)
   initIsingLab() {
     const canvas = document.getElementById('ising-canvas');
     if (!canvas) return;
@@ -412,7 +411,7 @@ class EtherealWorkspace {
     const tempVal = document.getElementById('ising-temp-val');
     const stateReadout = document.getElementById('ising-state-readout');
 
-    const L = 48;
+    const L = 36;
     const spins = new Int8Array(L * L);
     for (let i = 0; i < L * L; i++) spins[i] = Math.random() < 0.5 ? 1 : -1;
 
@@ -448,11 +447,13 @@ class EtherealWorkspace {
 
     updateReadout();
 
-    const scaleX = canvas.width / L;
-    const scaleY = canvas.height / L;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const diskR = Math.min(cx, cy) - 12;
+    const spacing = (diskR * 2) / L;
 
     const mcLoop = () => {
-      for (let step = 0; step < 1600; step++) {
+      for (let step = 0; step < 900; step++) {
         const x = Math.floor(Math.random() * L);
         const y = Math.floor(Math.random() * L);
         const idx = y * L + x;
@@ -469,14 +470,23 @@ class EtherealWorkspace {
         }
       }
 
-      ctx.fillStyle = '#030712';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let y = 0; y < L; y++) {
         for (let x = 0; x < L; x++) {
+          const px = cx - diskR + (x + 0.5) * spacing;
+          const py = cy - diskR + (y + 0.5) * spacing;
+          const dist = Math.hypot(px - cx, py - cy);
+          if (dist > diskR) continue;
+
           const s = spins[y * L + x];
-          ctx.fillStyle = s === 1 ? '#38bdf8' : '#0f172a';
-          ctx.fillRect(x * scaleX, y * scaleY, scaleX - 0.5, scaleY - 0.5);
+          const edgeFade = Math.max(0.15, 1 - Math.pow(dist / diskR, 3));
+          ctx.beginPath();
+          ctx.arc(px, py, s === 1 ? 2.2 : 1.1, 0, Math.PI * 2);
+          ctx.fillStyle = s === 1
+            ? `rgba(56, 189, 248, ${(0.78 * edgeFade).toFixed(2)})`
+            : `rgba(148, 163, 184, ${(0.16 * edgeFade).toFixed(2)})`;
+          ctx.fill();
         }
       }
 
@@ -534,8 +544,7 @@ class EtherealWorkspace {
     injectAntiKink(120, -0.55);
 
     const solitonLoop = () => {
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.35)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const phiNext = new Float32Array(N);
       for (let i = 1; i < N - 1; i++) {
@@ -609,8 +618,7 @@ class EtherealWorkspace {
     }
 
     const renderPoincare = () => {
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
@@ -661,8 +669,7 @@ class EtherealWorkspace {
     let t = 0;
 
     const renderAmplituhedron = () => {
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       t += 0.02;
 
       const cx = canvas.width / 2;
