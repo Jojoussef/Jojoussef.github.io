@@ -20,6 +20,7 @@ Available Celestial Observatory Commands:
   help                    List all available terminal commands
   whoami                  Display identity, credentials, and engineering ethos
   manifesto               Print the foundational physical & ontological thesis
+  scroll <stage>          Scroll quantum continuum (0-12, esim, zizkadb, ising, etc.)
   deconstruct             Dissolve spacetime metric (G_μν -> 0) & unbind Grassmannian
   reconstruct             Synthesize metric tensor and restore harmonic orbit
   regime <1-9>            Inspect ontological regime (Noether, Gauge, Soliton, etc.)
@@ -37,7 +38,7 @@ Available Celestial Observatory Commands:
 `,
       whoami: () => `
 Youssef Benatti · Senior AI & Data Systems Engineer
-Higher Institute of Informatics and Mathematics of Monastir (ISIMM, 2022–2026)
+Higher Institute of Informatics and Mathematics of Monastir (ISIMM, 2022 to 2026)
 Location: Monastir, Tunisia (35.76°N, 10.82°E)
 Specializations: High-throughput streaming (15M+ events/day), EU AI Act Article 12 audit trails, algorithmic price discrimination systems, and computer vision intake.
 Ethos: Conceptionist Maximalism — Software as living mathematical systems.
@@ -318,6 +319,47 @@ Code Mapping: Spacetime and locality as emergent projections of pure geometric i
         this.print(`[OK] Switched 3D celestial manifold topology to: ${arg.toUpperCase()}`);
       } else {
         this.print(`Usage: topology <torus | lorenz | clifford | amplituhedron | poincare>`);
+      }
+      return;
+    }
+
+    if (cmd === 'scroll') {
+      const stageMap = {
+        0: 'stage-0',
+        hero: 'stage-0',
+        1: 'stage-1',
+        noether: 'stage-1',
+        2: 'stage-2',
+        vacuum: 'stage-2',
+        3: 'stage-3',
+        feynman: 'stage-3',
+        4: 'stage-4',
+        ising: 'stage-4',
+        5: 'stage-5',
+        soliton: 'stage-5',
+        6: 'stage-6',
+        esim: 'stage-6',
+        7: 'stage-7',
+        zizkadb: 'stage-7',
+        8: 'stage-8',
+        etl: 'stage-8',
+        9: 'stage-9',
+        verifyid: 'stage-9',
+        10: 'stage-10',
+        poincare: 'stage-10',
+        11: 'stage-11',
+        amplituhedron: 'stage-11',
+        12: 'stage-12',
+        comms: 'stage-12'
+      };
+      const stageId = stageMap[arg] || `stage-${arg}`;
+      const targetEl = document.getElementById(stageId);
+      if (targetEl) {
+        this.close();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        this.print(`[OK] Scrolled continuum to: ${stageId}`);
+      } else {
+        this.print(`Usage: scroll <0-12 | esim | zizkadb | etl | verifyid | ising | soliton | poincare | amplituhedron | comms>`);
       }
       return;
     }

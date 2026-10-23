@@ -374,6 +374,46 @@ class EtherealSoundEngine {
       osc.stop(st + 1.25);
     });
   }
+
+  // Modulate drone harmonics based on continuous scroll progress (0.0 to 1.0)
+  modulateScroll(progress = 0) {
+    if (!this.enabled || !this.ctx || this.oscillators.length === 0) return;
+    const clampedProgress = Math.max(0, Math.min(1, progress));
+    // Sweep lowpass filter frequency across depth
+    const targetFreq = 280 + Math.sin(clampedProgress * Math.PI) * 750 + clampedProgress * 200;
+    this.oscillators.forEach(({ filter }, idx) => {
+      if (filter && filter.frequency) {
+        filter.frequency.setTargetAtTime(targetFreq + idx * 40, this.ctx.currentTime, 0.1);
+      }
+    });
+  }
+
+  // Microtonal quantum state collapse / virtual pair fluctuation pop
+  playQuantumFluctuation() {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
+
+    osc.type = 'sine';
+    const baseFreq = 864 + (Math.random() - 0.5) * 400;
+    osc.frequency.setValueAtTime(baseFreq, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.5, this.ctx.currentTime + 0.04);
+
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(baseFreq, this.ctx.currentTime);
+    filter.Q.setValueAtTime(12, this.ctx.currentTime);
+
+    gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.045);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.sfxGain);
+
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.05);
+  }
 }
 
 window.soundEngine = new EtherealSoundEngine();

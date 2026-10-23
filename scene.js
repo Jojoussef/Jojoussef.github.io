@@ -32,6 +32,12 @@ class CelestialObservatory {
     this.particles = null;
     this.time = 0;
 
+    // Quantum Spacetime Vacuum & Scroll Continuum Spline
+    this.scrollProgress = 0;
+    this.targetScrollProgress = 0;
+    this.virtualPairs = [];
+    this.lastFluctuationSoundTime = 0;
+
     this.init();
   }
 
@@ -41,7 +47,7 @@ class CelestialObservatory {
     this.scene.fog = new THREE.FogExp2(0x030712, 0.015);
 
     this.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set(0, 4, 34);
+    this.camera.position.set(0, 16, 38);
 
     // 2. Renderer
     this.renderer = new THREE.WebGLRenderer({
@@ -65,10 +71,14 @@ class CelestialObservatory {
     pointLightViolet.position.set(0, -10, -15);
     this.scene.add(pointLightViolet);
 
-    // 4. Build Core Celestial Elements
+    // 4. Build Core Celestial & Quantum Spacetime Elements
     this.buildCelestialCore();
     this.buildParticleManifold();
+    this.buildQuantumVacuum();
+    this.buildEntanglementTensorNetwork();
+    this.buildWavefunctionClouds();
     this.buildInteractiveNodes();
+    this.setupScrollSpline();
 
     // 5. Event Listeners
     this.setupEvents();
@@ -473,8 +483,222 @@ class CelestialObservatory {
     this.scene.add(this.particles);
   }
 
+  buildQuantumVacuum() {
+    this.vacuumCount = 2400;
+    const geom = new THREE.BufferGeometry();
+    const pos = new Float32Array(this.vacuumCount * 3);
+    const colors = new Float32Array(this.vacuumCount * 3);
+    this.vacuumBasePos = new Float32Array(this.vacuumCount * 3);
+    this.vacuumPhases = new Float32Array(this.vacuumCount);
+    this.vacuumFrequencies = new Float32Array(this.vacuumCount);
+
+    const cCyan = new THREE.Color(0x38bdf8);
+    const cViolet = new THREE.Color(0xa855f7);
+    const cTeal = new THREE.Color(0x2dd4bf);
+    const cAmber = new THREE.Color(0xf59e0b);
+
+    for (let i = 0; i < this.vacuumCount; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+      const r = 5.0 + Math.pow(Math.random(), 0.5) * 32.0;
+
+      const x = r * Math.sin(phi) * Math.cos(theta);
+      const y = r * Math.sin(phi) * Math.sin(theta);
+      const z = r * Math.cos(phi);
+
+      pos[i * 3] = x;
+      pos[i * 3 + 1] = y;
+      pos[i * 3 + 2] = z;
+      this.vacuumBasePos[i * 3] = x;
+      this.vacuumBasePos[i * 3 + 1] = y;
+      this.vacuumBasePos[i * 3 + 2] = z;
+
+      this.vacuumPhases[i] = Math.random() * Math.PI * 2;
+      this.vacuumFrequencies[i] = 1.0 + Math.random() * 3.5;
+
+      const pick = Math.random();
+      const col = pick < 0.4 ? cCyan : (pick < 0.7 ? cViolet : (pick < 0.9 ? cTeal : cAmber));
+      colors[i * 3] = col.r;
+      colors[i * 3 + 1] = col.g;
+      colors[i * 3 + 2] = col.b;
+    }
+
+    geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.28,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending
+    });
+
+    this.vacuumPoints = new THREE.Points(geom, mat);
+    this.scene.add(this.vacuumPoints);
+
+    // Virtual particle dipole pairs pool
+    this.virtualPairs = [];
+    const pairCount = 36;
+    for (let p = 0; p < pairCount; p++) {
+      const pairGroup = new THREE.Group();
+      
+      const particleMatPlus = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0 });
+      const particleMatMinus = new THREE.MeshBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0 });
+      const sphereGeom = new THREE.SphereGeometry(0.2, 8, 8);
+
+      const pPlus = new THREE.Mesh(sphereGeom, particleMatPlus);
+      const pMinus = new THREE.Mesh(sphereGeom, particleMatMinus);
+      pairGroup.add(pPlus);
+      pairGroup.add(pMinus);
+
+      const lineGeom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+      const lineMat = new THREE.LineBasicMaterial({ color: 0xbae6fd, transparent: true, opacity: 0 });
+      const dipoleLine = new THREE.Line(lineGeom, lineMat);
+      pairGroup.add(dipoleLine);
+
+      this.scene.add(pairGroup);
+
+      this.virtualPairs.push({
+        group: pairGroup,
+        pPlus: pPlus,
+        pMinus: pMinus,
+        line: dipoleLine,
+        lineGeom: lineGeom,
+        active: false,
+        age: 0,
+        lifespan: 1.0,
+        center: new THREE.Vector3(),
+        velocity: new THREE.Vector3()
+      });
+    }
+  }
+
+  buildEntanglementTensorNetwork() {
+    this.tensorLineCount = 180;
+    const geom = new THREE.BufferGeometry();
+    const positions = new Float32Array(this.tensorLineCount * 2 * 3);
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const mat = new THREE.LineBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.35,
+      blending: THREE.AdditiveBlending
+    });
+
+    this.tensorLines = new THREE.LineSegments(geom, mat);
+    this.scene.add(this.tensorLines);
+  }
+
+  buildWavefunctionClouds() {
+    this.wavefunctionCount = 950;
+    const geom = new THREE.BufferGeometry();
+    const pos = new Float32Array(this.wavefunctionCount * 3);
+    const colors = new Float32Array(this.wavefunctionCount * 3);
+    const cViolet = new THREE.Color(0xa855f7);
+    const cTeal = new THREE.Color(0x2dd4bf);
+
+    let count = 0;
+    while (count < this.wavefunctionCount) {
+      const rx = (Math.random() - 0.5) * 14.0;
+      const ry = (Math.random() - 0.5) * 14.0;
+      const rz = (Math.random() - 0.5) * 14.0;
+      const r = Math.hypot(rx, ry, rz);
+      if (r < 0.2 || r > 7.0) continue;
+
+      // 2p_z hydrogenic orbital rejection probability
+      const prob = (rz * rz) * Math.exp(-r * 0.85);
+      if (Math.random() < prob * 0.3) {
+        pos[count * 3] = rx;
+        pos[count * 3 + 1] = ry;
+        pos[count * 3 + 2] = rz;
+
+        const col = (rz > 0) ? cViolet : cTeal;
+        colors[count * 3] = col.r;
+        colors[count * 3 + 1] = col.g;
+        colors[count * 3 + 2] = col.b;
+        count++;
+      }
+    }
+
+    geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.32,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+
+    this.wavefunctionCloud = new THREE.Points(geom, mat);
+    this.wavefunctionCloud.position.set(0, 0, 0);
+    this.scene.add(this.wavefunctionCloud);
+  }
+
+  setupScrollSpline() {
+    // 13 Control Points matching the Continuum Stages
+    this.splinePoints = [
+      new THREE.Vector3(0, 16, 38),     // Stage 0: Classical Ingress
+      new THREE.Vector3(0, 7, 28),      // Stage 1: Noether & Gauge
+      new THREE.Vector3(-7, 3, 22),     // Stage 2: Quantum Vacuum & Uncertainty
+      new THREE.Vector3(7, 4, 18),      // Stage 3: Feynman Path Integrals
+      new THREE.Vector3(12, -3, 14),    // Stage 4: Ising Critical Conformal
+      new THREE.Vector3(-10, -5, 12),   // Stage 5: Sine-Gordon Solitons
+      new THREE.Vector3(-14, 3, 6),     // Stage 6: eSIM Arbitrage
+      new THREE.Vector3(14, 5, -4),     // Stage 7: ZizkaDB EU AI Act
+      new THREE.Vector3(10, -6, 11),    // Stage 8: 15M+ Pipeline
+      new THREE.Vector3(-9, -7, -10),   // Stage 9: Multimodal Vision & Miranda
+      new THREE.Vector3(0, 4, -12),     // Stage 10: Poincaré Bulk ER=EPR
+      new THREE.Vector3(0, 1, 9),       // Stage 11: Amplituhedron Jewel
+      new THREE.Vector3(0, -10, 8)      // Stage 12: Celestial Terminal & Ingress
+    ];
+
+    this.lookAtPoints = [
+      new THREE.Vector3(0, 0, 0),       // 0
+      new THREE.Vector3(0, 1, 0),       // 1
+      new THREE.Vector3(-2, 0, 5),      // 2
+      new THREE.Vector3(0, 1, 0),       // 3
+      new THREE.Vector3(4, -1, 0),      // 4
+      new THREE.Vector3(-3, -2, 0),     // 5
+      new THREE.Vector3(-14, 3, 6),     // 6
+      new THREE.Vector3(14, 5, -4),     // 7
+      new THREE.Vector3(10, -6, 11),    // 8
+      new THREE.Vector3(-9, -7, -10),   // 9
+      new THREE.Vector3(0, 0, 0),       // 10
+      new THREE.Vector3(0, 0, 0),       // 11
+      new THREE.Vector3(0, -11, 4)      // 12
+    ];
+
+    this.splineCurve = new THREE.CatmullRomCurve3(this.splinePoints);
+    this.lookAtCurve = new THREE.CatmullRomCurve3(this.lookAtPoints);
+  }
+
+  updateScrollProgress(progress) {
+    this.targetScrollProgress = Math.max(0, Math.min(1, progress));
+
+    // Dynamic topology shifts along the quantum continuum
+    if (this.targetScrollProgress > 0.90) {
+      if (this.currentTopology !== 'amplituhedron') this.switchTopology('amplituhedron');
+    } else if (this.targetScrollProgress > 0.78 && this.targetScrollProgress <= 0.90) {
+      if (this.currentTopology !== 'poincare') this.switchTopology('poincare');
+    } else if (this.targetScrollProgress > 0.32 && this.targetScrollProgress <= 0.48) {
+      if (this.currentTopology !== 'lorenz') this.switchTopology('lorenz');
+    } else {
+      if (!['torus', 'amplituhedron', 'poincare', 'lorenz'].includes(this.currentTopology)) {
+        this.switchTopology('torus');
+      }
+    }
+
+    if (window.soundEngine && typeof window.soundEngine.modulateScroll === 'function') {
+      window.soundEngine.modulateScroll(this.targetScrollProgress);
+    }
+  }
+
   buildInteractiveNodes() {
-    // 6 Celestial Nodes representing Youssef's core systems & conceptionist doctrine
+    // 12 Celestial Nodes representing Youssef's core systems & conceptionist continuum
     const nodeDefs = [
       {
         id: 'esim',
@@ -515,6 +739,56 @@ class CelestialObservatory {
         color: 0xf59e0b,
         emissive: 0xb45309,
         soundIdx: 3
+      },
+      {
+        id: 'feynman',
+        title: 'Feynman Path Integrals',
+        category: 'Phase Interference & Least Action',
+        position: new THREE.Vector3(7, 4, 18),
+        geometry: new THREE.TorusGeometry(1.9, 0.4, 16, 40),
+        color: 0x38bdf8,
+        emissive: 0x0284c7,
+        soundIdx: 2
+      },
+      {
+        id: 'ising',
+        title: 'Conformal Ising Lattice',
+        category: 'Scale Invariance & Criticality',
+        position: new THREE.Vector3(12, -3, 14),
+        geometry: new THREE.BoxGeometry(2.2, 2.2, 2.2),
+        color: 0xf59e0b,
+        emissive: 0xb45309,
+        soundIdx: 3
+      },
+      {
+        id: 'soliton',
+        title: 'Sine-Gordon Solitons',
+        category: 'Topological Charge & Pendulum Waves',
+        position: new THREE.Vector3(-10, -5, 12),
+        geometry: new THREE.CylinderGeometry(1.2, 1.2, 3.0, 16),
+        color: 0x2dd4bf,
+        emissive: 0x0f766e,
+        soundIdx: 1
+      },
+      {
+        id: 'poincare',
+        title: 'Poincaré Hyperbolic Bulk',
+        category: 'AdS/CFT & Ryu-Takayanagi ER=EPR',
+        position: new THREE.Vector3(0, 4, -12),
+        geometry: new THREE.RingGeometry(2.2, 2.7, 32),
+        color: 0xa855f7,
+        emissive: 0x7e22ce,
+        soundIdx: 4
+      },
+      {
+        id: 'amplituhedron',
+        title: 'Positive Amplituhedron',
+        category: 'Grassmannian Kinematics & Scattering',
+        position: new THREE.Vector3(0, 1, 9),
+        geometry: new THREE.IcosahedronGeometry(2.4, 1),
+        color: 0xf43f5e,
+        emissive: 0xbe123c,
+        soundIdx: 0
       },
       {
         id: 'manifesto',
@@ -792,10 +1066,131 @@ class CelestialObservatory {
     hudEl.innerHTML = `<span class="hud-item"><span class="hud-dot"></span>MONASTIR 35.76°N, 10.82°E</span> · <span class="hud-item">LST ${lstH}:${lstM}:${lstS}</span> · <span class="hud-item">1,800 VERTICES</span> · <span class="hud-item" style="color:#10b981;">${this.currentFps || 120} FPS</span>`;
   }
 
+  animateQuantumVacuum() {
+    if (!this.vacuumPoints) return;
+
+    const pos = this.vacuumPoints.geometry.attributes.position.array;
+    const dt = this.time;
+
+    // 1. Heisenberg uncertainty micro-displacements: Δx · Δp >= 1/2 ħ
+    const jitterScale = 0.08 + (this.isDeconstructed ? 0.25 : 0.0);
+    for (let i = 0; i < this.vacuumCount; i++) {
+      const idx = i * 3;
+      const bx = this.vacuumBasePos[idx];
+      const by = this.vacuumBasePos[idx + 1];
+      const bz = this.vacuumBasePos[idx + 2];
+      const phase = this.vacuumPhases[i];
+      const freq = this.vacuumFrequencies[i];
+
+      // Harmonic zero-point jitter
+      const dx = Math.sin(dt * freq + phase) * jitterScale;
+      const dy = Math.cos(dt * (freq * 1.2) + phase) * jitterScale;
+      const dz = Math.sin(dt * (freq * 0.8) + phase * 1.5) * jitterScale;
+
+      pos[idx] = bx + dx;
+      pos[idx + 1] = by + dy;
+      pos[idx + 2] = bz + dz;
+    }
+    this.vacuumPoints.geometry.attributes.position.needsUpdate = true;
+    this.vacuumPoints.rotation.y = this.time * 0.03;
+
+    // 2. Wavefunction Orbital Cloud gentle rotation
+    if (this.wavefunctionCloud) {
+      this.wavefunctionCloud.rotation.z = this.time * 0.08;
+      this.wavefunctionCloud.rotation.y = this.time * 0.05;
+      const wfOpacity = 0.5 + Math.sin(this.time * 2.0) * 0.2;
+      this.wavefunctionCloud.material.opacity = wfOpacity;
+    }
+
+    // 3. Virtual particle-antiparticle creation & annihilation
+    const now = performance.now();
+    this.virtualPairs.forEach(pair => {
+      if (!pair.active) {
+        // Spawn chance per frame
+        if (Math.random() < 0.025) {
+          pair.active = true;
+          pair.age = 0;
+          pair.lifespan = 0.8 + Math.random() * 0.9;
+          
+          // Random point in bulk
+          const theta = Math.random() * Math.PI * 2;
+          const r = 4.0 + Math.random() * 16.0;
+          pair.center.set(Math.cos(theta) * r, (Math.random() - 0.5) * 12.0, Math.sin(theta) * r);
+          pair.velocity.set((Math.random() - 0.5) * 1.8, (Math.random() - 0.5) * 1.8, (Math.random() - 0.5) * 1.8);
+
+          // Audio pop trigger (throttled)
+          if (now - this.lastFluctuationSoundTime > 650 && window.soundEngine && typeof window.soundEngine.playQuantumFluctuation === 'function') {
+            this.lastFluctuationSoundTime = now;
+            window.soundEngine.playQuantumFluctuation();
+          }
+        }
+      } else {
+        pair.age += 0.016;
+        const progress = pair.age / pair.lifespan;
+
+        if (progress >= 1.0) {
+          // Annihilation
+          pair.active = false;
+          pair.pPlus.material.opacity = 0;
+          pair.pMinus.material.opacity = 0;
+          pair.line.material.opacity = 0;
+        } else {
+          // Arc separation and recombination
+          const separation = Math.sin(progress * Math.PI) * 1.4;
+          const opacity = Math.sin(progress * Math.PI) * 0.85;
+
+          const plusPos = pair.center.clone().addScaledVector(pair.velocity, separation);
+          const minusPos = pair.center.clone().addScaledVector(pair.velocity, -separation);
+
+          pair.pPlus.position.copy(plusPos);
+          pair.pMinus.position.copy(minusPos);
+          pair.pPlus.material.opacity = opacity;
+          pair.pMinus.material.opacity = opacity;
+
+          // Dipole connector line
+          const linePos = pair.lineGeom.attributes.position.array;
+          linePos[0] = plusPos.x;
+          linePos[1] = plusPos.y;
+          linePos[2] = plusPos.z;
+          linePos[3] = minusPos.x;
+          linePos[4] = minusPos.y;
+          linePos[5] = minusPos.z;
+          pair.lineGeom.attributes.position.needsUpdate = true;
+          pair.line.material.opacity = opacity * 0.6;
+        }
+      }
+    });
+
+    // 4. Entanglement Tensor Network lines
+    if (this.tensorLines && Math.floor(this.time * 60) % 3 === 0) {
+      const linePos = this.tensorLines.geometry.attributes.position.array;
+      let lineIdx = 0;
+      const step = Math.floor(this.vacuumCount / this.tensorLineCount);
+
+      for (let i = 0; i < this.tensorLineCount; i++) {
+        const idxA = (i * step) * 3;
+        const idxB = (((i + 1) * step) % this.vacuumCount) * 3;
+
+        linePos[lineIdx++] = pos[idxA];
+        linePos[lineIdx++] = pos[idxA + 1];
+        linePos[lineIdx++] = pos[idxA + 2];
+
+        linePos[lineIdx++] = pos[idxB];
+        linePos[lineIdx++] = pos[idxB + 1];
+        linePos[lineIdx++] = pos[idxB + 2];
+      }
+      this.tensorLines.geometry.attributes.position.needsUpdate = true;
+      this.tensorLines.material.opacity = 0.2 + Math.sin(this.time * 3.0) * 0.12;
+    }
+  }
+
   animate() {
     this.time += 0.01;
 
-    // 1. Core manifold rotations
+    // 1. Quantum Spacetime Vacuum Simulation
+    this.animateQuantumVacuum();
+
+    // 2. Core manifold rotations
     if (this.coreKnot && this.torusGroup && this.torusGroup.visible) {
       this.coreKnot.rotation.y = this.time * 0.35;
       this.coreKnot.rotation.z = this.time * 0.2;
@@ -855,7 +1250,7 @@ class CelestialObservatory {
       this.updateTelemetryHUD();
     }
 
-    // 2. Rotate particle manifold
+    // 3. Rotate particle manifold
     if (this.particles) {
       if (this.isDeconstructed) {
         this.particles.rotation.y = this.time * 0.2;
@@ -866,7 +1261,7 @@ class CelestialObservatory {
       }
     }
 
-    // 3. Float & pulse interactive nodes
+    // 4. Float & pulse interactive nodes
     this.nodes.forEach((node, idx) => {
       const offset = idx * 1.3;
       if (this.isDeconstructed) {
@@ -892,7 +1287,7 @@ class CelestialObservatory {
       }
     });
 
-    // 4. Raycasting when not docked
+    // 5. Raycasting when not docked
     if (!this.isDocked) {
       this.raycaster.setFromCamera(this.mouse, this.camera);
       const meshes = this.nodes.map(n => n.userData.mesh);
@@ -936,23 +1331,33 @@ class CelestialObservatory {
         }
       }
 
-      // Camera Orbit Spherical Physics lerp
-      this.spherical.theta += (this.targetSpherical.theta - this.spherical.theta) * 0.08;
-      this.spherical.phi += (this.targetSpherical.phi - this.spherical.phi) * 0.08;
-      this.spherical.radius += (this.targetSpherical.radius - this.spherical.radius) * 0.08;
+      // Camera Catmull-Rom Spline driven by vertical scroll + mouse parallax
+      if (this.splineCurve && this.lookAtCurve) {
+        this.scrollProgress += (this.targetScrollProgress - this.scrollProgress) * 0.06;
+        const splinePoint = this.splineCurve.getPoint(this.scrollProgress);
+        const lookTarget = this.lookAtCurve.getPoint(this.scrollProgress);
 
-      // Convert Spherical to Cartesian
-      this.cameraTargetPos.x = this.spherical.radius * Math.sin(this.spherical.phi) * Math.sin(this.spherical.theta);
-      this.cameraTargetPos.y = this.spherical.radius * Math.cos(this.spherical.phi);
-      this.cameraTargetPos.z = this.spherical.radius * Math.sin(this.spherical.phi) * Math.cos(this.spherical.theta);
+        const mouseOffsetX = (this.rawMouse.x / window.innerWidth - 0.5) * 3.2;
+        const mouseOffsetY = -(this.rawMouse.y / window.innerHeight - 0.5) * 2.4;
+
+        this.cameraTargetPos.set(splinePoint.x + mouseOffsetX, splinePoint.y + mouseOffsetY, splinePoint.z);
+        this.cameraLookTarget.copy(lookTarget);
+      } else {
+        // Fallback spherical orbit
+        this.spherical.theta += (this.targetSpherical.theta - this.spherical.theta) * 0.08;
+        this.spherical.phi += (this.targetSpherical.phi - this.spherical.phi) * 0.08;
+        this.spherical.radius += (this.targetSpherical.radius - this.spherical.radius) * 0.08;
+
+        this.cameraTargetPos.x = this.spherical.radius * Math.sin(this.spherical.phi) * Math.sin(this.spherical.theta);
+        this.cameraTargetPos.y = this.spherical.radius * Math.cos(this.spherical.phi);
+        this.cameraTargetPos.z = this.spherical.radius * Math.sin(this.spherical.phi) * Math.cos(this.spherical.theta);
+      }
     }
 
     // Smooth camera damping
     this.camera.position.lerp(this.cameraTargetPos, 0.065);
     
     // LookAt lerp
-    const currentLook = new THREE.Vector3(0, 0, 0);
-    this.camera.getWorldDirection(currentLook);
     this.camera.lookAt(this.cameraLookTarget);
 
     this.renderer.render(this.scene, this.camera);
