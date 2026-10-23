@@ -1613,3 +1613,268 @@ html, body {
   }
 }
 
+
+/* ==========================================================================
+   TRANSCENDENCE MODULE II - ATMOSPHERIC DEPTH, OPTICAL GLASS & TYPOGRAPHY
+   Inspired by Why Zero forensic teardown. Engineered for Awwwards caliber.
+   ========================================================================== */
+
+:root {
+  --font-editorial: 'Newsreader', Georgia, serif;
+  --font-handwritten: 'Caveat', cursive;
+}
+
+#quantum-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 120vw 140vh at 50% 120%,
+    rgba(14, 26, 64, 0.92) 0%,
+    rgba(3, 7, 18, 1) 100%
+  );
+  will-change: background;
+}
+
+#celestial-scene { z-index: 1; position: fixed; }
+
+#grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  mix-blend-mode: overlay;
+}
+
+/* Eight-layer optical glass on cards */
+.quantum-card {
+  isolation: isolate;
+  position: relative;
+}
+.quantum-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    rgba(255,255,255,0.12) -0.3em -0.3em 0.1em -0.35em inset,
+    rgba(255,255,255,0.2) 0.3em 0.3em 0.1em -0.35em inset,
+    rgba(180,180,180,0.08) 0 0 2em inset;
+  mix-blend-mode: overlay;
+}
+
+/* Editorial serif upgrade */
+.quantum-card-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 2.35rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #f0f4ff;
+}
+.hero-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Caveat handwritten annotations */
+.margin-annotation {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(56,189,248,0.62);
+  transform: rotate(-1.5deg);
+  transform-origin: left center;
+  margin: 0.25rem 0 0.75rem 0.1rem;
+  line-height: 1.3;
+  pointer-events: none;
+}
+.hero-annotation {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(168,85,247,0.7);
+  transform: rotate(-1.2deg);
+  margin: 0.2rem 0 1.25rem;
+}
+
+/* Kinetic horizon ruler */
+#horizon-ruler {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  height: 48px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 1.5rem 0;
+  box-sizing: border-box;
+  background: rgba(3,7,18,0.75);
+  backdrop-filter: saturate(120%) blur(12px);
+  -webkit-backdrop-filter: saturate(120%) blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+#horizon-ruler-track {
+  position: relative;
+  width: 100%; height: 2px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 1px;
+  margin-top: 2px;
+}
+#horizon-ruler-fill {
+  position: absolute;
+  left: 0; top: 0; height: 100%; width: 0%;
+  background: linear-gradient(90deg, rgba(56,189,248,0.8) 0%, rgba(168,85,247,0.8) 60%, rgba(45,212,191,0.9) 100%);
+  border-radius: 1px;
+  transition: width 0.15s linear;
+  will-change: width;
+}
+#horizon-ruler-head {
+  position: absolute;
+  top: -3px; left: 0%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(56,189,248,0.8);
+  transform: translateX(-50%);
+  transition: left 0.15s linear;
+  will-change: left;
+  pointer-events: none;
+}
+#horizon-ticks {
+  display: flex;
+  align-items: flex-end;
+  width: 100%; height: 20px;
+  pointer-events: auto;
+}
+.h-tick {
+  display: flex; flex-direction: column; align-items: center;
+  flex: 1; gap: 1px; cursor: pointer;
+}
+.h-tick-line {
+  display: block; width: 1px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 1px;
+}
+.h-tick-major .h-tick-line { height: 12px; background: rgba(255,255,255,0.55); }
+.h-tick-minor .h-tick-line { height: 7px; }
+.h-tick-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.06em;
+  white-space: nowrap; line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+  transition: color 0.2s;
+}
+.h-tick-major .h-tick-label { color: rgba(255,255,255,0.55); }
+.h-tick:hover .h-tick-label, .h-tick-active .h-tick-label { color: rgba(56,189,248,1); }
+.h-tick:hover .h-tick-line, .h-tick-active .h-tick-line { background: rgba(56,189,248,0.8); }
+#horizon-stage-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 14px; margin-top: 2px;
+  pointer-events: none;
+}
+#horizon-stage-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#horizon-depth-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(56,189,248,0.7);
+  letter-spacing: 0.06em; white-space: nowrap;
+}
+
+/* Floating navigation dock */
+#float-dock {
+  position: fixed;
+  bottom: 18px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex; align-items: center; gap: 0;
+  padding: 8px 14px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  background: rgba(10,14,36,0.82);
+  backdrop-filter: saturate(120%) blur(14px);
+  -webkit-backdrop-filter: saturate(120%) blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -2px 0 rgba(0,0,0,0.3);
+  isolation: isolate;
+}
+.dock-origin-btn {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(56,189,248,0.8);
+  background: none; border: none; cursor: default;
+  padding: 0 10px 0 0; letter-spacing: 0.06em; white-space: nowrap; opacity: 0.8;
+}
+.dock-divider {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 10px; flex-shrink: 0;
+}
+.dock-sound-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer; color: rgba(255,255,255,0.65);
+  transition: background 0.2s, color 0.2s; padding: 0;
+}
+.dock-sound-btn:hover, .dock-sound-active {
+  background: rgba(56,189,248,0.15);
+  color: rgba(56,189,248,1);
+  border-color: rgba(56,189,248,0.35);
+}
+.dock-wave-1, .dock-wave-2 { transition: opacity 0.2s; }
+.dock-sound-btn:not(.dock-sound-active) .dock-wave-1,
+.dock-sound-btn:not(.dock-sound-active) .dock-wave-2 { opacity: 0.2; }
+.dock-chapters { display: flex; align-items: center; gap: 2px; }
+.dock-chapter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.5);
+  background: none; border: none; cursor: pointer;
+  padding: 4px 8px; border-radius: 12px;
+  transition: background 0.18s, color 0.18s;
+  white-space: nowrap; text-transform: uppercase;
+}
+.dock-chapter-btn:hover {
+  background: rgba(56,189,248,0.12);
+  color: rgba(56,189,248,1);
+}
+
+/* Push content below ruler */
+#quantum-continuum { padding-top: 48px; }
+
+@media (max-width: 768px) {
+  #horizon-ruler { height: 40px; }
+  #horizon-ticks { height: 14px; }
+  .h-tick-label { display: none; }
+  .h-tick-major .h-tick-label { display: block; font-size: 0.42rem; }
+  #float-dock { bottom: 12px; padding: 6px 10px; }
+  .dock-chapter-btn { padding: 4px 5px; font-size: 0.55rem; }
+  .dock-origin-btn span { display: none; }
+  .quantum-card-title { font-size: 1.9rem; }
+}
+@media (max-width: 480px) {
+  .dock-chapters .dock-chapter-btn:nth-child(n+4) { display: none; }
+}

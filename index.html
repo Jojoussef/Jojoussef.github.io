@@ -19,7 +19,7 @@
   <!-- Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 
@@ -159,8 +159,114 @@
   <!-- 3D WebGL Canvas Layer -->
   <canvas id="celestial-scene" role="img" aria-label="3D Celestial Observatory: Drag to orbit around the quantum manifold, click nodes to dock"></canvas>
 
+  <!-- Atmospheric Void: chromatic radial gradient behind WebGL (z:0, transparent canvas on top at z:1) -->
+  <div id="quantum-atmosphere" aria-hidden="true"></div>
+
+  <!-- SVG Film Grain Overlay -->
+  <svg id="grain-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <filter id="grain-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
+      <feBlend in="SourceGraphic" in2="grey" mode="overlay"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-filter)" opacity="0.035"/>
+  </svg>
+
+  <!-- Kinetic Horizon Ruler: calibrated depth indicator with stage ticks -->
+  <div id="horizon-ruler" aria-label="Quantum depth navigator" role="navigation">
+    <div id="horizon-ruler-track">
+      <div id="horizon-ruler-fill"></div>
+      <div id="horizon-ruler-head"></div>
+    </div>
+    <div id="horizon-ticks">
+      <span class="h-tick h-tick-major" data-stage="0" title="Hero">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">INGRESS</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="1" title="01 Noether">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">01</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="2" title="02 Vacuum">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">02</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="3" title="03 Feynman">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">03</span>
+      </span>
+      <span class="h-tick h-tick-major" data-stage="4" title="04 Ising">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">T_c</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="5" title="05 Soliton">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">05</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="6" title="06 Poincaré">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">06</span>
+      </span>
+      <span class="h-tick h-tick-major" data-stage="7" title="07 Holography">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">ER=EPR</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="8" title="08 Entanglement">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">08</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="9" title="09 Amplituhedron">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">09</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="10" title="10 Systems">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">10</span>
+      </span>
+      <span class="h-tick h-tick-minor" data-stage="11" title="11 eSIM">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">11</span>
+      </span>
+      <span class="h-tick h-tick-major" data-stage="12" title="12 ZizkaDB">
+        <span class="h-tick-line"></span>
+        <span class="h-tick-label">ZIZKA</span>
+      </span>
+    </div>
+    <div id="horizon-stage-readout">
+      <span id="horizon-stage-label">INGRESS · MONASTIR 35.76°N</span>
+      <span id="horizon-depth-val">0.00 ℓₚ</span>
+    </div>
+  </div>
+
+  <!-- Floating Navigation Dock (detached bottom bar) -->
+  <div id="float-dock" aria-label="Navigation dock">
+    <button type="button" class="dock-origin-btn" title="35.76°N 10.82°E — Monastir, Tunisia">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+      </svg>
+      <span>35.76°N</span>
+    </button>
+    <div class="dock-divider"></div>
+    <button type="button" class="dock-sound-btn" id="dock-sound-btn" aria-label="Toggle audio">
+      <svg class="dock-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path class="dock-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path class="dock-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+    </button>
+    <div class="dock-divider"></div>
+    <nav class="dock-chapters" aria-label="Chapter navigation">
+      <button class="dock-chapter-btn" data-target="stage-0">Origin</button>
+      <button class="dock-chapter-btn" data-target="stage-1">Gauge</button>
+      <button class="dock-chapter-btn" data-target="stage-4">Criticality</button>
+      <button class="dock-chapter-btn" data-target="stage-7">Holography</button>
+      <button class="dock-chapter-btn" data-target="stage-9">Jewel</button>
+      <button class="dock-chapter-btn" data-target="stage-12">ZizkaDB</button>
+    </nav>
+  </div>
+
   <!-- Constellation Bottom Quick-Jump Bar -->
-  
+
   <!-- ========================================================================
        QUANTUM CONTINUUM SCROLL ENGINE (13 Physical & Engineering Stages)
        ======================================================================== -->
@@ -174,12 +280,14 @@
         <p class="hero-subtitle">
           Senior AI and Data Systems Engineer based in Monastir, Tunisia. Designing high-scale streaming architectures processing 15M+ operational events daily, EU AI Act Article 12 verifiable audit trails, spot foreign-exchange arbitrage engines, and applied multimodal intelligence.
         </p>
+        <p class="hero-annotation" aria-hidden="true">the math was always underneath the engineering</p>
         <div class="hero-scroll-indicator">
           <span>SCROLL DOWN TO DESCEND THROUGH THE QUANTUM VACUUM</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
         </div>
       </div>
     </section>
+
 
     <!-- STAGE 1: Noether Symmetries & Gauge Potentials -->
     <section class="quantum-stage" id="stage-1" data-stage="1">
@@ -193,6 +301,7 @@
           <p class="quantum-text">
             Picture a sea with no water in it: a field of ink-dark stillness running to every horizon without a single fixed grain, so evenly symmetric that every shift or turn leaves it unchanged and guards a conserved current, ∂_μ J^μ = 0. Insistent on locality, when its phase twists differently at every point, a new field rises to absorb the difference: D_μ = ∂_μ − ieA_μ. That field is light.
           </p>
+          <span class="margin-annotation" aria-hidden="true">every symmetry hides a charge ↓</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Distributed state consensus. Local coordinate shifts across worker nodes leave the global cluster state invariant without race conditions.
           </div>
@@ -244,6 +353,7 @@
           <p class="quantum-text">
             The vacuum is never empty. It shimmers faintly with the restless hum of zero-point ground state energy, E₀ = Σ_k ½ħω_k. Virtual particle-antiparticle pairs materialize from the quantum foam, separate along dipole trajectories, and annihilate back into stillness within Heisenberg uncertainty boundaries Δt ≤ ħ / (2ΔE).
           </p>
+          <span class="margin-annotation" aria-hidden="true">the vacuum hums because it can't stop thinking</span>
           <div class="quantum-architecture-spec">
             <strong>SYSTEM PARALLEL:</strong> Microservice queue jitter and thermal noise. High-throughput event queues experience constant zero-point micro-bursts that require deterministic backpressure barriers.
           </div>
@@ -1943,5 +2053,213 @@
       });
     }
   </script>
+
+  <script>
+    /* =========================================================================
+       QUANTUM ATMOSPHERE ENGINE
+       Scroll-reactive chromatic radial gradient + kinetic ruler + dock wiring.
+       Zero external dependencies.
+       ========================================================================= */
+    (function () {
+
+      /* Stage atmosphere color palettes: [inner highlight, outer deep] */
+      const STAGE_PALETTES = [
+        /* 0  Ingress         */ ['rgba(14, 26, 64, 0.92)',  'rgba(3, 7, 18, 1)'],
+        /* 1  Noether Gauge   */ ['rgba(10, 22, 60, 0.94)',  'rgba(5, 10, 30, 1)'],
+        /* 2  Vacuum Foam     */ ['rgba(5, 14, 40, 0.96)',   'rgba(2, 4, 12, 1)'],
+        /* 3  Feynman Paths   */ ['rgba(15, 8, 48, 0.95)',   'rgba(8, 3, 22, 1)'],
+        /* 4  Ising T_c       */ ['rgba(60, 28, 8, 0.92)',   'rgba(18, 6, 2, 1)'],
+        /* 5  Sine-Gordon     */ ['rgba(4, 28, 32, 0.94)',   'rgba(2, 8, 10, 1)'],
+        /* 6  Poincaré Disk   */ ['rgba(8, 6, 52, 0.95)',    'rgba(3, 2, 20, 1)'],
+        /* 7  Holography ER=EPR */['rgba(38, 8, 58, 0.93)',  'rgba(12, 2, 20, 1)'],
+        /* 8  Entanglement    */ ['rgba(28, 6, 50, 0.94)',   'rgba(8, 2, 18, 1)'],
+        /* 9  Amplituhedron   */ ['rgba(8, 40, 28, 0.93)',   'rgba(2, 12, 8, 1)'],
+        /* 10 Systems Arc     */ ['rgba(6, 20, 44, 0.94)',   'rgba(2, 6, 16, 1)'],
+        /* 11 eSIM Arbitrage  */ ['rgba(10, 40, 20, 0.92)',  'rgba(3, 12, 6, 1)'],
+        /* 12 ZizkaDB         */ ['rgba(8, 22, 60, 0.95)',   'rgba(3, 8, 22, 1)'],
+      ];
+
+      const STAGE_LABELS = [
+        'INGRESS · MONASTIR 35.76°N',
+        '01 · Noether Symmetries',
+        '02 · Quantum Vacuum Foam',
+        '03 · Feynman Path Integral',
+        '04 · Ising Criticality T_c',
+        '05 · Sine-Gordon Soliton',
+        '06 · Poincaré Hyperbolic Disk',
+        '07 · Holography · ER = EPR',
+        '08 · Ryu-Takayanagi S_A',
+        '09 · Amplituhedron Y = C·Z',
+        '10 · Systems Architecture',
+        '11 · eSIM Arbitrage Engine',
+        '12 · ZizkaDB · Cryptographic Audit',
+      ];
+
+      const atm = document.getElementById('quantum-atmosphere');
+      const rulerFill = document.getElementById('horizon-ruler-fill');
+      const rulerHead = document.getElementById('horizon-ruler-head');
+      const stageLabel = document.getElementById('horizon-stage-label');
+      const depthVal = document.getElementById('horizon-depth-val');
+      const dockSoundBtn = document.getElementById('dock-sound-btn');
+
+      let currentStageIdx = 0;
+      let ticking = false;
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function getScrollProgress() {
+        const body = document.body;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = body.scrollHeight - window.innerHeight;
+        return maxScroll > 0 ? Math.min(1, scrollTop / maxScroll) : 0;
+      }
+
+      function updateAtmosphere(progress) {
+        if (!atm) return;
+        const totalStages = STAGE_PALETTES.length;
+        const rawIdx = progress * (totalStages - 1);
+        const lo = Math.floor(rawIdx);
+        const hi = Math.min(lo + 1, totalStages - 1);
+        const t = rawIdx - lo;
+        const [innerLo, outerLo] = STAGE_PALETTES[lo];
+        const [innerHi, outerHi] = STAGE_PALETTES[hi];
+
+        /* Build gradient: ellipse radiating from bottom-center upward */
+        atm.style.background = `radial-gradient(
+          ellipse 120vw 140vh at 50% 120%,
+          ${t < 0.5 ? innerLo : innerHi} 0%,
+          ${t < 0.5 ? outerLo : outerHi} 100%
+        )`;
+      }
+
+      function updateRuler(progress) {
+        if (!rulerFill || !rulerHead || !stageLabel || !depthVal) return;
+        const pct = (progress * 100).toFixed(1);
+        rulerFill.style.width = pct + '%';
+        rulerHead.style.left = pct + '%';
+
+        const totalStages = STAGE_LABELS.length;
+        const stageIdx = Math.min(Math.floor(progress * totalStages), totalStages - 1);
+
+        if (stageIdx !== currentStageIdx) {
+          currentStageIdx = stageIdx;
+          stageLabel.textContent = STAGE_LABELS[stageIdx];
+
+          /* Highlight active tick */
+          document.querySelectorAll('.h-tick').forEach((tick, idx) => {
+            tick.classList.toggle('h-tick-active', idx === stageIdx);
+          });
+
+          /* Trigger regime audio if enabled */
+          if (window.soundEngine && window.soundEngine.enabled && stageIdx > 0 && stageIdx <= 9) {
+            window.soundEngine.playRegime(stageIdx);
+          }
+        }
+
+        const planckDepth = (progress * 12.89).toFixed(2);
+        depthVal.textContent = planckDepth + ' ℓₚ';
+      }
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const p = getScrollProgress();
+          updateAtmosphere(p);
+          updateRuler(p);
+          if (window.soundEngine && window.soundEngine.enabled) {
+            window.soundEngine.modulateScroll(p);
+          }
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      /* Initial render */
+      updateAtmosphere(0);
+      updateRuler(0);
+
+      /* -----------------------------------------------------------------------
+         Tick click navigation: clicking a horizon ruler tick scrolls to stage
+         ----------------------------------------------------------------------- */
+      document.querySelectorAll('.h-tick').forEach((tick) => {
+        tick.style.cursor = 'pointer';
+        tick.addEventListener('click', () => {
+          const stageNum = parseInt(tick.dataset.stage, 10);
+          const target = document.getElementById('stage-' + stageNum);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+            if (window.soundEngine && window.soundEngine.enabled) {
+              window.soundEngine.playClick();
+            }
+          }
+        });
+      });
+
+      /* -----------------------------------------------------------------------
+         Floating dock: chapter navigation
+         ----------------------------------------------------------------------- */
+      document.querySelectorAll('.dock-chapter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.target;
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+          if (window.soundEngine && window.soundEngine.enabled) {
+            window.soundEngine.playClick();
+          }
+        });
+      });
+
+      /* -----------------------------------------------------------------------
+         Dock sound toggle: mirrors existing sound-btn state
+         ----------------------------------------------------------------------- */
+      if (dockSoundBtn) {
+        dockSoundBtn.addEventListener('click', () => {
+          const existing = document.getElementById('sound-btn');
+          if (existing) existing.click();
+          dockSoundBtn.classList.toggle('dock-sound-active',
+            window.soundEngine ? window.soundEngine.enabled : false);
+        });
+      }
+
+      /* Keep dock sound button state in sync with main sound button */
+      const mainSoundBtn = document.getElementById('sound-btn');
+      if (mainSoundBtn && dockSoundBtn) {
+        const obs = new MutationObserver(() => {
+          dockSoundBtn.classList.toggle('dock-sound-active',
+            mainSoundBtn.classList.contains('active'));
+        });
+        obs.observe(mainSoundBtn, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      /* -----------------------------------------------------------------------
+         Tactile foley: add click audio to all interactive quantum buttons
+         ----------------------------------------------------------------------- */
+      document.querySelectorAll(
+        '.btn-quantum-inspect, .btn-quantum-link, .ont-pill, .btn-topology'
+      ).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (window.soundEngine && window.soundEngine.enabled) {
+            window.soundEngine.playClick();
+          }
+        });
+      });
+
+      /* Hover chime on orbit nodes */
+      document.querySelectorAll('.ont-pill').forEach((pill, idx) => {
+        pill.addEventListener('mouseenter', () => {
+          if (window.soundEngine && window.soundEngine.enabled) {
+            window.soundEngine.playChime(idx);
+          }
+        });
+      });
+
+    })();
+  </script>
+
 </body>
 </html>
