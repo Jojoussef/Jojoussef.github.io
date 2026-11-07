@@ -1200,7 +1200,19 @@ class CelestialObservatory {
 
     // 5. Raycasting when not docked
     if (!this.isDocked) {
-      this.raycaster.setFromCamera(this.mouse, this.camera);
+      // Invert full-screen optical zoom and parallax so pointer hits exact 3D node on screen
+      const zoom = (this.lensState && this.lensState.zoom) ? this.lensState.zoom : 1;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const dpr = this.renderer ? this.renderer.getPixelRatio() : 1;
+      const px = ((this.rawMouse.x || vw * 0.5) / vw - 0.5) * 18 * dpr;
+      const py = ((this.rawMouse.y || vh * 0.5) / vh - 0.5) * 14 * dpr;
+
+      const normX = ((this.rawMouse.x || vw * 0.5) - vw * 0.5 - (px / dpr)) / (vw * 0.5);
+      const normY = ((this.rawMouse.y || vh * 0.5) - vh * 0.5 - (py / dpr)) / (vh * 0.5);
+      const opticalMouse = new THREE.Vector2(normX / zoom, -normY / zoom);
+
+      this.raycaster.setFromCamera(opticalMouse, this.camera);
       const meshes = this.nodes.map(n => n.userData.mesh);
       const intersects = this.raycaster.intersectObjects(meshes);
 
@@ -1303,8 +1315,8 @@ class CelestialObservatory {
       },
       {
         name: 'FROSTED FUSED SILICA · WIDE CAVITY',
-        params: 'n = 0.82 · Δλ = 5.0nm · σ = 3.5px · ω = -0.08 rad',
-        zoom: 0.82, twist: -0.08, dispersion: 5.0, blur: 3.5, hue: -24, sat: 1.28, contrast: 1.06,
+        params: 'n = 1.08 · Δλ = 5.0nm · σ = 3.2px · ω = -0.06 rad',
+        zoom: 1.08, twist: -0.06, dispersion: 5.0, blur: 3.2, hue: -24, sat: 1.28, contrast: 1.06,
         rim: 'rgba(168, 85, 247, 0.32)', glow: 'rgba(99, 102, 241, 0.18)',
         bgBlur: 0.8, bgHue: -12, bgSat: 1.14, bgContrast: 1.02
       },
@@ -1358,11 +1370,11 @@ class CelestialObservatory {
         bgBlur: 0.0, bgHue: -6, bgSat: 1.08, bgContrast: 1.06
       },
       {
-        name: 'HYPERBOLIC ULTRA-WIDE · AdS HORIZON',
-        params: 'n = 0.74 · Δλ = 9.0nm · σ = 2.8px · ω = -0.20 rad',
-        zoom: 0.74, twist: -0.20, dispersion: 9.0, blur: 2.8, hue: 50, sat: 1.45, contrast: 1.18,
+        name: 'HYPERBOLIC WIDE-HORIZON · AdS CAVITY',
+        params: 'n = 1.06 · Δλ = 8.5nm · σ = 2.4px · ω = -0.08 rad',
+        zoom: 1.06, twist: -0.08, dispersion: 8.5, blur: 2.4, hue: 45, sat: 1.40, contrast: 1.16,
         rim: 'rgba(192, 132, 252, 0.40)', glow: 'rgba(56, 189, 248, 0.20)',
-        bgBlur: 0.6, bgHue: 20, bgSat: 1.20, bgContrast: 1.08
+        bgBlur: 0.6, bgHue: 18, bgSat: 1.18, bgContrast: 1.06
       },
       {
         name: 'GRASSMANNIAN MACRO · G₊(2,6)',

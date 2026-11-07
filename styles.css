@@ -1642,6 +1642,11 @@ html, body {
 #celestial-scene {
   z-index: 1;
   position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
   filter: blur(var(--bg-blur, 0px)) saturate(var(--bg-sat, 1)) hue-rotate(var(--bg-hue, 0deg)) contrast(var(--bg-contrast, 1));
   transition: filter 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: filter;
@@ -1651,8 +1656,11 @@ html, body {
 #quantum-glass-lens {
   position: fixed;
   inset: 0;
+  width: 100%;
   width: 100vw;
+  height: 100%;
   height: 100vh;
+  height: 100dvh;
   border-radius: 0;
   z-index: 2;
   pointer-events: none;
@@ -1677,7 +1685,7 @@ html, body {
   border-radius: 0;
   display: block;
   pointer-events: none;
-  opacity: 0.94;
+  opacity: 1;
 }
 
 .lens-fresnel-sheen {
