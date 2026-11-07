@@ -54,7 +54,8 @@ class CelestialObservatory {
       canvas: this.canvas,
       antialias: true,
       alpha: true,
-      powerPreference: 'high-performance'
+      powerPreference: 'high-performance',
+      preserveDrawingBuffer: true
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -912,6 +913,7 @@ class CelestialObservatory {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.resizeLensCanvas();
   }
 
   dockToNode(nodeGroup) {
@@ -1281,110 +1283,99 @@ class CelestialObservatory {
     this.lensParamsEl = document.getElementById('lens-optic-params');
     this.lensCtx = this.lensCanvas ? this.lensCanvas.getContext('2d') : null;
 
+    this.resizeLensCanvas();
+
     // 13 Stage-Specific Optical Glass Prescriptions (Stage 00 .. Stage 12)
     this.lensPresets = [
       {
-        name: 'CROWN SINGLET · f=85mm',
-        params: 'n = 1.24 · Δλ = 3.5nm · σ = 1.5px · ω = +0.04 rad',
-        x: 0.50, y: 0.44, size: 470, aspect: 1.00, tilt: 0,
-        zoom: 1.24, twist: 0.04, dispersion: 3.5, blur: 1.5, hue: 0, sat: 1.25, contrast: 1.12,
-        rim: 'rgba(56, 189, 248, 0.36)', glow: 'rgba(56, 189, 248, 0.16)',
+        name: 'FULL-APERTURE CROWN · f=85mm',
+        params: 'n = 1.18 · Δλ = 3.5nm · σ = 1.2px · ω = +0.02 rad',
+        zoom: 1.18, twist: 0.02, dispersion: 3.5, blur: 1.2, hue: 0, sat: 1.20, contrast: 1.10,
+        rim: 'rgba(56, 189, 248, 0.28)', glow: 'rgba(56, 189, 248, 0.14)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.00, bgContrast: 1.00
       },
       {
         name: 'BIREFRINGENT CALCITE · U(1) GAUGE',
-        params: 'n = 1.38 · Δλ = 9.5nm · σ = 2.2px · ω = +0.18 rad',
-        x: 0.65, y: 0.48, size: 430, aspect: 1.10, tilt: -12,
-        zoom: 1.38, twist: 0.18, dispersion: 9.5, blur: 2.2, hue: 22, sat: 1.48, contrast: 1.18,
-        rim: 'rgba(56, 189, 248, 0.44)', glow: 'rgba(168, 85, 247, 0.20)',
-        bgBlur: 0.3, bgHue: 8, bgSat: 1.10, bgContrast: 1.04
+        params: 'n = 1.36 · Δλ = 8.5nm · σ = 1.8px · ω = +0.12 rad',
+        zoom: 1.36, twist: 0.12, dispersion: 8.5, blur: 1.8, hue: 20, sat: 1.35, contrast: 1.15,
+        rim: 'rgba(56, 189, 248, 0.35)', glow: 'rgba(168, 85, 247, 0.18)',
+        bgBlur: 0.2, bgHue: 8, bgSat: 1.10, bgContrast: 1.04
       },
       {
-        name: 'FROSTED FUSED SILICA · ΔxΔp ≥ ½ħ',
-        params: 'n = 0.84 · Δλ = 6.0nm · σ = 8.5px · ω = -0.10 rad',
-        x: 0.35, y: 0.50, size: 460, aspect: 0.94, tilt: 8,
-        zoom: 0.84, twist: -0.10, dispersion: 6.0, blur: 8.5, hue: -28, sat: 1.38, contrast: 1.06,
-        rim: 'rgba(168, 85, 247, 0.38)', glow: 'rgba(99, 102, 241, 0.22)',
-        bgBlur: 1.2, bgHue: -14, bgSat: 1.16, bgContrast: 1.02
+        name: 'FROSTED FUSED SILICA · WIDE CAVITY',
+        params: 'n = 0.82 · Δλ = 5.0nm · σ = 3.5px · ω = -0.08 rad',
+        zoom: 0.82, twist: -0.08, dispersion: 5.0, blur: 3.5, hue: -24, sat: 1.28, contrast: 1.06,
+        rim: 'rgba(168, 85, 247, 0.32)', glow: 'rgba(99, 102, 241, 0.18)',
+        bgBlur: 0.8, bgHue: -12, bgSat: 1.14, bgContrast: 1.02
       },
       {
         name: 'PRISMATIC FLINT · e^{iS/ħ}',
-        params: 'n = 1.42 · Δλ = 15.0nm · σ = 1.8px · ω = +0.24 rad',
-        x: 0.63, y: 0.46, size: 420, aspect: 1.14, tilt: -18,
-        zoom: 1.42, twist: 0.24, dispersion: 15.0, blur: 1.8, hue: 48, sat: 1.72, contrast: 1.22,
-        rim: 'rgba(244, 63, 94, 0.42)', glow: 'rgba(168, 85, 247, 0.24)',
-        bgBlur: 0.2, bgHue: 18, bgSat: 1.22, bgContrast: 1.06
+        params: 'n = 1.45 · Δλ = 12.0nm · σ = 1.6px · ω = +0.18 rad',
+        zoom: 1.45, twist: 0.18, dispersion: 12.0, blur: 1.6, hue: 42, sat: 1.50, contrast: 1.20,
+        rim: 'rgba(244, 63, 94, 0.35)', glow: 'rgba(168, 85, 247, 0.20)',
+        bgBlur: 0.2, bgHue: 16, bgSat: 1.20, bgContrast: 1.06
       },
       {
         name: 'CRITICAL OPAL · T_c = 2.269',
-        params: 'n = 1.50 · Δλ = 8.0nm · σ = 4.8px · ω = +0.08 rad',
-        x: 0.37, y: 0.51, size: 450, aspect: 1.00, tilt: 6,
-        zoom: 1.50, twist: 0.08, dispersion: 8.0, blur: 4.8, hue: -42, sat: 1.60, contrast: 1.28,
-        rim: 'rgba(245, 158, 11, 0.46)', glow: 'rgba(245, 158, 11, 0.22)',
-        bgBlur: 0.6, bgHue: -18, bgSat: 1.18, bgContrast: 1.08
+        params: 'n = 1.54 · Δλ = 7.0nm · σ = 3.2px · ω = +0.06 rad',
+        zoom: 1.54, twist: 0.06, dispersion: 7.0, blur: 3.2, hue: -36, sat: 1.45, contrast: 1.22,
+        rim: 'rgba(245, 158, 11, 0.38)', glow: 'rgba(245, 158, 11, 0.18)',
+        bgBlur: 0.5, bgHue: -16, bgSat: 1.16, bgContrast: 1.08
       },
       {
         name: 'ANAMORPHIC SOLITON · Q = +1',
-        params: 'n = 1.32 · Δλ = 7.5nm · σ = 2.0px · ω = +0.36 rad',
-        x: 0.64, y: 0.50, size: 440, aspect: 1.24, tilt: -22,
-        zoom: 1.32, twist: 0.36, dispersion: 7.5, blur: 2.0, hue: 14, sat: 1.42, contrast: 1.16,
-        rim: 'rgba(45, 212, 191, 0.44)', glow: 'rgba(45, 212, 191, 0.20)',
+        params: 'n = 1.28 · Δλ = 6.5nm · σ = 1.8px · ω = +0.22 rad',
+        zoom: 1.28, twist: 0.22, dispersion: 6.5, blur: 1.8, hue: 12, sat: 1.32, contrast: 1.14,
+        rim: 'rgba(45, 212, 191, 0.36)', glow: 'rgba(45, 212, 191, 0.16)',
         bgBlur: 0.0, bgHue: 6, bgSat: 1.08, bgContrast: 1.04
       },
       {
-        name: 'ACHROMATIC DOUBLET · SPOT FX',
-        params: 'n = 1.56 · Δλ = 1.5nm · σ = 0.5px · ω = 0.00 rad',
-        x: 0.34, y: 0.48, size: 410, aspect: 1.00, tilt: 0,
-        zoom: 1.56, twist: 0.00, dispersion: 1.5, blur: 0.5, hue: 6, sat: 1.28, contrast: 1.32,
-        rim: 'rgba(16, 185, 129, 0.44)', glow: 'rgba(56, 189, 248, 0.18)',
+        name: 'ACHROMATIC TELEPHOTO · SPOT FX',
+        params: 'n = 1.62 · Δλ = 1.5nm · σ = 0.5px · ω = 0.00 rad',
+        zoom: 1.62, twist: 0.00, dispersion: 1.5, blur: 0.5, hue: 6, sat: 1.25, contrast: 1.28,
+        rim: 'rgba(16, 185, 129, 0.38)', glow: 'rgba(56, 189, 248, 0.16)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.05, bgContrast: 1.08
       },
       {
         name: 'DIAMOND MERKLE OPTIC · SHA-256',
-        params: 'n = 2.42 · Δλ = 12.0nm · σ = 1.6px · ω = +0.14 rad',
-        x: 0.66, y: 0.48, size: 430, aspect: 1.02, tilt: 12,
-        zoom: 1.46, twist: 0.14, dispersion: 12.0, blur: 1.6, hue: -22, sat: 1.55, contrast: 1.24,
-        rim: 'rgba(168, 85, 247, 0.48)', glow: 'rgba(168, 85, 247, 0.24)',
-        bgBlur: 0.2, bgHue: -10, bgSat: 1.14, bgContrast: 1.06
+        params: 'n = 1.44 · Δλ = 10.0nm · σ = 1.4px · ω = +0.10 rad',
+        zoom: 1.44, twist: 0.10, dispersion: 10.0, blur: 1.4, hue: -20, sat: 1.42, contrast: 1.20,
+        rim: 'rgba(168, 85, 247, 0.40)', glow: 'rgba(168, 85, 247, 0.20)',
+        bgBlur: 0.2, bgHue: -10, bgSat: 1.12, bgContrast: 1.06
       },
       {
         name: 'ASPHERIC CONDENSER · 15M+ & x402',
-        params: 'n = 1.75 · Δλ = 6.5nm · σ = 3.0px · ω = -0.12 rad',
-        x: 0.36, y: 0.52, size: 445, aspect: 1.12, tilt: 14,
-        zoom: 1.28, twist: -0.12, dispersion: 6.5, blur: 3.0, hue: 30, sat: 1.40, contrast: 1.20,
-        rim: 'rgba(245, 158, 11, 0.42)', glow: 'rgba(56, 189, 248, 0.20)',
-        bgBlur: 0.4, bgHue: 10, bgSat: 1.12, bgContrast: 1.05
+        params: 'n = 1.24 · Δλ = 5.5nm · σ = 2.4px · ω = -0.08 rad',
+        zoom: 1.24, twist: -0.08, dispersion: 5.5, blur: 2.4, hue: 25, sat: 1.30, contrast: 1.16,
+        rim: 'rgba(245, 158, 11, 0.35)', glow: 'rgba(56, 189, 248, 0.16)',
+        bgBlur: 0.3, bgHue: 10, bgSat: 1.10, bgContrast: 1.05
       },
       {
         name: 'APOCHROMATIC BIOMETRIC · ViT / ONNX',
-        params: 'n = 1.80 · Δλ = 3.0nm · σ = 1.0px · ω = +0.05 rad',
-        x: 0.64, y: 0.49, size: 420, aspect: 1.00, tilt: -6,
-        zoom: 1.58, twist: 0.05, dispersion: 3.0, blur: 1.0, hue: -14, sat: 1.36, contrast: 1.30,
-        rim: 'rgba(45, 212, 191, 0.46)', glow: 'rgba(244, 63, 94, 0.18)',
+        params: 'n = 1.58 · Δλ = 2.5nm · σ = 0.8px · ω = +0.04 rad',
+        zoom: 1.58, twist: 0.04, dispersion: 2.5, blur: 0.8, hue: -12, sat: 1.30, contrast: 1.25,
+        rim: 'rgba(45, 212, 191, 0.38)', glow: 'rgba(244, 63, 94, 0.16)',
         bgBlur: 0.0, bgHue: -6, bgSat: 1.08, bgContrast: 1.06
       },
       {
-        name: 'HYPERBOLIC CONCAVE · n = 0.64 AdS',
-        params: 'n = 0.64 · Δλ = 11.0nm · σ = 3.6px · ω = -0.28 rad',
-        x: 0.38, y: 0.48, size: 480, aspect: 1.00, tilt: 0,
-        zoom: 0.64, twist: -0.28, dispersion: 11.0, blur: 3.6, hue: 60, sat: 1.65, contrast: 1.22,
-        rim: 'rgba(192, 132, 252, 0.48)', glow: 'rgba(56, 189, 248, 0.24)',
-        bgBlur: 0.8, bgHue: 24, bgSat: 1.25, bgContrast: 1.08
+        name: 'HYPERBOLIC ULTRA-WIDE · AdS HORIZON',
+        params: 'n = 0.74 · Δλ = 9.0nm · σ = 2.8px · ω = -0.20 rad',
+        zoom: 0.74, twist: -0.20, dispersion: 9.0, blur: 2.8, hue: 50, sat: 1.45, contrast: 1.18,
+        rim: 'rgba(192, 132, 252, 0.40)', glow: 'rgba(56, 189, 248, 0.20)',
+        bgBlur: 0.6, bgHue: 20, bgSat: 1.20, bgContrast: 1.08
       },
       {
-        name: 'GRASSMANNIAN CRYSTAL · G₊(2,6)',
-        params: 'n = 2.65 · Δλ = 17.5nm · σ = 2.2px · ω = +0.32 rad',
-        x: 0.60, y: 0.48, size: 490, aspect: 1.06, tilt: 16,
-        zoom: 1.64, twist: 0.32, dispersion: 17.5, blur: 2.2, hue: -52, sat: 1.80, contrast: 1.28,
-        rim: 'rgba(45, 212, 191, 0.52)', glow: 'rgba(168, 85, 247, 0.28)',
-        bgBlur: 0.5, bgHue: -22, bgSat: 1.30, bgContrast: 1.10
+        name: 'GRASSMANNIAN MACRO · G₊(2,6)',
+        params: 'n = 1.68 · Δλ = 14.0nm · σ = 1.8px · ω = +0.24 rad',
+        zoom: 1.68, twist: 0.24, dispersion: 14.0, blur: 1.8, hue: -45, sat: 1.55, contrast: 1.25,
+        rim: 'rgba(45, 212, 191, 0.44)', glow: 'rgba(168, 85, 247, 0.22)',
+        bgBlur: 0.4, bgHue: -18, bgSat: 1.24, bgContrast: 1.10
       },
       {
-        name: 'HORIZON MENISCUS · 35.76°N',
-        params: 'n = 1.15 · Δλ = 2.5nm · σ = 2.2px · ω = +0.02 rad',
-        x: 0.50, y: 0.50, size: 440, aspect: 1.00, tilt: 0,
-        zoom: 1.15, twist: 0.02, dispersion: 2.5, blur: 2.2, hue: 0, sat: 1.18, contrast: 1.10,
-        rim: 'rgba(56, 189, 248, 0.34)', glow: 'rgba(56, 189, 248, 0.16)',
+        name: 'HORIZON INFINITY MENISCUS · 35.76°N',
+        params: 'n = 1.10 · Δλ = 2.0nm · σ = 1.6px · ω = +0.02 rad',
+        zoom: 1.10, twist: 0.02, dispersion: 2.0, blur: 1.6, hue: 0, sat: 1.15, contrast: 1.08,
+        rim: 'rgba(56, 189, 248, 0.28)', glow: 'rgba(56, 189, 248, 0.14)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.00, bgContrast: 1.00
       }
     ];
@@ -1393,6 +1384,19 @@ class CelestialObservatory {
     this.lensState = Object.assign({}, this.lensPresets[0]);
     this.lensTarget = Object.assign({}, this.lensPresets[0]);
     this.setLensStage(0);
+  }
+
+  resizeLensCanvas() {
+    if (!this.lensCanvas) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const targetW = Math.floor(w * dpr);
+    const targetH = Math.floor(h * dpr);
+    if (this.lensCanvas.width !== targetW || this.lensCanvas.height !== targetH) {
+      this.lensCanvas.width = targetW;
+      this.lensCanvas.height = targetH;
+    }
   }
 
   setLensStage(stageIdx) {
@@ -1404,7 +1408,7 @@ class CelestialObservatory {
     this.lensTarget = Object.assign({}, preset);
 
     if (this.lensNameEl) this.lensNameEl.textContent = preset.name;
-    if (this.lensParamsEl) this.lensParamsEl.textContent = preset.params;
+    if (this.lensParamsEl) this.lensParamsEl.textContent = `MAG ${preset.zoom.toFixed(2)}x · ${preset.params}`;
 
     if (this.lensEl) {
       this.lensEl.style.setProperty('--lens-rim-color', preset.rim);
@@ -1426,11 +1430,6 @@ class CelestialObservatory {
     const t = this.lensTarget;
     const lerp = 0.065;
 
-    s.x += (t.x - s.x) * lerp;
-    s.y += (t.y - s.y) * lerp;
-    s.size += (t.size - s.size) * lerp;
-    s.aspect += (t.aspect - s.aspect) * lerp;
-    s.tilt += (t.tilt - s.tilt) * lerp;
     s.zoom += (t.zoom - s.zoom) * lerp;
     s.twist += (t.twist - s.twist) * lerp;
     s.dispersion += (t.dispersion - s.dispersion) * lerp;
@@ -1439,94 +1438,74 @@ class CelestialObservatory {
     s.sat += (t.sat - s.sat) * lerp;
     s.contrast += (t.contrast - s.contrast) * lerp;
 
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const d = Math.min(s.size, Math.min(vw, vh) * 0.74);
-
-    // Subtle cursor parallax on the optical axis
-    const parallaxX = ((this.rawMouse.x || vw * 0.5) / vw - 0.5) * 34;
-    const parallaxY = ((this.rawMouse.y || vh * 0.5) / vh - 0.5) * 26;
-
-    const cx = s.x * vw + parallaxX;
-    const cy = s.y * vh + parallaxY;
-
-    this.lensEl.style.setProperty('--lens-size', `${d.toFixed(1)}px`);
     this.lensEl.style.setProperty('--lens-blur', `${s.blur.toFixed(2)}px`);
     this.lensEl.style.setProperty('--lens-sat', `${s.sat.toFixed(2)}`);
     this.lensEl.style.setProperty('--lens-hue', `${s.hue.toFixed(1)}deg`);
     this.lensEl.style.setProperty('--lens-contrast', `${s.contrast.toFixed(2)}`);
 
-    const left = cx - d * 0.5;
-    const top = cy - d * 0.5;
-    this.lensEl.style.transform = `translate3d(${left.toFixed(1)}px, ${top.toFixed(1)}px, 0) rotate(${s.tilt.toFixed(2)}deg) scaleX(${s.aspect.toFixed(3)})`;
-
-    // Sample WebGL background canvas and apply real optical magnification, twist, and chromatic dispersion
     const cw = this.lensCanvas.width;
     const ch = this.lensCanvas.height;
+    if (cw === 0 || ch === 0) return;
+
     const ctx = this.lensCtx;
     ctx.clearRect(0, 0, cw, ch);
 
     const dpr = this.renderer ? this.renderer.getPixelRatio() : 1;
-    const srcSpan = (d * dpr) / Math.max(0.35, s.zoom);
-    const sx = cx * dpr - srcSpan * 0.5;
-    const sy = cy * dpr - srcSpan * 0.5;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
 
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cw * 0.5, ch * 0.5, cw * 0.495, 0, Math.PI * 2);
-    ctx.clip();
+    // Subtle optical axis parallax driven by cursor
+    const parallaxX = ((this.rawMouse.x || vw * 0.5) / vw - 0.5) * 18 * dpr;
+    const parallaxY = ((this.rawMouse.y || vh * 0.5) / vh - 0.5) * 14 * dpr;
 
-    // Base refracted & magnified/demagnified optical pass
+    // Base optical pass with full-screen zoom scaling
     ctx.save();
-    ctx.translate(cw * 0.5, ch * 0.5);
-    ctx.rotate(s.twist + Math.sin(this.time * 0.35) * 0.015);
-    ctx.filter = `blur(${Math.max(0, s.blur * 0.35).toFixed(1)}px) hue-rotate(${s.hue.toFixed(0)}deg) saturate(${s.sat.toFixed(2)}) contrast(${s.contrast.toFixed(2)})`;
-    ctx.drawImage(this.canvas, sx, sy, srcSpan, srcSpan, -cw * 0.5, -ch * 0.5, cw, ch);
+    ctx.translate(cw * 0.5 + parallaxX, ch * 0.5 + parallaxY);
+    ctx.rotate(s.twist + Math.sin(this.time * 0.35) * 0.012);
+    ctx.scale(s.zoom, s.zoom);
+    ctx.filter = `blur(${Math.max(0, s.blur * 0.25).toFixed(1)}px) hue-rotate(${s.hue.toFixed(0)}deg) saturate(${s.sat.toFixed(2)}) contrast(${s.contrast.toFixed(2)})`;
+    ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
     ctx.restore();
 
-    // Chromatic dispersion caustic passes (cyan/violet/rose prism split)
+    // Chromatic dispersion passes (cyan / magenta spectral split)
     if (s.dispersion > 1.2) {
-      const disp = s.dispersion;
+      const disp = s.dispersion * dpr * 0.55;
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
-      ctx.globalAlpha = Math.min(0.52, 0.16 + disp * 0.022);
-      ctx.translate(cw * 0.5 + disp, ch * 0.5 - disp * 0.45);
-      ctx.rotate(s.twist * 1.08);
-      ctx.filter = `hue-rotate(${(s.hue + 38).toFixed(0)}deg) saturate(1.8)`;
-      ctx.drawImage(this.canvas, sx, sy, srcSpan, srcSpan, -cw * 0.5, -ch * 0.5, cw, ch);
+      ctx.globalAlpha = Math.min(0.36, 0.12 + s.dispersion * 0.015);
+      ctx.translate(cw * 0.5 + parallaxX + disp, ch * 0.5 + parallaxY - disp * 0.45);
+      ctx.rotate(s.twist * 1.04);
+      ctx.scale(s.zoom * 1.005, s.zoom * 1.005);
+      ctx.filter = `hue-rotate(${(s.hue + 32).toFixed(0)}deg) saturate(1.6)`;
+      ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
       ctx.restore();
 
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
-      ctx.globalAlpha = Math.min(0.45, 0.12 + disp * 0.018);
-      ctx.translate(cw * 0.5 - disp * 0.85, ch * 0.5 + disp * 0.55);
-      ctx.rotate(s.twist * 0.92);
-      ctx.filter = `hue-rotate(${(s.hue - 42).toFixed(0)}deg) saturate(1.7)`;
-      ctx.drawImage(this.canvas, sx, sy, srcSpan, srcSpan, -cw * 0.5, -ch * 0.5, cw, ch);
+      ctx.globalAlpha = Math.min(0.30, 0.10 + s.dispersion * 0.012);
+      ctx.translate(cw * 0.5 + parallaxX - disp * 0.7, ch * 0.5 + parallaxY + disp * 0.5);
+      ctx.rotate(s.twist * 0.96);
+      ctx.scale(s.zoom * 0.995, s.zoom * 0.995);
+      ctx.filter = `hue-rotate(${(s.hue - 36).toFixed(0)}deg) saturate(1.5)`;
+      ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
       ctx.restore();
     }
 
-    // Subtle engraved optical diopter ring & axis ticks inside the glass
+    // Subtle optical reticle in screen center
     ctx.save();
     ctx.translate(cw * 0.5, ch * 0.5);
-    ctx.rotate(-s.tilt * (Math.PI / 180));
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.075)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.16)';
     ctx.lineWidth = 1;
-    ctx.setLineDash([3, 9]);
     ctx.beginPath();
-    ctx.arc(0, 0, cw * 0.38, 0, Math.PI * 2);
+    ctx.moveTo(-16, 0); ctx.lineTo(16, 0);
+    ctx.moveTo(0, -16); ctx.lineTo(0, 16);
     ctx.stroke();
 
-    ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
     ctx.beginPath();
-    ctx.moveTo(-10, 0);
-    ctx.lineTo(10, 0);
-    ctx.moveTo(0, -10);
-    ctx.lineTo(0, 10);
+    ctx.arc(0, 0, 38, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.setLineDash([2, 8]);
     ctx.stroke();
-    ctx.restore();
-
     ctx.restore();
   }
 }
