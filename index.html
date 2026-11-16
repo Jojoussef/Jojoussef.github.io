@@ -268,6 +268,14 @@
       </svg>
     </button>
     <div class="dock-divider"></div>
+    <button type="button" class="dock-invert-btn" id="dock-invert-btn" aria-label="Toggle color invert filter" aria-pressed="false" title="Toggle Color Invert Filter (Shortcut: I)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/>
+      </svg>
+      <span>Invert</span>
+    </button>
+    <div class="dock-divider"></div>
     <nav class="dock-chapters" aria-label="Chapter navigation">
       <button type="button" class="dock-chapter-btn" data-target="stage-0">Origin</button>
       <button type="button" class="dock-chapter-btn" data-target="stage-1">Gauge</button>
@@ -2273,6 +2281,30 @@
             window.soundEngine ? window.soundEngine.enabled : false);
         });
       }
+
+      /* -----------------------------------------------------------------------
+         Dock color invert filter toggle & keyboard shortcut (I)
+         ----------------------------------------------------------------------- */
+      const dockInvertBtn = document.getElementById('dock-invert-btn');
+      if (dockInvertBtn) {
+        dockInvertBtn.addEventListener('click', () => {
+          if (window.observatory && typeof window.observatory.toggleColorInvert === 'function') {
+            window.observatory.toggleColorInvert();
+          }
+          if (window.soundEngine && window.soundEngine.enabled) {
+            window.soundEngine.playClick();
+          }
+        });
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) return;
+        if ((e.key === 'i' || e.key === 'I') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          if (window.observatory && typeof window.observatory.toggleColorInvert === 'function') {
+            window.observatory.toggleColorInvert();
+          }
+        }
+      });
 
       /* Keep dock sound button state in sync with main sound button */
       const mainSoundBtn = document.getElementById('sound-btn');

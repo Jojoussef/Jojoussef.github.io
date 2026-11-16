@@ -1647,7 +1647,7 @@ html, body {
   height: 100%;
   opacity: 0;
   pointer-events: none;
-  filter: blur(var(--bg-blur, 0px)) saturate(var(--bg-sat, 1)) hue-rotate(var(--bg-hue, 0deg)) contrast(var(--bg-contrast, 1));
+  filter: blur(var(--bg-blur, 0px)) invert(var(--bg-invert, 0)) saturate(var(--bg-sat, 1)) hue-rotate(var(--bg-hue, 0deg)) contrast(var(--bg-contrast, 1));
   transition: filter 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: filter;
 }
@@ -1665,8 +1665,8 @@ html, body {
   z-index: 2;
   pointer-events: none;
   overflow: hidden;
-  backdrop-filter: blur(var(--lens-blur, 1.5px)) saturate(var(--lens-sat, 1.25)) hue-rotate(var(--lens-hue, 0deg)) contrast(var(--lens-contrast, 1.12)) brightness(var(--lens-bright, 1.05));
-  -webkit-backdrop-filter: blur(var(--lens-blur, 1.5px)) saturate(var(--lens-sat, 1.25)) hue-rotate(var(--lens-hue, 0deg)) contrast(var(--lens-contrast, 1.12)) brightness(var(--lens-bright, 1.05));
+  backdrop-filter: blur(var(--lens-blur, 1.5px)) invert(var(--lens-invert, 0)) saturate(var(--lens-sat, 1.25)) hue-rotate(var(--lens-hue, 0deg)) contrast(var(--lens-contrast, 1.12)) brightness(var(--lens-bright, 1.05));
+  -webkit-backdrop-filter: blur(var(--lens-blur, 1.5px)) invert(var(--lens-invert, 0)) saturate(var(--lens-sat, 1.25)) hue-rotate(var(--lens-hue, 0deg)) contrast(var(--lens-contrast, 1.12)) brightness(var(--lens-bright, 1.05));
   background: radial-gradient(
     circle at 50% 50%,
     rgba(255, 255, 255, 0.02) 0%,
@@ -1708,6 +1708,7 @@ html, body {
   box-shadow:
     inset 0 0 60px var(--lens-glow-color, rgba(56, 189, 248, 0.12)),
     inset 0 0 120px rgba(3, 7, 18, 0.35);
+  transition: box-shadow 0.5s ease, border-color 0.5s ease;
 }
 
 .lens-optic-readout {
@@ -1720,7 +1721,7 @@ html, body {
   align-items: flex-end;
   gap: 4px;
   text-align: right;
-  pointer-events: none;
+  pointer-events: auto;
   font-family: var(--font-mono);
   background: rgba(3, 7, 18, 0.55);
   backdrop-filter: blur(12px);
@@ -1729,6 +1730,12 @@ html, body {
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.lens-optic-readout:hover {
+  border-color: rgba(56, 189, 248, 0.45);
 }
 
 #lens-optic-name {
@@ -2296,6 +2303,34 @@ a.btn-quantum-link:hover {
   opacity: 0.2;
 }
 
+.dock-invert-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(226, 232, 240, 0.72);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 6px;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.dock-invert-btn:hover,
+.dock-invert-btn.dock-invert-active {
+  color: #38bdf8;
+}
+
+.dock-invert-btn.dock-invert-active {
+  background: rgba(56, 189, 248, 0.14);
+}
+
 .dock-chapters {
   display: flex;
   align-items: center;
@@ -2325,6 +2360,120 @@ a.btn-quantum-link:hover {
 #quantum-continuum {
   padding-top: 12px;
   padding-bottom: 4rem;
+}
+
+/* ==========================================================================
+   COLOR INVERT FILTER REGIME (body.optic-inverted-field)
+   Adapts open-space ink and 2D physics canvases when the optical lens inverts
+   the cosmic field into a high-key negative-index observatory
+   ========================================================================== */
+body.optic-inverted-field .hero-title,
+body.optic-inverted-field .quantum-card-title,
+body.optic-inverted-field .sig-name {
+  color: #050914 !important;
+  text-shadow: 0 2px 24px rgba(255, 255, 255, 0.95), 0 0 36px rgba(14, 165, 233, 0.22) !important;
+}
+
+body.optic-inverted-field .sig-meta {
+  color: rgba(30, 41, 59, 0.78) !important;
+}
+
+body.optic-inverted-field .quantum-text,
+body.optic-inverted-field .hero-subtitle,
+body.optic-inverted-field .quantum-architecture-spec {
+  color: rgba(15, 23, 42, 0.90) !important;
+  text-shadow: 0 1px 16px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-architecture-spec {
+  border-left-color: rgba(2, 132, 199, 0.65) !important;
+}
+
+body.optic-inverted-field .hero-badge,
+body.optic-inverted-field .quantum-formula-badge,
+body.optic-inverted-field a.btn-quantum-inspect,
+body.optic-inverted-field a.btn-quantum-link {
+  color: #0369a1 !important;
+  border-bottom-color: rgba(3, 105, 161, 0.55) !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.92) !important;
+}
+
+body.optic-inverted-field a.btn-quantum-inspect:hover,
+body.optic-inverted-field a.btn-quantum-link:hover {
+  color: #050914 !important;
+  border-bottom-color: #0284c7 !important;
+}
+
+body.optic-inverted-field .quantum-metric-label {
+  color: rgba(51, 65, 85, 0.85) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9) !important;
+}
+
+body.optic-inverted-field .quantum-metric-val {
+  color: #050914 !important;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-readout,
+body.optic-inverted-field .btn-sim-action {
+  color: rgba(15, 23, 42, 0.86) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.35) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9) !important;
+}
+
+body.optic-inverted-field .btn-sim-action:hover,
+body.optic-inverted-field .btn-sim-action.active {
+  color: #0284c7 !important;
+  border-bottom-color: #0284c7 !important;
+}
+
+body.optic-inverted-field .margin-annotation {
+  color: #0369a1 !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.92) !important;
+}
+
+body.optic-inverted-field .hero-annotation {
+  color: #6d28d9 !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.92) !important;
+}
+
+body.optic-inverted-field #mini-dest,
+body.optic-inverted-field #mini-ccy {
+  color: #050914 !important;
+  border-bottom-color: rgba(2, 132, 199, 0.55) !important;
+}
+
+body.optic-inverted-field .quantum-sim-canvas-wrap canvas {
+  filter: invert(0.92) hue-rotate(180deg) contrast(1.12);
+}
+
+body.optic-inverted-field #horizon-ruler-track {
+  background: rgba(15, 23, 42, 0.24);
+}
+
+body.optic-inverted-field .h-tick-line {
+  background: rgba(15, 23, 42, 0.32);
+}
+
+body.optic-inverted-field .h-tick-major .h-tick-line {
+  background: rgba(15, 23, 42, 0.68);
+}
+
+body.optic-inverted-field .h-tick-label,
+body.optic-inverted-field #horizon-stage-label {
+  color: rgba(15, 23, 42, 0.78);
+}
+
+body.optic-inverted-field .h-tick:hover .h-tick-label,
+body.optic-inverted-field .h-tick-active .h-tick-label,
+body.optic-inverted-field #horizon-depth-val {
+  color: #0284c7;
+}
+
+body.optic-inverted-field .lens-caustic-ring {
+  box-shadow:
+    inset 0 0 60px var(--lens-glow-color, rgba(14, 165, 233, 0.16)),
+    inset 0 0 120px rgba(15, 23, 42, 0.08);
 }
 
 /* ==========================================================================
