@@ -126,19 +126,6 @@ class CelestialObservatory {
     });
     this.coreKnot = new THREE.Mesh(knotGeom, knotMat);
     this.torusGroup.add(this.coreKnot);
-
-    const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.18 });
-    const ringGeom1 = new THREE.RingGeometry(6.5, 6.62, 64);
-    this.ring1 = new THREE.Mesh(ringGeom1, ringMat1);
-    this.ring1.rotation.x = Math.PI * 0.35;
-    this.torusGroup.add(this.ring1);
-
-    const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.15 });
-    const ringGeom2 = new THREE.RingGeometry(8.2, 8.32, 64);
-    this.ring2 = new THREE.Mesh(ringGeom2, ringMat2);
-    this.ring2.rotation.y = Math.PI * 0.25;
-    this.ring2.rotation.x = -Math.PI * 0.2;
-    this.torusGroup.add(this.ring2);
     this.scene.add(this.torusGroup);
 
     // 2. Lorenz Strange Attractor (Numerical differential integration)
@@ -730,52 +717,8 @@ class CelestialObservatory {
   }
 
   buildInteractiveNodes() {
-    // Subtle harmonic anchors along the scroll spline (no solid 3D boxes or polyhedra crowding space)
-    const nodeDefs = [
-      { id: 'esim', title: 'eSIM Arbitrage Optimizer', category: 'Spot FX & Price Inversions', position: new THREE.Vector3(-14, 3, 6), color: 0x38bdf8, soundIdx: 0 },
-      { id: 'zizkadb', title: 'Open Source & ZizkaDB', category: '5 Upstream PRs & Article 12 Audit', position: new THREE.Vector3(14, 5, -4), color: 0xa855f7, soundIdx: 1 },
-      { id: 'verifyid', title: 'VerifyID, Miranda & Seha', category: 'Vision, Clinical & Metal/ONNX Edge', position: new THREE.Vector3(-9, -7, -10), color: 0x2dd4bf, soundIdx: 2 },
-      { id: 'etl', title: '15M+ ETL & x402 Broker', category: 'Distributed Pipelines & Banking Migration', position: new THREE.Vector3(10, -6, 11), color: 0xf59e0b, soundIdx: 3 }
-    ];
-
-    nodeDefs.forEach((def) => {
-      const group = new THREE.Group();
-      group.position.copy(def.position);
-
-      const sphereGeom = new THREE.SphereGeometry(0.35, 16, 16);
-      const mat = new THREE.MeshBasicMaterial({
-        color: def.color,
-        transparent: true,
-        opacity: 0.45
-      });
-      const mesh = new THREE.Mesh(sphereGeom, mat);
-      group.add(mesh);
-
-      const haloGeom = new THREE.RingGeometry(1.6, 1.66, 48);
-      const haloMat = new THREE.MeshBasicMaterial({
-        color: def.color,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.16
-      });
-      const halo = new THREE.Mesh(haloGeom, haloMat);
-      halo.rotation.x = Math.PI * 0.5;
-      group.add(halo);
-
-      group.userData = {
-        id: def.id,
-        title: def.title,
-        category: def.category,
-        soundIdx: def.soundIdx,
-        baseScale: 1.0,
-        mesh: mesh,
-        halo: halo,
-        defaultPos: def.position.clone()
-      };
-
-      this.scene.add(group);
-      this.nodes.push(group);
-    });
+    // Floating orb docks and orbital rings removed for pure open-space flow
+    this.nodes = [];
   }
 
   setupEvents() {
@@ -1303,9 +1246,9 @@ class CelestialObservatory {
     this.lensPresets = [
       {
         name: 'FULL-APERTURE CROWN · f=85mm',
-        params: 'n = 1.18 · CORE 65% · Δλ = 3.5nm · σ = 1.2px',
+        params: 'n = 1.18 · Δλ = 3.5nm · σ = 1.2px · ω = +0.02 rad',
         zoom: 1.18, twist: 0.02, dispersion: 3.5, blur: 1.2, hue: 0, sat: 1.20, contrast: 1.10,
-        invert: 0.00, singletInvert: 0.65,
+        invert: 0.00,
         rim: 'rgba(56, 189, 248, 0.28)', glow: 'rgba(56, 189, 248, 0.14)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.00, bgContrast: 1.00, bgInvert: 0.00
       },
@@ -1313,7 +1256,7 @@ class CelestialObservatory {
         name: 'BIREFRINGENT CALCITE · U(1) GAUGE',
         params: 'n = 1.36 · Δλ = 8.5nm · σ = 1.8px · ω = +0.12 rad',
         zoom: 1.36, twist: 0.12, dispersion: 8.5, blur: 1.8, hue: 20, sat: 1.35, contrast: 1.15,
-        invert: 0.14, singletInvert: 0.75,
+        invert: 0.14,
         rim: 'rgba(56, 189, 248, 0.35)', glow: 'rgba(168, 85, 247, 0.18)',
         bgBlur: 0.2, bgHue: 8, bgSat: 1.10, bgContrast: 1.04, bgInvert: 0.08
       },
@@ -1321,7 +1264,7 @@ class CelestialObservatory {
         name: 'NEGATIVE-PHASE SILICA · VACUUM CAVITY',
         params: 'n = -1.08 · Δλ = 5.0nm · σ = 2.2px · ω = -0.06 rad',
         zoom: 1.08, twist: -0.06, dispersion: 5.0, blur: 2.2, hue: 165, sat: 1.32, contrast: 1.12,
-        invert: 0.94, singletInvert: 0.94,
+        invert: 0.94,
         rim: 'rgba(14, 165, 233, 0.42)', glow: 'rgba(99, 102, 241, 0.22)',
         bgBlur: 0.4, bgHue: 165, bgSat: 1.18, bgContrast: 1.08, bgInvert: 0.94
       },
@@ -1329,7 +1272,7 @@ class CelestialObservatory {
         name: 'PRISMATIC FLINT · e^{iS/ħ}',
         params: 'n = 1.45 · Δλ = 12.0nm · σ = 1.6px · ω = +0.18 rad',
         zoom: 1.45, twist: 0.18, dispersion: 12.0, blur: 1.6, hue: 42, sat: 1.50, contrast: 1.20,
-        invert: 0.20, singletInvert: 0.82,
+        invert: 0.20,
         rim: 'rgba(244, 63, 94, 0.35)', glow: 'rgba(168, 85, 247, 0.20)',
         bgBlur: 0.2, bgHue: 16, bgSat: 1.20, bgContrast: 1.06, bgInvert: 0.12
       },
@@ -1337,7 +1280,7 @@ class CelestialObservatory {
         name: 'CRITICAL OPAL · PHASE INVERSION T_c',
         params: 'n = -1.54 · Δλ = 7.0nm · σ = 2.0px · T_c = 2.269',
         zoom: 1.54, twist: 0.06, dispersion: 7.0, blur: 2.0, hue: 180, sat: 1.40, contrast: 1.18,
-        invert: 0.96, singletInvert: 0.96,
+        invert: 0.96,
         rim: 'rgba(2, 132, 199, 0.45)', glow: 'rgba(245, 158, 11, 0.22)',
         bgBlur: 0.3, bgHue: 180, bgSat: 1.20, bgContrast: 1.10, bgInvert: 0.96
       },
@@ -1345,15 +1288,15 @@ class CelestialObservatory {
         name: 'ANAMORPHIC SOLITON · Q = +1',
         params: 'n = 1.28 · Δλ = 6.5nm · σ = 1.8px · ω = +0.22 rad',
         zoom: 1.28, twist: 0.22, dispersion: 6.5, blur: 1.8, hue: 12, sat: 1.32, contrast: 1.14,
-        invert: 0.12, singletInvert: 0.68,
+        invert: 0.12,
         rim: 'rgba(45, 212, 191, 0.36)', glow: 'rgba(45, 212, 191, 0.16)',
         bgBlur: 0.0, bgHue: 6, bgSat: 1.08, bgContrast: 1.04, bgInvert: 0.06
       },
       {
         name: 'ACHROMATIC TELEPHOTO · SPOT FX',
-        params: 'n = 1.62 · CORE 55% · Δλ = 1.5nm · σ = 0.5px',
+        params: 'n = 1.62 · Δλ = 1.5nm · σ = 0.5px · ω = 0.00 rad',
         zoom: 1.62, twist: 0.00, dispersion: 1.5, blur: 0.5, hue: 6, sat: 1.25, contrast: 1.28,
-        invert: 0.00, singletInvert: 0.55,
+        invert: 0.00,
         rim: 'rgba(16, 185, 129, 0.38)', glow: 'rgba(56, 189, 248, 0.16)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.05, bgContrast: 1.08, bgInvert: 0.00
       },
@@ -1361,7 +1304,7 @@ class CelestialObservatory {
         name: 'ZERO-KNOWLEDGE NEGATIVE OPTIC · SHA-256',
         params: 'n = -1.44 · Δλ = 10.0nm · σ = 1.4px · ω = +0.10 rad',
         zoom: 1.44, twist: 0.10, dispersion: 10.0, blur: 1.4, hue: 170, sat: 1.38, contrast: 1.16,
-        invert: 0.94, singletInvert: 0.94,
+        invert: 0.94,
         rim: 'rgba(124, 58, 237, 0.42)', glow: 'rgba(14, 165, 233, 0.20)',
         bgBlur: 0.2, bgHue: 170, bgSat: 1.15, bgContrast: 1.08, bgInvert: 0.94
       },
@@ -1369,7 +1312,7 @@ class CelestialObservatory {
         name: 'ASPHERIC CONDENSER · 15M+ & x402',
         params: 'n = 1.24 · Δλ = 5.5nm · σ = 2.4px · ω = -0.08 rad',
         zoom: 1.24, twist: -0.08, dispersion: 5.5, blur: 2.4, hue: 25, sat: 1.30, contrast: 1.16,
-        invert: 0.16, singletInvert: 0.72,
+        invert: 0.16,
         rim: 'rgba(245, 158, 11, 0.35)', glow: 'rgba(56, 189, 248, 0.16)',
         bgBlur: 0.3, bgHue: 10, bgSat: 1.10, bgContrast: 1.05, bgInvert: 0.10
       },
@@ -1377,7 +1320,7 @@ class CelestialObservatory {
         name: 'APOCHROMATIC BIOMETRIC · ViT / ONNX',
         params: 'n = 1.58 · Δλ = 2.5nm · σ = 0.8px · ω = +0.04 rad',
         zoom: 1.58, twist: 0.04, dispersion: 2.5, blur: 0.8, hue: -12, sat: 1.30, contrast: 1.25,
-        invert: 0.08, singletInvert: 0.62,
+        invert: 0.08,
         rim: 'rgba(45, 212, 191, 0.38)', glow: 'rgba(244, 63, 94, 0.16)',
         bgBlur: 0.0, bgHue: -6, bgSat: 1.08, bgContrast: 1.06, bgInvert: 0.04
       },
@@ -1385,7 +1328,7 @@ class CelestialObservatory {
         name: 'NEGATIVE-INDEX AdS LENS · n = -1.06',
         params: 'n = -1.06 · Δλ = 8.5nm · σ = 1.8px · ER = EPR',
         zoom: 1.06, twist: -0.08, dispersion: 8.5, blur: 1.8, hue: 195, sat: 1.38, contrast: 1.16,
-        invert: 0.96, singletInvert: 0.96,
+        invert: 0.96,
         rim: 'rgba(14, 165, 233, 0.45)', glow: 'rgba(168, 85, 247, 0.22)',
         bgBlur: 0.4, bgHue: 195, bgSat: 1.18, bgContrast: 1.08, bgInvert: 0.96
       },
@@ -1393,15 +1336,15 @@ class CelestialObservatory {
         name: 'GRASSMANNIAN MACRO · G₊(2,6)',
         params: 'n = 1.68 · Δλ = 14.0nm · σ = 1.8px · ω = +0.24 rad',
         zoom: 1.68, twist: 0.24, dispersion: 14.0, blur: 1.8, hue: -45, sat: 1.55, contrast: 1.25,
-        invert: 0.24, singletInvert: 0.85,
+        invert: 0.24,
         rim: 'rgba(45, 212, 191, 0.44)', glow: 'rgba(168, 85, 247, 0.22)',
         bgBlur: 0.4, bgHue: -18, bgSat: 1.24, bgContrast: 1.10, bgInvert: 0.16
       },
       {
         name: 'HORIZON INFINITY MENISCUS · 35.76°N',
-        params: 'n = 1.10 · CORE 55% · Δλ = 2.0nm · σ = 1.6px',
+        params: 'n = 1.10 · Δλ = 2.0nm · σ = 1.6px · ω = +0.02 rad',
         zoom: 1.10, twist: 0.02, dispersion: 2.0, blur: 1.6, hue: 0, sat: 1.15, contrast: 1.08,
-        invert: 0.00, singletInvert: 0.55,
+        invert: 0.00,
         rim: 'rgba(56, 189, 248, 0.28)', glow: 'rgba(56, 189, 248, 0.14)',
         bgBlur: 0.0, bgHue: 0, bgSat: 1.00, bgContrast: 1.00, bgInvert: 0.00
       }
@@ -1499,7 +1442,6 @@ class CelestialObservatory {
     s.sat += (t.sat - s.sat) * lerp;
     s.contrast += (t.contrast - s.contrast) * lerp;
     s.invert = (typeof s.invert === 'number' ? s.invert : 0) + (t.invert - (typeof s.invert === 'number' ? s.invert : 0)) * lerp;
-    s.singletInvert = (typeof s.singletInvert === 'number' ? s.singletInvert : 0.65) + (t.singletInvert - (typeof s.singletInvert === 'number' ? s.singletInvert : 0.65)) * lerp;
 
     this.lensEl.style.setProperty('--lens-blur', `${s.blur.toFixed(2)}px`);
     this.lensEl.style.setProperty('--lens-sat', `${s.sat.toFixed(2)}`);
@@ -1540,32 +1482,6 @@ class CelestialObservatory {
     ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
     ctx.restore();
 
-    // Central Color-Invert Singlet Core (refracts and color-inverts the central 3D manifold)
-    const singletRadius = Math.min(cw, ch) * (0.22 + (s.zoom - 1.0) * 0.14);
-    const centerX = cw * 0.5 + parallaxX * 1.35;
-    const centerY = ch * 0.5 + parallaxY * 1.35;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, singletRadius, 0, Math.PI * 2);
-    ctx.clip();
-    ctx.globalCompositeOperation = s.invert >= 0.5 ? 'multiply' : 'difference';
-    ctx.globalAlpha = Math.min(0.88, s.singletInvert * 0.65);
-    ctx.translate(centerX, centerY);
-    ctx.rotate(-s.twist * 1.25 - Math.cos(this.time * 0.4) * 0.02);
-    ctx.scale(s.zoom * 1.16, s.zoom * 1.16);
-    ctx.filter = `invert(100%) hue-rotate(${(s.hue + 180).toFixed(0)}deg) saturate(1.65) contrast(1.25)`;
-    ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
-    ctx.restore();
-
-    // Singlet perimeter caustic ring
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, singletRadius, 0, Math.PI * 2);
-    ctx.strokeStyle = s.invert >= 0.5 ? 'rgba(2, 132, 199, 0.22)' : 'rgba(56, 189, 248, 0.18)';
-    ctx.lineWidth = 1.2 * dpr;
-    ctx.stroke();
-    ctx.restore();
-
     // Chromatic dispersion passes (cyan / magenta spectral split)
     if (s.dispersion > 1.2) {
       const disp = s.dispersion * dpr * 0.55;
@@ -1589,23 +1505,6 @@ class CelestialObservatory {
       ctx.drawImage(this.canvas, -cw * 0.5, -ch * 0.5, cw, ch);
       ctx.restore();
     }
-
-    // Subtle optical reticle in screen center
-    ctx.save();
-    ctx.translate(centerX, centerY);
-    ctx.strokeStyle = s.invert >= 0.5 ? 'rgba(15, 23, 42, 0.24)' : 'rgba(56, 189, 248, 0.16)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(-16, 0); ctx.lineTo(16, 0);
-    ctx.moveTo(0, -16); ctx.lineTo(0, 16);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, 38, 0, Math.PI * 2);
-    ctx.strokeStyle = s.invert >= 0.5 ? 'rgba(15, 23, 42, 0.12)' : 'rgba(255, 255, 255, 0.05)';
-    ctx.setLineDash([2, 8]);
-    ctx.stroke();
-    ctx.restore();
   }
 }
 
