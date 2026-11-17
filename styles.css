@@ -1713,29 +1713,24 @@ html, body {
 
 .lens-optic-readout {
   position: fixed;
-  top: 18px;
+  top: 16px;
   right: 28px;
   z-index: 55;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 3px;
   text-align: right;
   pointer-events: auto;
   font-family: var(--font-mono);
-  background: rgba(3, 7, 18, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 2px 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
   cursor: pointer;
-  transition: background 0.35s ease, border-color 0.35s ease;
-}
-
-.lens-optic-readout:hover {
-  border-color: rgba(56, 189, 248, 0.45);
 }
 
 #lens-optic-name {
@@ -1744,6 +1739,11 @@ html, body {
   color: rgba(248, 250, 252, 0.90);
   text-transform: uppercase;
   text-shadow: 0 2px 10px rgba(3, 7, 18, 0.95);
+  transition: color 0.3s ease;
+}
+
+.lens-optic-readout:hover #lens-optic-name {
+  color: var(--aurora-cyan);
 }
 
 #lens-optic-params {
@@ -2362,6 +2362,19 @@ a.btn-quantum-link:hover {
   padding-bottom: 4rem;
 }
 
+/* Ensure form labels in Stage 06 eSIM calculator and sliders are crisp in open space */
+.sim-field label {
+  color: rgba(226, 232, 240, 0.92) !important;
+  text-shadow: 0 2px 10px rgba(3, 7, 18, 0.95);
+}
+
+/* Remove floating circular cursor ring so zero stray circles appear on screen */
+.cursor-ring,
+.cursor-dot,
+.cursor-label {
+  display: none !important;
+}
+
 /* ==========================================================================
    COLOR INVERT FILTER REGIME (body.optic-inverted-field)
    Adapts open-space ink and 2D physics canvases when the optical lens inverts
@@ -2375,18 +2388,55 @@ body.optic-inverted-field .sig-name {
 }
 
 body.optic-inverted-field .sig-meta {
-  color: rgba(30, 41, 59, 0.78) !important;
+  color: rgba(30, 41, 59, 0.82) !important;
+}
+
+body.optic-inverted-field #lens-optic-name {
+  color: #050914 !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field #lens-optic-params {
+  color: #0369a1 !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-stage-num {
+  color: #b45309 !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-sim-tag {
+  color: #0f766e !important;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-sim-status {
+  color: rgba(30, 41, 59, 0.80) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.92) !important;
 }
 
 body.optic-inverted-field .quantum-text,
 body.optic-inverted-field .hero-subtitle,
 body.optic-inverted-field .quantum-architecture-spec {
-  color: rgba(15, 23, 42, 0.90) !important;
+  color: rgba(15, 23, 42, 0.92) !important;
   text-shadow: 0 1px 16px rgba(255, 255, 255, 0.95) !important;
 }
 
 body.optic-inverted-field .quantum-architecture-spec {
-  border-left-color: rgba(2, 132, 199, 0.65) !important;
+  border-left-color: rgba(2, 132, 199, 0.72) !important;
+}
+
+body.optic-inverted-field .quantum-architecture-spec strong {
+  color: #0f766e !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
+}
+
+body.optic-inverted-field .quantum-architecture-spec a {
+  color: #0369a1 !important;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95) !important;
 }
 
 body.optic-inverted-field .hero-badge,
@@ -2404,21 +2454,23 @@ body.optic-inverted-field a.btn-quantum-link:hover {
   border-bottom-color: #0284c7 !important;
 }
 
-body.optic-inverted-field .quantum-metric-label {
-  color: rgba(51, 65, 85, 0.85) !important;
-  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9) !important;
+body.optic-inverted-field .quantum-metric-label,
+body.optic-inverted-field .sim-field label {
+  color: rgba(30, 41, 59, 0.88) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.92) !important;
 }
 
-body.optic-inverted-field .quantum-metric-val {
+body.optic-inverted-field .quantum-metric-val,
+body.optic-inverted-field #mini-days-val {
   color: #050914 !important;
   text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95) !important;
 }
 
 body.optic-inverted-field .quantum-readout,
 body.optic-inverted-field .btn-sim-action {
-  color: rgba(15, 23, 42, 0.86) !important;
-  border-bottom-color: rgba(15, 23, 42, 0.35) !important;
-  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9) !important;
+  color: rgba(15, 23, 42, 0.88) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.38) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.92) !important;
 }
 
 body.optic-inverted-field .btn-sim-action:hover,
@@ -2461,7 +2513,7 @@ body.optic-inverted-field .h-tick-major .h-tick-line {
 
 body.optic-inverted-field .h-tick-label,
 body.optic-inverted-field #horizon-stage-label {
-  color: rgba(15, 23, 42, 0.78);
+  color: rgba(15, 23, 42, 0.82);
 }
 
 body.optic-inverted-field .h-tick:hover .h-tick-label,

@@ -204,11 +204,11 @@ class CelestialObservatory {
     cliffGeom.setAttribute('color', new THREE.BufferAttribute(cliffColors, 3));
 
     const cliffMat = new THREE.PointsMaterial({
-      size: 0.38,
+      size: 0.15,
       map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.34,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     });
@@ -542,11 +542,11 @@ class CelestialObservatory {
     geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: 0.38,
+      size: 0.22,
       map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.78,
+      opacity: 0.55,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     });
@@ -554,41 +554,8 @@ class CelestialObservatory {
     this.vacuumPoints = new THREE.Points(geom, mat);
     this.scene.add(this.vacuumPoints);
 
-    // Virtual particle dipole pairs pool
+    // Virtual dipole spheres removed so no magnified orb pairs clutter zoomed stages
     this.virtualPairs = [];
-    const pairCount = 28;
-    for (let p = 0; p < pairCount; p++) {
-      const pairGroup = new THREE.Group();
-      
-      const particleMatPlus = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0 });
-      const particleMatMinus = new THREE.MeshBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0 });
-      const sphereGeom = new THREE.SphereGeometry(0.16, 12, 12);
-
-      const pPlus = new THREE.Mesh(sphereGeom, particleMatPlus);
-      const pMinus = new THREE.Mesh(sphereGeom, particleMatMinus);
-      pairGroup.add(pPlus);
-      pairGroup.add(pMinus);
-
-      const lineGeom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
-      const lineMat = new THREE.LineBasicMaterial({ color: 0xbae6fd, transparent: true, opacity: 0 });
-      const dipoleLine = new THREE.Line(lineGeom, lineMat);
-      pairGroup.add(dipoleLine);
-
-      this.scene.add(pairGroup);
-
-      this.virtualPairs.push({
-        group: pairGroup,
-        pPlus: pPlus,
-        pMinus: pMinus,
-        line: dipoleLine,
-        lineGeom: lineGeom,
-        active: false,
-        age: 0,
-        lifespan: 1.0,
-        center: new THREE.Vector3(),
-        velocity: new THREE.Vector3()
-      });
-    }
   }
 
   buildEntanglementTensorNetwork() {
@@ -609,7 +576,7 @@ class CelestialObservatory {
   }
 
   buildWavefunctionClouds() {
-    this.wavefunctionCount = 700;
+    this.wavefunctionCount = 520;
     const geom = new THREE.BufferGeometry();
     const pos = new Float32Array(this.wavefunctionCount * 3);
     const colors = new Float32Array(this.wavefunctionCount * 3);
@@ -622,7 +589,7 @@ class CelestialObservatory {
       const ry = (Math.random() - 0.5) * 14.0;
       const rz = (Math.random() - 0.5) * 14.0;
       const r = Math.hypot(rx, ry, rz);
-      if (r < 0.2 || r > 7.0) continue;
+      if (r < 0.6 || r > 7.0) continue;
 
       // 2p_z hydrogenic orbital rejection probability
       const prob = (rz * rz) * Math.exp(-r * 0.85);
@@ -643,11 +610,11 @@ class CelestialObservatory {
     geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: 0.42,
+      size: 0.16,
       map: this.pointTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.22,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     });
@@ -952,7 +919,7 @@ class CelestialObservatory {
     if (this.wavefunctionCloud) {
       this.wavefunctionCloud.rotation.z = this.time * 0.08;
       this.wavefunctionCloud.rotation.y = this.time * 0.05;
-      const wfOpacity = 0.5 + Math.sin(this.time * 2.0) * 0.2;
+      const wfOpacity = 0.16 + Math.sin(this.time * 2.0) * 0.05;
       this.wavefunctionCloud.material.opacity = wfOpacity;
     }
 
@@ -1417,6 +1384,8 @@ class CelestialObservatory {
       this.lensEl.style.setProperty('--lens-rim-color', preset.rim);
       this.lensEl.style.setProperty('--lens-glow-color', preset.glow);
     }
+
+    document.body.classList.toggle('optic-inverted-field', preset.invert >= 0.5);
 
     if (this.canvas) {
       this.canvas.style.setProperty('--bg-blur', `${preset.bgBlur}px`);
